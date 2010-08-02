@@ -25,8 +25,6 @@ from xml.dom import minidom
 from google.appengine.api import urlfetch
 from xml.etree import ElementTree
 
-
-
 AWS_ACCESS_KEY_ID = 'xxxxx'
 AWS_SECRET_ACCESS_KEY = 'xxxxx'
 S3_BUCKET_NAME = "xxxxxx"
@@ -35,6 +33,7 @@ THIS_URL = "http://xxxxxx"
 
 AMAZON_S3_URL = "http://s3.amazonaws.com"
 GOOGLE_WEATHER_API_URL = "http://www.google.com/ig/api"
+
 
 def HelloWorld(handler, tropo):
     """
@@ -129,7 +128,7 @@ DEMOS = {
  '2' : ('Weather Demo', WeatherDemo),
  '3' : ('Record Demo', RecordDemo),
  '4' : ('SMS Demo', SMSDemo),
- '5' : ('RecordHelloWorld Demo', RecordHelloWorld),
+ '5' : ('Record Conversation Demo', RecordHelloWorld),
  '6' : ('Redirect Demo', RedirectDemo),
  '7' : ('Transfer Demo', TransferDemo),
 }

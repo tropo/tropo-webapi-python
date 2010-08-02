@@ -20,7 +20,7 @@ from django.utils import simplejson
 import cgi
 import logging
 import pprint
- 
+import unittest 
 
 
 class Choices():
@@ -659,43 +659,79 @@ class Tropo():
         return pretty
 
 
+
+class SanityCheck(unittest.TestCase):        
+    def testSanity(self):                    
+        """fromRoman(toRoman(n))==n for all n"""
+        print "I a sane"
+
+    def testInSanity(self):                    
+        """fromRoman(toRoman(n))==n for all n"""
+        print "I am insane"
+
+    def test_ask(self):
+        tropo = Tropo()
+        tropo.ask("[5 digits]",
+                  say = Say("Please enter a 5 digit zip code").json)
+        rendered = tropo.RenderJson()
+        
+        print "Want %s" % tropo.PrettyJson()
+        want = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
+        self.assertEqual(rendered, want)
+
+    def call(self):
+        tropo = Tropo()
+        tropo.ask("[5 digits]",
+                  say = Say("Please enter a 5 digit zip code").json)
+        rendered = tropo.RenderJson()
+        
+        print "Want %s" % tropo.PrettyJson()
+        want = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
+        self.assertEqual(rendered, want)
+
+
+
 if __name__ == '__main__':
     """
     Unit tests.
     """
-    TO = "8005551212"
+    if (0):
+        TO = "8005551212"
 
-    ID = "foo"
-    URL = "http://s3.amazonaws.com/xxx_s3_bucket/hello.wav"
+        ID = "foo"
+        URL = "http://s3.amazonaws.com/xxx_s3_bucket/hello.wav"
 
 
 
-    tropo = Tropo()
+        tropo = Tropo()
 
-    tropo.ask("[5 digits]",
-              say = Say("Please enter a 5 digit zip code").json)
+        tropo.ask("[5 digits]",
+                  say = Say("Please enter a 5 digit zip code").json)
 
-    tropo.call (TO)
-    tropo.conference(ID)
-    tropo.hangup()
-    tropo.message ("Hello, World", TO)
-    tropo.on(event="continue", 
-         next="http://example.com/weather.py",
-         say="Please hold.")
+        tropo.call (TO)
+        tropo.conference(ID)
+        tropo.hangup()
+        tropo.message ("Hello, World", TO)
+        tropo.on(event="continue", 
+             next="http://example.com/weather.py",
+             say="Please hold.")
 
-    tropo.record(say="Please say something for posterity", 
-                 url=URL, 
-                 choices = Choices("", terminator="#").json)
-    tropo.redirect(ID)
-    tropo.reject(ID)
-    tropo.startRecording(URL)
-    tropo.stopRecording()
-    tropo.transfer(TO)
+        tropo.record(say="Please say something for posterity", 
+                     url=URL, 
+                     choices = Choices("", terminator="#").json)
+        tropo.redirect(ID)
+        tropo.reject(ID)
+        tropo.startRecording(URL)
+        tropo.stopRecording()
+        tropo.transfer(TO)
 
-    tropo.message("Hello, World",
-                  TO, 
-                  channel='TEXT', 
-                  network='SMS')
+        tropo.message("Hello, World",
+                      TO, 
+                      channel='TEXT', 
+                      network='SMS')
+
+    else:
+        unittest.main()
 
     print tropo.PrettyJson()
 
