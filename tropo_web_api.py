@@ -23,7 +23,6 @@ import pprint
  
 
 
-# ?????
 class Choices():
     def __init__(self, value, **options):
         dict = {}
@@ -36,7 +35,7 @@ class Choices():
         dict['value'] = value
 
         self.obj = {'choices': dict}
-
+        self.json = dict
 
 class Ask():
     """
@@ -61,23 +60,21 @@ class Ask():
         dict = {}
         options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice']
         
-        choices_json = choices.obj
-        logging.info ("choices_json: %s" % choices_json)
-        choices_payload = choices_json['choices']
-        dict['choices'] = choices_payload
+        if (isinstance(choices, str)):
+            choices1 = Choices(choices).json
+            dict['choices'] = choices1
+        else:
+            dict['choices'] = choices['choices']
         for opt in options_array:
             if opt in options:
-                if (opt == 'say'):
-                    message = options['say']
-                    say_obj = Say(message).obj
-                    say_payload = say_obj['say']
-                    dict['say'] = say_payload
-
+                if ((opt == 'say') and (isinstance(options['say'], str))):
+                    say_obj = options['say']
+                    say_obj1 = Say(say_obj).json
+                    dict['say'] = say_obj1
                 else:
-
                     dict[opt] = options[opt]
         self.obj = {'ask' : dict}
-
+        self.json = dict
 
 class Call():
     """
@@ -102,13 +99,9 @@ class Call():
         options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
         for opt in options_array:
             if opt in options:
-                if (opt == 'headers'):
-                    dict['headers'] = options['header']
-                elif(opt == 'recording'):
-                    dict['recording'] = options['recording']
-                else:
-                    dict[opt] = options[opt]
+                dict[opt] = options[opt]
         self.obj = {'call' : dict}
+        self.json = dict
 
 class Conference():
     """
@@ -133,7 +126,7 @@ class Conference():
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'conference' : dict}
-
+        self.json = dict
 
 class Hangup ():
     """
@@ -145,6 +138,7 @@ class Hangup ():
     def __init__(self):
         dict = {}
         self.obj = {'hangup' : dict}
+        self.json = dict
 
 class Message():
     """
@@ -160,13 +154,14 @@ class Message():
             "timeout": Float,
             "voice": String } } 
     """
-    def __init__(self, message, to, **options):
+    def __init__(self, say_obj, to, **options):
 
         dict = {}
 
-        say_obj = Say(message).obj
+        # say_obj = Say(message).obj
         say_payload = say_obj['say']
         dict['say'] = say_payload
+        dict['to'] = to
 
         options_array = ['answerOnMedia', 'channel', 'from', 'name', 'network', 'required', 'timeout', 'voice']
 
@@ -175,7 +170,7 @@ class Message():
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'message' : dict}
-
+        self.json = dict
 
 class On():
     """
@@ -195,13 +190,15 @@ class On():
         options_array = ['name','next','required','say']
         for opt in options_array:
             if opt in options:
-                if (opt == 'say'):
-                    say_obj = Say(options['say']).obj
-                    say_payload = say_obj['say']
-                    dict['say'] = say_payload
+                if ((opt == 'say') and (isinstance(options['say'], str))):
+                    say_obj = options['say']
+                    say_obj1 = Say(say_obj).json
+                    dict['say'] = say_obj1
                 else:
                     dict[opt] = options[opt]
+
         self.obj = {'on' : dict}
+        self.json = dict
 
 
 class Record():
@@ -234,19 +231,14 @@ class Record():
         options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username']
         for opt in options_array:
             if opt in options:
-                if (opt == 'say'):
-                    say_obj = options['say'].obj
-                    say_payload = say_obj['say']
-                    dict['say'] = say_payload
-
-                elif(opt == 'choices'):
-                    #dict['choices'] = {'value' : options['choices']}
-                    choices_obj = options['choices'].obj
-                    choices_payload = choices_obj['choices']
-                    dict['choices'] = choices_payload
+                if ((opt == 'say') and (isinstance(options['say'], str))):
+                    say_obj = options['say']
+                    say_obj1 = Say(say_obj).json
+                    dict['say'] = say_obj1
                 else:
                     dict[opt] = options[opt]
         self.obj = {'record' : dict}
+        self.json = dict
 
 
 class Redirect():
@@ -269,6 +261,7 @@ class Redirect():
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'redirect' : dict}
+        self.json = dict
 
 
 class Reject():
@@ -299,6 +292,16 @@ class Result():
             "state": String } }
     """ 
             
+    def initOld(self, result_json):
+        logging.info ("result POST data: %s" % result_json)
+        result_data = simplejson.loads(result_json)
+        result_dict = result_data['result']
+
+        options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state']
+        for opt in options_array:
+            logging.info ("Result setting %s to %s" % (opt, result_dict[opt]))
+            self.opt = result_dict[opt]
+
     def __init__(self, result_json):
         logging.info ("result POST data: %s" % result_json)
         result_data = simplejson.loads(result_json)
@@ -314,25 +317,14 @@ class Result():
         self._sessionId = result_dict['sessionId']
         self._state = result_dict['state']
 
-    def actions(self):
-        getpass
-    def getcomplete(self):
-        pass
-    def geterror(self):
-        pass
-    def getsequence(self):
-        pass
-    def getsessionDuration(self):
-        pass
-    def getsessionId(self):
-        pass
-    def getstate(self):
-        pass
-
     def getValue(self):
         # Enhance this to handle actions being an array
-#        actions = self._actions
         actions = self._actions
+
+#        for item in self.__dict__.(keys):
+#            logging.info ("dict value: %s" % item)
+
+#        actions = self.actions
         if (type (actions) is list):
             logging.info ("Actions is a list")
             dict = actions[0]
@@ -342,6 +334,7 @@ class Result():
         logging.info ("Actions is: %s" % actions)
         return dict['interpretation']
 
+# ??? can we initialize this with an array?
 class Say():
     """
     Python class that corresponds to "csay" json object. 
@@ -362,7 +355,7 @@ class Say():
                 dict[opt] = options[opt]
         dict['value'] = message
         self.obj = {'say' : dict}
-
+        self.json = dict
 
 
 class Session():
@@ -398,6 +391,7 @@ class StartRecording ():
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'startRecording' : dict}
+        self.json = dict
 
 class StopRecording ():
    """
@@ -406,6 +400,7 @@ class StopRecording ():
    def __init__(self):
        dict = {}
        self.obj = {'stopRecording' : dict}
+       self.json = dict
 
 
 
@@ -430,13 +425,13 @@ class Transfer():
         for opt in options_array:
             if opt in options:
                 if (opt == 'from'):
-                    dict['from'] = Say(options['say'])
+                    dict['from'] = options['from']
                 elif(opt == 'choices'):
                     dict['choices'] = {'value' : options['choices']}
                 else:
                     dict[opt] = options[opt]
         self.obj = {'transfer' : dict}
-
+        self.json = dict
 
 
 class Tropo():
@@ -506,7 +501,7 @@ class Tropo():
         steps.append(piece)
         self._steps = steps
 
-    def message (self, message, to, **options):
+    def message (self, say_obj, to, **options):
         """
 	 * A shortcut method to create a session, say something, and hang up, all in one step. This is particularly useful for sending out a quick SMS or IM. 
 	 *
@@ -516,7 +511,11 @@ class Tropo():
 	 * See https://www.tropo.com/docs/webapi/message.htm
         """
         steps = self._steps
-        message_obj = Message(message, to, **options)
+        if isinstance(say_obj, str):
+           say_obj1 = Say(say_obj).obj
+           message_obj = Message(say_obj1, to, **options)
+        else:
+           message_obj = Message(say_obj, to, **options)
         piece = message_obj.obj
 #        steps.append({'message' : piece})
         steps.append(piece)
@@ -585,6 +584,7 @@ class Tropo():
         steps.append(piece)
         self._steps = steps
 
+# ??? say may take an array of values
     def say(self, message, **options):
         """
 	 * When the current session is a voice channel this key will either play a message or an audio file from a URL. 
@@ -600,6 +600,7 @@ class Tropo():
 #        steps.append({'say' : piece})
         steps.append(piece)
         self._steps = steps
+        return say_obj.json
 
     def startRecording(self, url, **options):
         """
@@ -662,35 +663,39 @@ if __name__ == '__main__':
     """
     Unit tests.
     """
-    TO = "6039570051"
-    MESSAGE  = "Hello World"
-    ID = "foo"
-    URL = "http://s3.amazonaws.com/tedsvoice/hello.wav"
-    tropo = Tropo()
-    tropo.say(MESSAGE)
-    tropo.call (TO)
-    tropo.message (MESSAGE, TO)
-    tropo.on("continue")
-    choices = Choices("[5 digits]")
-    tropo.ask(choices, say=MESSAGE)
-    url = "http://egilchri1.appspot.com/receive_recording.py"
-    say_obj = Say("Tell us about yourself, and don't embellish")
-    choices_obj = Choices("", terminator="#")
-    tropo.record(say=say_obj, url=url, choices = choices_obj)
+    TO = "8005551212"
 
+    ID = "foo"
+    URL = "http://s3.amazonaws.com/xxx_s3_bucket/hello.wav"
+
+
+
+    tropo = Tropo()
+
+    tropo.ask("[5 digits]",
+              say = Say("Please enter a 5 digit zip code").json)
+
+    tropo.call (TO)
     tropo.conference(ID)
     tropo.hangup()
+    tropo.message ("Hello, World", TO)
+    tropo.on(event="continue", 
+         next="http://example.com/weather.py",
+         say="Please hold.")
+
+    tropo.record(say="Please say something for posterity", 
+                 url=URL, 
+                 choices = Choices("", terminator="#").json)
     tropo.redirect(ID)
     tropo.reject(ID)
     tropo.startRecording(URL)
     tropo.stopRecording()
     tropo.transfer(TO)
-    if (0):
-        json = tropo.RenderJson()
-        l = simplejson.loads(json)
-        print simplejson.dumps(l, indent=4)
-    else:
-        print tropo.PrettyJson()
 
-    for key in Tropo.__dict__:
-        print key
+    tropo.message("Hello, World",
+                  TO, 
+                  channel='TEXT', 
+                  network='SMS')
+
+    print tropo.PrettyJson()
+
