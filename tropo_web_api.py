@@ -571,7 +571,7 @@ class Tropo():
         steps.append(piece)
         self._steps = steps
 
-    def reject(self, id, **options):
+    def reject(self):
         """
 	 * Allows Tropo applications to reject incoming sessions before they are answered. 
 	 * For example, an application could inspect the callerID variable to determine if the user is known, and then use the reject call accordingly. 
@@ -660,7 +660,13 @@ class Tropo():
 
 
 
-class SanityCheck(unittest.TestCase):        
+class WebAPICheck(unittest.TestCase):        
+    TO = "8005551212"
+    MY_PHONE = "6021234567"
+    RECORDING_URL = "/receive_recording.py"
+    ID = "foo"
+    S3_URL = "http://s3.amazonaws.com/xxx_s3_bucket/hello.wav"
+
     def testSanity(self):                    
         """fromRoman(toRoman(n))==n for all n"""
         print "I a sane"
@@ -674,20 +680,153 @@ class SanityCheck(unittest.TestCase):
         tropo.ask("[5 digits]",
                   say = Say("Please enter a 5 digit zip code").json)
         rendered = tropo.RenderJson()
-        
-        print "Want %s" % tropo.PrettyJson()
-        want = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
-        self.assertEqual(rendered, want)
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"ask": {"say": {"value": "Please enter a 5 digit zip code"}, "choices": {"value": "[5 digits]"}}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        print "test_ask: %s" % tropo.RenderJson()
+        self.assertEqual(rendered_obj, wanted_obj)
 
-    def call(self):
+    def test_call(self):
         tropo = Tropo()
-        tropo.ask("[5 digits]",
-                  say = Say("Please enter a 5 digit zip code").json)
+        tropo.call(self.MY_PHONE, channel='TEXT', network='SMS')
+        tropo.say ("Wish you were here")
         rendered = tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"call": {"to": "%s", "network": "SMS", "channel": "TEXT"}}, {"say": {"value": "Wish you were here"}}]}' % self.MY_PHONE
+        wanted_obj = simplejson.loads(wanted_json)
+        print "test_call: %s" % tropo.RenderJson()
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
+    def test_conference(self):
+        tropo = Tropo()
+        tropo.call(self.ID, playTones=True,terminator="#",
+                   name="Staff Meeting", mute=False)
+        rendered = tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = ' {"tropo": [{"call": {"to": "%s", "name": "Staff Meeting"}}]}' % self.ID
+        wanted_obj = simplejson.loads(wanted_json)
+        print "test_conference: %s" % tropo.RenderJson()
+        self.assertEqual(rendered_obj, wanted_obj)
+
+    def test_hangup(self):
+        tropo = Tropo()
+        tropo.hangup()
+        rendered = tropo.RenderJson()
+        print "test_hangup: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"hangup": {}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+    def test_message(self):
+        tropo = Tropo()
+        tropo.message("Hello World", self.MY_PHONE, channel='TEXT', network='SMS', timeout=5)
+        rendered = tropo.RenderJson()
+        print "test_message: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = ' {"tropo": [{"message": {"to": "%s", "say": {"value": "Hello World"}, "network": "SMS", "timeout": 5, "channel": "TEXT"}}]}' % self.MY_PHONE
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+    def test_on(self):
+        tropo = Tropo()
+
+        tropo.on(event="continue", 
+             next="/weather.py?uri=end",
+             say="Please hold.")
+        rendered = tropo.RenderJson()
+        print "test_on: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = ' {"tropo": [{"on": {"say": {"value": "Please hold."}, "event": "continue", "next": "/weather.py?uri=end"}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
+
+    def test_record(self):
+        tropo = Tropo()
+        url = "/receive_recording.py"
+        choices_obj = Choices("", terminator="#").json
+        tropo.record(say="Tell us about yourself", url=url, 
+                     choices=choices_obj)
+        rendered = tropo.RenderJson()
+        print "test_record: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = ' {"tropo": [{"record": {"url": "/receive_recording.py", "say": {"value": "Tell us about yourself"}, "choices": {"terminator": "#", "value": ""}}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+    def test_redirect(self):
+        tropo = Tropo()
+        tropo.redirect(self.MY_PHONE)
+        rendered = tropo.RenderJson()
+        print "Wanted_Json %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"redirect": {"to": "%s"}}]}' % self.MY_PHONE
+        wanted_obj = simplejson.loads(wanted_json)
+        print "test_redirect: %s" % tropo.RenderJson()
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
+    def test_reject(self):
+        tropo = Tropo()
+        tropo.reject()
+        rendered = tropo.RenderJson()
+        print "Want %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"reject": {}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        print "test_reject: %s" % tropo.RenderJson()
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
+    def test_say(self):
+        tropo = Tropo()
+        tropo.say("Hello, World")
+        rendered = tropo.RenderJson()
+        print "test_say: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
+    def test_startRecording(self):
+        tropo = Tropo()
+        tropo.startRecording(self.RECORDING_URL)
+        rendered = tropo.RenderJson()
+        print "test_startRecording: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"startRecording": {"url": "/receive_recording.py"}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
         
-        print "Want %s" % tropo.PrettyJson()
-        want = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
-        self.assertEqual(rendered, want)
+
+    def test_stopRecording(self):
+        tropo = Tropo()
+        tropo.stopRecording()
+        rendered = tropo.RenderJson()
+        print "test_stopRecording: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = ' {"tropo": [{"stopRecording": {}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
+    def test_transfer(self):
+        tropo = Tropo()
+        tropo.say ("One moment please.")
+        tropo.transfer(self.MY_PHONE)
+        tropo.say("Hi. I am a robot")
+        rendered = tropo.RenderJson()
+        print "test_transfer: %s" % tropo.RenderJson()
+        rendered_obj = simplejson.loads(rendered)
+        wanted_json = '{"tropo": [{"say": {"value": "One moment please."}}, {"transfer": {"to": "6021234567"}}, {"say": {"value": "Hi. I am a robot"}}]}'
+        wanted_obj = simplejson.loads(wanted_json)
+        self.assertEqual(rendered_obj, wanted_obj)
+
+
 
 
 
@@ -733,5 +872,4 @@ if __name__ == '__main__':
     else:
         unittest.main()
 
-    print tropo.PrettyJson()
 

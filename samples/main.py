@@ -34,7 +34,6 @@ THIS_URL = "http://xxxxxx"
 AMAZON_S3_URL = "http://s3.amazonaws.com"
 GOOGLE_WEATHER_API_URL = "http://www.google.com/ig/api"
 
-
 def HelloWorld(handler, tropo):
     """
     This is the traditional "Hello, World" function. The idiom is used throughout the API. We consturct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
@@ -51,14 +50,16 @@ def WeatherDemo(handler, tropo):
 
     tropo.ask(choices, 
               say="Please enter your 5 digit zip code.", 
-              attempts=3, bargein=True, name="zip", timeout=5, voice="dave");
+              attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
 
     tropo.on(event="continue", 
-             next="%s/weather.py?uri=end" % THIS_URL,
+#             next="%s/weather.py?uri=end" % THIS_URL,
+             next="/weather.py?uri=end",
              say="Please hold.")
 
     tropo.on(event="error",
-             next="%s/weather.py?uri=error" % THIS_URL,
+#             next="%s/weather.py?uri=error" % THIS_URL,
+             next="/weather.py?uri=error",
              say="Ann error occurred.")
 
     json = tropo.RenderJson()
@@ -70,7 +71,7 @@ def WeatherDemo(handler, tropo):
 
 def RecordDemo(handler, tropo):
 
-    url = "%s/receive_recording.py" % THIS_URL
+    url = "/receive_recording.py"
     choices_obj = tropo_web_api.Choices("", terminator="#").json
     tropo.record(say="Tell us about yourself", url=url, 
                  choices=choices_obj)
@@ -123,6 +124,16 @@ def TransferDemo(handler, tropo):
 
 
 
+def CallDemo(handler, tropo):
+    tropo = tropo_web_api.Tropo()
+    tropo.call(MY_PHONE, channel='TEXT', network='SMS')
+    tropo.say ("Wish you were here")
+    json = tropo.RenderJson()
+    logging.info ("CallDemo json: %s " % json)
+    handler.response.out.write(json)
+
+
+
 DEMOS = {
  '1' : ('Hello World', HelloWorld),
  '2' : ('Weather Demo', WeatherDemo),
@@ -131,6 +142,7 @@ DEMOS = {
  '5' : ('Record Conversation Demo', RecordHelloWorld),
  '6' : ('Redirect Demo', RedirectDemo),
  '7' : ('Transfer Demo', TransferDemo),
+ '8' : ('Call Demo', CallDemo),
 }
 
 class TropoDemo(webapp.RequestHandler):
@@ -161,11 +173,11 @@ class TropoDemo(webapp.RequestHandler):
             tropo.ask(choices, say=request, attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
 
             tropo.on(event="continue", 
-                     next="%s/demo_continue.py" % THIS_URL,
+                     next="/demo_continue.py"
                      say="Please hold.")
 
             tropo.on(event="error",
-                     next="%s/demo_continue.py" % THIS_URL,
+                     next="/demo_continue.py"
                      say="An error occurred.")
 
             json = tropo.RenderJson()
@@ -271,18 +283,6 @@ class ReceiveRecording(webapp.RequestHandler):
 
 
 
-class CallWorld(webapp.RequestHandler):
-    def post(self):
-        tropo = tropo_web_api.Tropo()
-        options = {}
-        options['channel'] = 'TEXT'
-        options['network'] = 'SMS'
-
-        tropo.call(MY_PHONE, options)
-        tropo.say ("Wish you were here")
-        json = tropo.RenderJson()
-        logging.info ("Json result: %s " % json)
-        self.response.out.write(json)
 
 
 
