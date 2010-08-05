@@ -1,0 +1,19 @@
+Overview
+========
+
+TropoPython is a set of Python classes for working with [Tropo's cloud communication service](http://tropo.com/). Tropo allows a developer to create applications that run over the phone, IM, SMS, and Twitter using web technologies. This library communicates with Tropo over JSON.
+
+Usage
+=====
+
+This is "Hello World", in Google's Appengine:
+
+import tropo_web_api
+
+def HelloWorld(handler, tropo):
+    tropo = tropo_web_api.Tropo()
+    tropo.say ("Hello, World")
+    json = tropo.RenderJson()
+    logging.info ("HelloWorld json: %s" % json)
+    handler.response.out.write(json)
+
