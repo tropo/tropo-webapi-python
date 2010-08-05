@@ -16,7 +16,6 @@
 #
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from django.utils import simplejson
 import cgi
 import logging
 import tropo_web_api
@@ -24,12 +23,8 @@ import GoogleS3
 from xml.dom import minidom
 from google.appengine.api import urlfetch
 from xml.etree import ElementTree
+from setup import *
 
-AWS_ACCESS_KEY_ID = 'xxxxx'
-AWS_SECRET_ACCESS_KEY = 'xxxxx'
-S3_BUCKET_NAME = "xxxxxx"
-YOUR_PHONE_NUMBER = "tel:+1xxxxxxxxxx"
-THIS_URL = "http://xxxxxx"
 
 AMAZON_S3_URL = "http://s3.amazonaws.com"
 GOOGLE_WEATHER_API_URL = "http://www.google.com/ig/api"
@@ -125,15 +120,30 @@ def TransferDemo(handler, tropo):
 
 
 def CallDemo(handler, tropo):
-    tropo = tropo_web_api.Tropo()
-    tropo.call(MY_PHONE, channel='TEXT', network='SMS')
-    tropo.say ("Wish you were here")
+    tropo.say ("One moment please.")
+    tropo.call(THEIR_PHONE)
+    tropo.say ("May I help you?")
+    json = tropo.RenderJson()
+    logging.info ("CallDemo json: %s " % json)
+    handler.response.out.write(json)
+#    handler.response.out.write('{"tropo":[{"call":{"to":["tel:+16039570525"]}},{"say":[{"value":"Hello, happy you were the first phone to answer!"}]}]}')
+
+def ConferenceDemo(handler, tropo):
+    tropo.say ("Have some of your friends launch this demo. You'll be on the world's simplest conference call. Now, for a little music, while we wait for the others.")
+    tropo.conference("partyline", terminator="#", name="Family Meeting")
+    tropo.say("http://denalidomain.com/music/keepers/Fontella%20Bass%20This%20Little%20Light%20Of%20Mine.mp3")
+#    tropo.call(MY_PHONE)
+
+#    tropo.call(THEIR_PHONE)
+    tropo.say ("How do you like the conference so far?")
     json = tropo.RenderJson()
     logging.info ("CallDemo json: %s " % json)
     handler.response.out.write(json)
 
 
 
+
+# List of Demos
 DEMOS = {
  '1' : ('Hello World', HelloWorld),
  '2' : ('Weather Demo', WeatherDemo),
@@ -143,6 +153,7 @@ DEMOS = {
  '6' : ('Redirect Demo', RedirectDemo),
  '7' : ('Transfer Demo', TransferDemo),
  '8' : ('Call Demo', CallDemo),
+ '9' : ('Conference Demo', ConferenceDemo)
 }
 
 class TropoDemo(webapp.RequestHandler):
@@ -173,11 +184,11 @@ class TropoDemo(webapp.RequestHandler):
             tropo.ask(choices, say=request, attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
 
             tropo.on(event="continue", 
-                     next="/demo_continue.py"
+                     next="/demo_continue.py",
                      say="Please hold.")
 
             tropo.on(event="error",
-                     next="/demo_continue.py"
+                     next="/demo_continue.py",
                      say="An error occurred.")
 
             json = tropo.RenderJson()
@@ -283,6 +294,14 @@ class ReceiveRecording(webapp.RequestHandler):
 
 
 
+class CallWorld(webapp.RequestHandler):
+    def post(self):
+        tropo = tropo_web_api.Tropo()
+        tropo.call("tel:+16039570051", channel='TEXT', network='SMS', answerOnMedia='True')
+        tropo.say ("Wish you were here")
+        json = tropo.RenderJson()
+        logging.info ("Json result: %s " % json)
+        self.response.out.write(json)
 
 
 
@@ -305,7 +324,9 @@ def main():
 #                                          ('/record.py', RecordMess),
                                           ('/weather.py', Weather),
                                           ('/receive_recording.py', ReceiveRecording),
-                                          ('/demo_continue.py', TropoDemoContinue)
+                                          ('/demo_continue.py', TropoDemoContinue),
+#                                          ('/tropo_web_api.html', ShowDoc)
+
   ],
                                          debug=True)
     util.run_wsgi_app(application)
