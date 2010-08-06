@@ -9,22 +9,29 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>tropo_web_api</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/egilchri/appengine/egilchri1/tropo_web_api.py">/Users/egilchri/appengine/egilchri1/tropo_web_api.py</a></font></td></tr></table>
-    <p><tt>#&nbsp;Copyright&nbsp;2007&nbsp;Google&nbsp;Inc.<br>
-#<br>
-#&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");<br>
-#&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.<br>
-#&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at<br>
-#<br>
-#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br>
-#<br>
-#&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software<br>
-#&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,<br>
-#&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;implied.<br>
-#&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;permissions&nbsp;and<br>
-#&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.<br>
-#<br>
-#&nbsp;from&nbsp;google.appengine.ext&nbsp;import&nbsp;webapp<br>
-#&nbsp;from&nbsp;google.appengine.ext.webapp&nbsp;import&nbsp;util</tt></p>
+    <p><tt>The&nbsp;TropoPython&nbsp;module.&nbsp;This&nbsp;module&nbsp;implements&nbsp;a&nbsp;set&nbsp;of&nbsp;classes&nbsp;and&nbsp;methods&nbsp;for&nbsp;manipulating&nbsp;the&nbsp;Voxeo&nbsp;<a href="#Tropo">Tropo</a>&nbsp;WebAPI.<br>
+&nbsp;<br>
+Usage:<br>
+&nbsp;<br>
+tropo&nbsp;=&nbsp;<a href="#Tropo">Tropo</a>()<br>
+tropo.say("Hello,&nbsp;World")<br>
+json&nbsp;=&nbsp;tropo.RenderJson()&nbsp;<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;write&nbsp;this&nbsp;JSON&nbsp;back&nbsp;to&nbsp;standard&nbsp;output&nbsp;to&nbsp;get&nbsp;<a href="#Tropo">Tropo</a>&nbsp;to&nbsp;perform&nbsp;<br>
+the&nbsp;action.&nbsp;For&nbsp;example,&nbsp;on&nbsp;Google&nbsp;Appengine&nbsp;you&nbsp;might&nbsp;write&nbsp;something&nbsp;like:<br>
+&nbsp;<br>
+handler.response.out.write(json)<br>
+&nbsp;<br>
+Much&nbsp;of&nbsp;the&nbsp;time,&nbsp;a&nbsp;you&nbsp;will&nbsp;interact&nbsp;with&nbsp;<a href="#Tropo">Tropo</a>&nbsp;by&nbsp;&nbsp;examining&nbsp;the&nbsp;<a href="#Result">Result</a>&nbsp;<br>
+object&nbsp;and&nbsp;communicating&nbsp;back&nbsp;to&nbsp;<a href="#Tropo">Tropo</a>&nbsp;via&nbsp;the&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;methods,&nbsp;such&nbsp;<br>
+as&nbsp;"say".&nbsp;In&nbsp;some&nbsp;cases,&nbsp;you'll&nbsp;want&nbsp;to&nbsp;build&nbsp;a&nbsp;class&nbsp;object&nbsp;directly&nbsp;such&nbsp;as&nbsp;in&nbsp;:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;choices&nbsp;=&nbsp;tropo_web_api.<a href="#Choices">Choices</a>("[5&nbsp;digits]").obj<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tropo.ask(choices,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;say="Please&nbsp;enter&nbsp;your&nbsp;5&nbsp;digit&nbsp;zip&nbsp;code.",&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attempts=3,&nbsp;bargein=True,&nbsp;name="zip",&nbsp;timeout=5,&nbsp;voice="dave")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -60,15 +67,10 @@
 </font></dt><dt><font face="helvetica, arial"><a href="tropo_web_api.html#Session">Session</a>
 </font></dt><dt><font face="helvetica, arial"><a href="tropo_web_api.html#StartRecording">StartRecording</a>
 </font></dt><dt><font face="helvetica, arial"><a href="tropo_web_api.html#StopRecording">StopRecording</a>
+</font></dt><dt><font face="helvetica, arial"><a href="tropo_web_api.html#TestTropoPython">TestTropoPython</a>
 </font></dt><dt><font face="helvetica, arial"><a href="tropo_web_api.html#Transfer">Transfer</a>
 </font></dt><dt><font face="helvetica, arial"><a href="tropo_web_api.html#Tropo">Tropo</a>
-</font></dt><dt><font face="helvetica, arial"><a href="unittest.html#TestCase">unittest.TestCase</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
-</font></dt><dd>
-<dl>
-<dt><font face="helvetica, arial"><a href="tropo_web_api.html#TestWebAPI">TestWebAPI</a>
 </font></dt></dl>
-</dd>
-</dl>
  <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -76,7 +78,12 @@
 <font color="#000000" face="helvetica, arial"><a name="Ask">class <strong>Ask</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Request&nbsp;information&nbsp;from&nbsp;the&nbsp;caller&nbsp;and&nbsp;wait&nbsp;for&nbsp;a&nbsp;response.<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"ask"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;an&nbsp;"ask"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;choices,&nbsp;a&nbsp;<a href="#Choices">Choices</a>&nbsp;object<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.ask()<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;attempts,&nbsp;bargein,&nbsp;choices,&nbsp;minConfidence,&nbsp;name,&nbsp;recognizer,&nbsp;required,&nbsp;say,&nbsp;timeout,&nbsp;voice<br>
+&nbsp;<br>
+Request&nbsp;information&nbsp;from&nbsp;the&nbsp;caller&nbsp;and&nbsp;wait&nbsp;for&nbsp;a&nbsp;response.<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/ask.htm)<br>
 &nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"ask":&nbsp;{<br>
@@ -101,7 +108,11 @@
 <font color="#000000" face="helvetica, arial"><a name="Call">class <strong>Call</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Initiates&nbsp;an&nbsp;outbound&nbsp;call&nbsp;or&nbsp;a&nbsp;text&nbsp;conversation.&nbsp;Note&nbsp;that&nbsp;this&nbsp;verb&nbsp;is&nbsp;only&nbsp;valid&nbsp;when&nbsp;there&nbsp;is&nbsp;no&nbsp;active&nbsp;WebAPI&nbsp;call.<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"call"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"call"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;to,&nbsp;a&nbsp;String<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;answerOnMedia,&nbsp;channel,&nbsp;from,&nbsp;headers,&nbsp;name,&nbsp;network,&nbsp;recording,&nbsp;required,&nbsp;timeout<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.call()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/call.htm)<br>
 &nbsp;<br>
 {&nbsp;"call":&nbsp;{<br>
@@ -126,7 +137,9 @@
 <font color="#000000" face="helvetica, arial"><a name="Choices">class <strong>Choices</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Indicates&nbsp;the&nbsp;structure&nbsp;of&nbsp;expected&nbsp;data.<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;choice&nbsp;made&nbsp;by&nbsp;a&nbsp;user.&nbsp;Builds&nbsp;a&nbsp;"choices"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;terminator,&nbsp;mode<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/ask.htm)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
@@ -139,7 +152,10 @@
 <font color="#000000" face="helvetica, arial"><a name="Conference">class <strong>Conference</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Allows&nbsp;multiple&nbsp;lines&nbsp;in&nbsp;separate&nbsp;sessions&nbsp;to&nbsp;be&nbsp;conferenced&nbsp;together&nbsp;so&nbsp;that&nbsp;the&nbsp;parties&nbsp;on&nbsp;each&nbsp;line&nbsp;can&nbsp;talk&nbsp;to&nbsp;each&nbsp;other&nbsp;simultaneously.&nbsp;This&nbsp;is&nbsp;a&nbsp;voice&nbsp;channel&nbsp;only&nbsp;feature.&nbsp;<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"conference"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"conference"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;id,&nbsp;a&nbsp;String<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.conference()<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;mute,&nbsp;name,&nbsp;playTones,&nbsp;required,&nbsp;terminator<br>
 &nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/conference.htm)<br>
 &nbsp;<br>
@@ -161,7 +177,11 @@
 <font color="#000000" face="helvetica, arial"><a name="Hangup">class <strong>Hangup</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Instructs&nbsp;<a href="#Tropo">Tropo</a>&nbsp;to&nbsp;"hang-up"&nbsp;or&nbsp;disconnect&nbsp;the&nbsp;session&nbsp;associated&nbsp;with&nbsp;the&nbsp;current&nbsp;session.&nbsp;<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"hangup"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"hangup"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.hangup()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/hangup.htm)<br>
 &nbsp;<br>
 {&nbsp;"hangup":&nbsp;{&nbsp;}&nbsp;}<br>&nbsp;</tt></td></tr>
@@ -176,7 +196,12 @@
 <font color="#000000" face="helvetica, arial"><a name="Message">class <strong>Message</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Creates&nbsp;a&nbsp;call,&nbsp;says&nbsp;something&nbsp;and&nbsp;then&nbsp;hangs&nbsp;up,&nbsp;all&nbsp;in&nbsp;one&nbsp;step.<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"message"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"message"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;say_obj,&nbsp;a&nbsp;<a href="#Say">Say</a>&nbsp;object<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;to,&nbsp;a&nbsp;String<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;answerOnMedia,&nbsp;channel,&nbsp;from,&nbsp;name,&nbsp;network,&nbsp;required,&nbsp;timeout,&nbsp;voice<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.message()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/message.htm)<br>
 {&nbsp;"message":&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"say":&nbsp;Object,#Required<br>
@@ -200,7 +225,11 @@
 <font color="#000000" face="helvetica, arial"><a name="On">class <strong>On</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Determines&nbsp;the&nbsp;events&nbsp;to&nbsp;be&nbsp;handled.&nbsp;Possible&nbsp;events&nbsp;are:&nbsp;"continue",&nbsp;"error",&nbsp;"incomplete"&nbsp;and&nbsp;"hangup".&nbsp;<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"on"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;an&nbsp;"on"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;event,&nbsp;a&nbsp;String<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;&nbsp;name,next,required,say<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.on()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/on.htm)<br>
 &nbsp;<br>
 {&nbsp;"on":&nbsp;{<br>
@@ -220,7 +249,13 @@
 <font color="#000000" face="helvetica, arial"><a name="Record">class <strong>Record</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Plays&nbsp;a&nbsp;prompt&nbsp;(audio&nbsp;file&nbsp;or&nbsp;text&nbsp;to&nbsp;speech)&nbsp;then&nbsp;optionally&nbsp;waits&nbsp;for&nbsp;a&nbsp;response&nbsp;from&nbsp;the&nbsp;caller&nbsp;and&nbsp;records&nbsp;it.&nbsp;<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"record"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"record"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;attempts,&nbsp;bargein,&nbsp;beep,&nbsp;choices,&nbsp;format,&nbsp;maxSilence,&nbsp;maxTime,&nbsp;method,&nbsp;minConfidence,&nbsp;name,&nbsp;password,&nbsp;required,&nbsp;say,&nbsp;timeout,&nbsp;transcription,&nbsp;url,&nbsp;username<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.record()<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/record.htm)<br>
 &nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"record":&nbsp;{<br>
@@ -252,7 +287,11 @@
 <font color="#000000" face="helvetica, arial"><a name="Redirect">class <strong>Redirect</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Deflects&nbsp;the&nbsp;call&nbsp;to&nbsp;a&nbsp;third&nbsp;party&nbsp;SIP&nbsp;address.&nbsp;This&nbsp;function&nbsp;must&nbsp;be&nbsp;called&nbsp;before&nbsp;the&nbsp;call&nbsp;is&nbsp;answered<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"redirect"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"redirect"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;to,&nbsp;a&nbsp;String<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;&nbsp;name,&nbsp;required<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.redirect()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/redirect.htm)<br>
 &nbsp;<br>
 {&nbsp;"redirect":&nbsp;{<br>
@@ -270,7 +309,11 @@
 <font color="#000000" face="helvetica, arial"><a name="Reject">class <strong>Reject</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Rejects&nbsp;the&nbsp;incoming&nbsp;call.<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"reject"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"reject"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.reject()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/reject.htm)<br>
 &nbsp;<br>
 {&nbsp;"reject":&nbsp;{&nbsp;}&nbsp;}<br>&nbsp;</tt></td></tr>
@@ -286,6 +329,7 @@
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Returned&nbsp;anytime&nbsp;a&nbsp;request&nbsp;is&nbsp;made&nbsp;to&nbsp;the&nbsp;<a href="#Tropo">Tropo</a>&nbsp;Web&nbsp;API.&nbsp;<br>
+Method:&nbsp;getValue&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/result.htm)<br>
 &nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;"result":&nbsp;{<br>
@@ -300,9 +344,7 @@
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Result-__init__"><strong>__init__</strong></a>(self, result_json)</dt></dl>
 
-<dl><dt><a name="Result-getValue"><strong>getValue</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="Result-initOld"><strong>initOld</strong></a>(self, result_json)</dt></dl>
+<dl><dt><a name="Result-getValue"><strong>getValue</strong></a>(self)</dt><dd><tt>Get&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;previously&nbsp;POSTed&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.</tt></dd></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -311,7 +353,11 @@
 <font color="#000000" face="helvetica, arial"><a name="Say">class <strong>Say</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Say">Say</a>&nbsp;can&nbsp;play&nbsp;text&nbsp;strings&nbsp;using&nbsp;TTS&nbsp;(text&nbsp;to&nbsp;speech)&nbsp;or&nbsp;play&nbsp;URL's&nbsp;as&nbsp;audio&nbsp;files.<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"say"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"say"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;message,&nbsp;a&nbsp;String,&nbsp;or&nbsp;a&nbsp;List&nbsp;of&nbsp;Strings<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;attempts,&nbsp;bargein,&nbsp;choices,&nbsp;minConfidence,&nbsp;name,&nbsp;recognizer,&nbsp;required,&nbsp;say,&nbsp;timeout,&nbsp;voice<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.say()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/say.htm)<br>
 &nbsp;<br>
 {&nbsp;"say":&nbsp;{<br>
@@ -344,7 +390,11 @@
 <font color="#000000" face="helvetica, arial"><a name="StartRecording">class <strong>StartRecording</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Allows&nbsp;<a href="#Tropo">Tropo</a>&nbsp;applications&nbsp;to&nbsp;begin&nbsp;recording&nbsp;the&nbsp;current&nbsp;session.&nbsp;<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"startRecording"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"startRecording"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;url,&nbsp;a&nbsp;String<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;format,&nbsp;method,&nbsp;username,&nbsp;password<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.startRecording()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/startrecording.htm)<br>
 &nbsp;<br>
 {&nbsp;"startRecording":&nbsp;{<br>
@@ -364,7 +414,11 @@
 <font color="#000000" face="helvetica, arial"><a name="StopRecording">class <strong>StopRecording</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Stops&nbsp;the&nbsp;recording&nbsp;of&nbsp;the&nbsp;current&nbsp;call&nbsp;after&nbsp;startCallRecording&nbsp;has&nbsp;been&nbsp;called.<br>
+<td colspan=2><tt>&nbsp;Class&nbsp;representing&nbsp;the&nbsp;"stopRecording"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"stopRecording"&nbsp;JSON&nbsp;object.<br>
+&nbsp;Class&nbsp;constructor&nbsp;arg:<br>
+&nbsp;Class&nbsp;constructor&nbsp;options:<br>
+&nbsp;Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.stopRecording()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/stoprecording.htm)<br>
 &nbsp;&nbsp;&nbsp;{&nbsp;"stopRecording":&nbsp;{&nbsp;}&nbsp;}<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
@@ -375,41 +429,39 @@
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="TestWebAPI">class <strong>TestWebAPI</strong></a>(<a href="unittest.html#TestCase">unittest.TestCase</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="TestTropoPython">class <strong>TestTropoPython</strong></a></font></td></tr>
     
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="tropo_web_api.html#TestWebAPI">TestWebAPI</a></dd>
-<dd><a href="unittest.html#TestCase">unittest.TestCase</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Methods defined here:<br>
-<dl><dt><a name="TestWebAPI-test_ask"><strong>test_ask</strong></a>(self)</dt></dl>
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Class&nbsp;implementing&nbsp;a&nbsp;set&nbsp;of&nbsp;unit&nbsp;tests&nbsp;for&nbsp;TropoPython.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="TestTropoPython-test_ask"><strong>test_ask</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"ask"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_call"><strong>test_call</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_call"><strong>test_call</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"call"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_conference"><strong>test_conference</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_conference"><strong>test_conference</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"conference"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_hangup"><strong>test_hangup</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_hangup"><strong>test_hangup</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"hangup"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_message"><strong>test_message</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_list_say"><strong>test_list_say</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"say"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method,&nbsp;when&nbsp;a&nbsp;list&nbsp;of&nbsp;Strings&nbsp;is&nbsp;passed&nbsp;to&nbsp;it.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_on"><strong>test_on</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_message"><strong>test_message</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"message"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_record"><strong>test_record</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_on"><strong>test_on</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"on"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_redirect"><strong>test_redirect</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_record"><strong>test_record</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"record"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_reject"><strong>test_reject</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_redirect"><strong>test_redirect</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"redirect"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_say"><strong>test_say</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_reject"><strong>test_reject</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"reject"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_startRecording"><strong>test_startRecording</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_say"><strong>test_say</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"say"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_stopRecording"><strong>test_stopRecording</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_startRecording"><strong>test_startRecording</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"startRecording"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
-<dl><dt><a name="TestWebAPI-test_transfer"><strong>test_transfer</strong></a>(self)</dt></dl>
+<dl><dt><a name="TestTropoPython-test_stopRecording"><strong>test_stopRecording</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"stopRecording"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
+
+<dl><dt><a name="TestTropoPython-test_transfer"><strong>test_transfer</strong></a>(self)</dt><dd><tt>Test&nbsp;the&nbsp;"transfer"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;class&nbsp;method.</tt></dd></dl>
 
 <hr>
 Data and other attributes defined here:<br>
@@ -423,136 +475,6 @@ Data and other attributes defined here:<br>
 
 <dl><dt><strong>TO</strong> = '8005551212'</dl>
 
-<hr>
-Methods inherited from <a href="unittest.html#TestCase">unittest.TestCase</a>:<br>
-<dl><dt><a name="TestWebAPI-__call__"><strong>__call__</strong></a>(self, *args, **kwds)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-__init__"><strong>__init__</strong></a>(self, methodName<font color="#909090">='runTest'</font>)</dt><dd><tt>Create&nbsp;an&nbsp;instance&nbsp;of&nbsp;the&nbsp;class&nbsp;that&nbsp;will&nbsp;use&nbsp;the&nbsp;named&nbsp;test<br>
-method&nbsp;when&nbsp;executed.&nbsp;Raises&nbsp;a&nbsp;ValueError&nbsp;if&nbsp;the&nbsp;instance&nbsp;does<br>
-not&nbsp;have&nbsp;a&nbsp;method&nbsp;with&nbsp;the&nbsp;specified&nbsp;name.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-__str__"><strong>__str__</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-assertAlmostEqual"><strong>assertAlmostEqual</strong></a> = failUnlessAlmostEqual(self, first, second, places<font color="#909090">=7</font>, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;their<br>
-difference&nbsp;rounded&nbsp;to&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places<br>
-(default&nbsp;7)&nbsp;and&nbsp;comparing&nbsp;to&nbsp;zero.<br>
-&nbsp;<br>
-Note&nbsp;that&nbsp;decimal&nbsp;places&nbsp;(from&nbsp;zero)&nbsp;are&nbsp;usually&nbsp;not&nbsp;the&nbsp;same<br>
-as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp;signficant&nbsp;digit).</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertAlmostEquals"><strong>assertAlmostEquals</strong></a> = failUnlessAlmostEqual(self, first, second, places<font color="#909090">=7</font>, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;their<br>
-difference&nbsp;rounded&nbsp;to&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places<br>
-(default&nbsp;7)&nbsp;and&nbsp;comparing&nbsp;to&nbsp;zero.<br>
-&nbsp;<br>
-Note&nbsp;that&nbsp;decimal&nbsp;places&nbsp;(from&nbsp;zero)&nbsp;are&nbsp;usually&nbsp;not&nbsp;the&nbsp;same<br>
-as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp;signficant&nbsp;digit).</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertEqual"><strong>assertEqual</strong></a> = failUnlessEqual(self, first, second, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
-operator.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertEquals"><strong>assertEquals</strong></a> = failUnlessEqual(self, first, second, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
-operator.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertFalse"><strong>assertFalse</strong></a> = failIf(self, expr, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;the&nbsp;test&nbsp;if&nbsp;the&nbsp;expression&nbsp;is&nbsp;true.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertNotAlmostEqual"><strong>assertNotAlmostEqual</strong></a> = failIfAlmostEqual(self, first, second, places<font color="#909090">=7</font>, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;their<br>
-difference&nbsp;rounded&nbsp;to&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places<br>
-(default&nbsp;7)&nbsp;and&nbsp;comparing&nbsp;to&nbsp;zero.<br>
-&nbsp;<br>
-Note&nbsp;that&nbsp;decimal&nbsp;places&nbsp;(from&nbsp;zero)&nbsp;are&nbsp;usually&nbsp;not&nbsp;the&nbsp;same<br>
-as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp;signficant&nbsp;digit).</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertNotAlmostEquals"><strong>assertNotAlmostEquals</strong></a> = failIfAlmostEqual(self, first, second, places<font color="#909090">=7</font>, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;their<br>
-difference&nbsp;rounded&nbsp;to&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places<br>
-(default&nbsp;7)&nbsp;and&nbsp;comparing&nbsp;to&nbsp;zero.<br>
-&nbsp;<br>
-Note&nbsp;that&nbsp;decimal&nbsp;places&nbsp;(from&nbsp;zero)&nbsp;are&nbsp;usually&nbsp;not&nbsp;the&nbsp;same<br>
-as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp;signficant&nbsp;digit).</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertNotEqual"><strong>assertNotEqual</strong></a> = failIfEqual(self, first, second, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
-operator.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertNotEquals"><strong>assertNotEquals</strong></a> = failIfEqual(self, first, second, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
-operator.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertRaises"><strong>assertRaises</strong></a> = failUnlessRaises(self, excClass, callableObj, *args, **kwargs)</dt><dd><tt>Fail&nbsp;unless&nbsp;an&nbsp;exception&nbsp;of&nbsp;class&nbsp;excClass&nbsp;is&nbsp;thrown<br>
-by&nbsp;callableObj&nbsp;when&nbsp;invoked&nbsp;with&nbsp;arguments&nbsp;args&nbsp;and&nbsp;keyword<br>
-arguments&nbsp;kwargs.&nbsp;If&nbsp;a&nbsp;different&nbsp;type&nbsp;of&nbsp;exception&nbsp;is<br>
-thrown,&nbsp;it&nbsp;will&nbsp;not&nbsp;be&nbsp;caught,&nbsp;and&nbsp;the&nbsp;test&nbsp;case&nbsp;will&nbsp;be<br>
-deemed&nbsp;to&nbsp;have&nbsp;suffered&nbsp;an&nbsp;error,&nbsp;exactly&nbsp;as&nbsp;for&nbsp;an<br>
-unexpected&nbsp;exception.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assertTrue"><strong>assertTrue</strong></a> = failUnless(self, expr, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;the&nbsp;test&nbsp;unless&nbsp;the&nbsp;expression&nbsp;is&nbsp;true.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-assert_"><strong>assert_</strong></a> = failUnless(self, expr, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;the&nbsp;test&nbsp;unless&nbsp;the&nbsp;expression&nbsp;is&nbsp;true.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-countTestCases"><strong>countTestCases</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-debug"><strong>debug</strong></a>(self)</dt><dd><tt>Run&nbsp;the&nbsp;test&nbsp;without&nbsp;collecting&nbsp;errors&nbsp;in&nbsp;a&nbsp;TestResult</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-defaultTestResult"><strong>defaultTestResult</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-fail"><strong>fail</strong></a>(self, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;immediately,&nbsp;with&nbsp;the&nbsp;given&nbsp;message.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failIf"><strong>failIf</strong></a>(self, expr, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;the&nbsp;test&nbsp;if&nbsp;the&nbsp;expression&nbsp;is&nbsp;true.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failIfAlmostEqual"><strong>failIfAlmostEqual</strong></a>(self, first, second, places<font color="#909090">=7</font>, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;their<br>
-difference&nbsp;rounded&nbsp;to&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places<br>
-(default&nbsp;7)&nbsp;and&nbsp;comparing&nbsp;to&nbsp;zero.<br>
-&nbsp;<br>
-Note&nbsp;that&nbsp;decimal&nbsp;places&nbsp;(from&nbsp;zero)&nbsp;are&nbsp;usually&nbsp;not&nbsp;the&nbsp;same<br>
-as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp;signficant&nbsp;digit).</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failIfEqual"><strong>failIfEqual</strong></a>(self, first, second, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
-operator.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failUnless"><strong>failUnless</strong></a>(self, expr, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;the&nbsp;test&nbsp;unless&nbsp;the&nbsp;expression&nbsp;is&nbsp;true.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failUnlessAlmostEqual"><strong>failUnlessAlmostEqual</strong></a>(self, first, second, places<font color="#909090">=7</font>, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;their<br>
-difference&nbsp;rounded&nbsp;to&nbsp;the&nbsp;given&nbsp;number&nbsp;of&nbsp;decimal&nbsp;places<br>
-(default&nbsp;7)&nbsp;and&nbsp;comparing&nbsp;to&nbsp;zero.<br>
-&nbsp;<br>
-Note&nbsp;that&nbsp;decimal&nbsp;places&nbsp;(from&nbsp;zero)&nbsp;are&nbsp;usually&nbsp;not&nbsp;the&nbsp;same<br>
-as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp;signficant&nbsp;digit).</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failUnlessEqual"><strong>failUnlessEqual</strong></a>(self, first, second, msg<font color="#909090">=None</font>)</dt><dd><tt>Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
-operator.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-failUnlessRaises"><strong>failUnlessRaises</strong></a>(self, excClass, callableObj, *args, **kwargs)</dt><dd><tt>Fail&nbsp;unless&nbsp;an&nbsp;exception&nbsp;of&nbsp;class&nbsp;excClass&nbsp;is&nbsp;thrown<br>
-by&nbsp;callableObj&nbsp;when&nbsp;invoked&nbsp;with&nbsp;arguments&nbsp;args&nbsp;and&nbsp;keyword<br>
-arguments&nbsp;kwargs.&nbsp;If&nbsp;a&nbsp;different&nbsp;type&nbsp;of&nbsp;exception&nbsp;is<br>
-thrown,&nbsp;it&nbsp;will&nbsp;not&nbsp;be&nbsp;caught,&nbsp;and&nbsp;the&nbsp;test&nbsp;case&nbsp;will&nbsp;be<br>
-deemed&nbsp;to&nbsp;have&nbsp;suffered&nbsp;an&nbsp;error,&nbsp;exactly&nbsp;as&nbsp;for&nbsp;an<br>
-unexpected&nbsp;exception.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-id"><strong>id</strong></a>(self)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-run"><strong>run</strong></a>(self, result<font color="#909090">=None</font>)</dt></dl>
-
-<dl><dt><a name="TestWebAPI-setUp"><strong>setUp</strong></a>(self)</dt><dd><tt>Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;the&nbsp;test&nbsp;fixture&nbsp;before&nbsp;exercising&nbsp;it.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-shortDescription"><strong>shortDescription</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;one-line&nbsp;description&nbsp;of&nbsp;the&nbsp;test,&nbsp;or&nbsp;None&nbsp;if&nbsp;no<br>
-description&nbsp;has&nbsp;been&nbsp;provided.<br>
-&nbsp;<br>
-The&nbsp;default&nbsp;implementation&nbsp;of&nbsp;this&nbsp;method&nbsp;returns&nbsp;the&nbsp;first&nbsp;line&nbsp;of<br>
-the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</tt></dd></dl>
-
-<dl><dt><a name="TestWebAPI-tearDown"><strong>tearDown</strong></a>(self)</dt><dd><tt>Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;test&nbsp;fixture&nbsp;after&nbsp;testing&nbsp;it.</tt></dd></dl>
-
-<hr>
-Data descriptors inherited from <a href="unittest.html#TestCase">unittest.TestCase</a>:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<hr>
-Data and other attributes inherited from <a href="unittest.html#TestCase">unittest.TestCase</a>:<br>
-<dl><dt><strong>failureException</strong> = &lt;type 'exceptions.AssertionError'&gt;<dd><tt>Assertion&nbsp;failed.</tt></dl>
-
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -560,7 +482,11 @@ Data and other attributes inherited from <a href="unittest.html#TestCase">unitte
 <font color="#000000" face="helvetica, arial"><a name="Transfer">class <strong>Transfer</strong></a></font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Transfers&nbsp;an&nbsp;already&nbsp;answered&nbsp;call&nbsp;to&nbsp;another&nbsp;destination&nbsp;/&nbsp;phone&nbsp;numbe<br>
+<td colspan=2><tt>Class&nbsp;representing&nbsp;the&nbsp;"transfer"&nbsp;<a href="#Tropo">Tropo</a>&nbsp;action.&nbsp;Builds&nbsp;a&nbsp;"transfer"&nbsp;JSON&nbsp;object.<br>
+Class&nbsp;constructor&nbsp;arg:&nbsp;to,&nbsp;a&nbsp;String,&nbsp;or&nbsp;List<br>
+Class&nbsp;constructor&nbsp;options:&nbsp;answerOnMedia,&nbsp;choices,&nbsp;from,&nbsp;name,&nbsp;required,&nbsp;terminator<br>
+Convenience&nbsp;function:&nbsp;<a href="#Tropo">Tropo</a>.transfer()<br>
+&nbsp;<br>
 (See&nbsp;https://www.tropo.com/docs/webapi/transfer.htm)<br>
 {&nbsp;"transfer":&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;"to":&nbsp;String&nbsp;or&nbsp;Array,#Required<br>
@@ -583,10 +509,14 @@ Data and other attributes inherited from <a href="unittest.html#TestCase">unitte
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>This&nbsp;is&nbsp;the&nbsp;top&nbsp;level&nbsp;class&nbsp;for&nbsp;all&nbsp;the&nbsp;<a href="#Tropo">Tropo</a>&nbsp;web&nbsp;api&nbsp;actions.<br>
+The&nbsp;methods&nbsp;of&nbsp;this&nbsp;class&nbsp;implement&nbsp;individual&nbsp;<a href="#Tropo">Tropo</a>&nbsp;actions.<br>
 Individual&nbsp;actions&nbsp;are&nbsp;each&nbsp;methods&nbsp;on&nbsp;this&nbsp;class.<br>
 &nbsp;<br>
-They&nbsp;each&nbsp;take&nbsp;one&nbsp;or&nbsp;more&nbsp;required&nbsp;arguments,&nbsp;followed&nbsp;by&nbsp;optional<br>
-arguments&nbsp;expressed&nbsp;as&nbsp;key=value&nbsp;pairs.<br>&nbsp;</tt></td></tr>
+Each&nbsp;method&nbsp;takes&nbsp;one&nbsp;or&nbsp;more&nbsp;required&nbsp;arguments,&nbsp;followed&nbsp;by&nbsp;optional<br>
+arguments&nbsp;expressed&nbsp;as&nbsp;key=value&nbsp;pairs.<br>
+&nbsp;<br>
+The&nbsp;optional&nbsp;arguments&nbsp;for&nbsp;these&nbsp;methods&nbsp;are&nbsp;described&nbsp;here:<br>
+https://www.tropo.com/docs/webapi/<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
 <dl><dt><a name="Tropo-PrettyJson"><strong>PrettyJson</strong></a>(self)</dt><dd><tt>Render&nbsp;a&nbsp;<a href="#Tropo">Tropo</a>&nbsp;object&nbsp;into&nbsp;a&nbsp;Json&nbsp;string,&nbsp;pretty-printed&nbsp;with&nbsp;indents.</tt></dd></dl>
@@ -611,7 +541,7 @@ Argument:&nbsp;"id"&nbsp;is&nbsp;a&nbsp;String<br>
 Argument:&nbsp;**options&nbsp;is&nbsp;a&nbsp;set&nbsp;of&nbsp;optional&nbsp;keyword&nbsp;arguments.<br>
 See&nbsp;https://www.tropo.com/docs/webapi/conference.htm</tt></dd></dl>
 
-<dl><dt><a name="Tropo-hangup"><strong>hangup</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;instructs&nbsp;<a href="#Tropo">Tropo</a>&nbsp;to&nbsp;"hang-up"&nbsp;or&nbsp;disconnect&nbsp;the&nbsp;session&nbsp;associated&nbsp;with&nbsp;the&nbsp;current&nbsp;session.<br>
+<dl><dt><a name="Tropo-hangup"><strong>hangup</strong></a>(self)</dt><dd><tt>This&nbsp;method&nbsp;instructs&nbsp;<a href="#Tropo">Tropo</a>&nbsp;to&nbsp;"hang-up"&nbsp;or&nbsp;disconnect&nbsp;the&nbsp;session&nbsp;associated&nbsp;with&nbsp;the&nbsp;current&nbsp;session.<br>
 See&nbsp;https://www.tropo.com/docs/webapi/hangup.htm</tt></dd></dl>
 
 <dl><dt><a name="Tropo-message"><strong>message</strong></a>(self, say_obj, to, **options)</dt><dd><tt>A&nbsp;shortcut&nbsp;method&nbsp;to&nbsp;create&nbsp;a&nbsp;session,&nbsp;say&nbsp;something,&nbsp;and&nbsp;hang&nbsp;up,&nbsp;all&nbsp;in&nbsp;one&nbsp;step.&nbsp;This&nbsp;is&nbsp;particularly&nbsp;useful&nbsp;for&nbsp;sending&nbsp;out&nbsp;a&nbsp;quick&nbsp;SMS&nbsp;or&nbsp;IM.&nbsp;<br>
