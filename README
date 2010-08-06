@@ -27,6 +27,11 @@ DESCRIPTION
                   attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
         ...
 
+TESTS
+
+	Run testsuite by issuing:
+	python ./tropo_web_api.py
+
 CLASSES
     Ask
     Call

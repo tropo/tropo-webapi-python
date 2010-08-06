@@ -1,3 +1,8 @@
+"""
+This script is intended to be used with Google Appengine. It contains
+a number of demos that illustrate the TropoPython API.
+"""
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 import cgi
@@ -296,14 +301,6 @@ def main():
     application = webapp.WSGIApplication([('/', MainHandler),
                                           ('/hello_tropo.py', TropoDemo),
 #                                          ('/hello_tropo.py', CallWorld),
-#                                          ('/hello_tropo.py', RecordWorld),
-#                                          ('/hello_tropo.py', ExerciseAll),
-#                                          ('/hello_tropo.py', ReceiveRecording),
-#                                          ('/hello_tropo.py', HelloWorld1),
-#                                          ('/hello_tropo.py', RecordMess),
-#                                          ('/hello_tropo.py', QuickMessage),
-#                                          ('/get_zip_code.py', GetZipCode),
-#                                          ('/record.py', RecordMess),
                                           ('/weather.py', Weather),
                                           ('/receive_recording.py', ReceiveRecording),
                                           ('/demo_continue.py', TropoDemoContinue),
