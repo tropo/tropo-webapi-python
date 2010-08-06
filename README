@@ -3,7 +3,7 @@ Overview
 
 TropoPython is a set of Python classes for working with [Tropo's cloud communication service](http://tropo.com/). Tropo allows a developer to create applications that run over the phone, IM, SMS, and Twitter using web technologies. This library communicates with Tropo over JSON.
 
-See the documentation at http://egilchri1.appspot.com/doc/tropo_web_api.html
+See the documentation at < href="http://egilchri1.appspot.com/doc/tropo_web_api.htm">Doc</a>
 
 Usage
 =====
