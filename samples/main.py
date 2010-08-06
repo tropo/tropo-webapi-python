@@ -1,19 +1,3 @@
-#!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 import cgi
@@ -33,7 +17,7 @@ def HelloWorld(handler, tropo):
     """
     This is the traditional "Hello, World" function. The idiom is used throughout the API. We consturct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
     """
-    tropo.say ("Hello, World")
+    tropo.say (["Hello, World", "How ya doing?"])
     json = tropo.RenderJson()
     logging.info ("HelloWorld json: %s" % json)
     handler.response.out.write(json)
@@ -120,9 +104,7 @@ def TransferDemo(handler, tropo):
 
 
 def CallDemo(handler, tropo):
-    tropo.say ("One moment please.")
     tropo.call(THEIR_PHONE)
-    tropo.say ("May I help you?")
     json = tropo.RenderJson()
     logging.info ("CallDemo json: %s " % json)
     handler.response.out.write(json)
@@ -297,7 +279,7 @@ class ReceiveRecording(webapp.RequestHandler):
 class CallWorld(webapp.RequestHandler):
     def post(self):
         tropo = tropo_web_api.Tropo()
-        tropo.call("tel:+16039570051", channel='TEXT', network='SMS', answerOnMedia='True')
+        tropo.call(MY_PHONE, channel='TEXT', network='SMS', answerOnMedia='True')
         tropo.say ("Wish you were here")
         json = tropo.RenderJson()
         logging.info ("Json result: %s " % json)
