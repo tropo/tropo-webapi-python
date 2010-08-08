@@ -448,21 +448,15 @@ class Result(object):
             "sessionId": String,
             "state": String } }
     """
+    options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state']
 
     def __init__(self, result_json):
         logging.info ("result POST data: %s" % result_json)
         result_data = jsonlib.loads(result_json)
         result_dict = result_data['result']
 
-        options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state']
-        self._actions = result_dict['actions']
-        self._complete = result_dict['complete']
-        self._error = result_dict['error']
-        self._actions = result_dict['actions']
-        self._sequence = result_dict['sequence']
-        self._sessionDuration = result_dict['sessionDuration']
-        self._sessionId = result_dict['sessionId']
-        self._state = result_dict['state']
+        for opt in self.options_array:
+            setattr(self, '_%s' % opt, result_dict[opt])
 
     def getValue(self):
         """
