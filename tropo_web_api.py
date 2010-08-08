@@ -486,10 +486,7 @@ class Session(object):
         for key in session_dict:
             val = session_dict[key]
             logging.info ("key: %s val: %s" % (key, val))
-
-        for key in session_dict:
-            val = session_dict[key]
-            self.key = val
+            setattr(self, key, val)
 
 
 class Tropo(object):
