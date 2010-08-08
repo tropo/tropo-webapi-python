@@ -64,22 +64,18 @@ class Ask(object):
             "voice": String } } 
 
     """
-    def __init__(self, choices, **options):
+    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice']
 
+    def __init__(self, choices, **options):
         dict = {}
-        options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice']
-        
         if (isinstance(choices, str)):
-            choices1 = Choices(choices).json
-            dict['choices'] = choices1
+            dict['choices'] = Choices(choices).json
         else:
             dict['choices'] = choices['choices']
-        for opt in options_array:
+        for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], str))):
-                    say_obj = options['say']
-                    say_obj1 = Say(say_obj).json
-                    dict['say'] = say_obj1
+                    dict['say'] = Say(options['say']).json
                 else:
                     dict[opt] = options[opt]
         self.obj = {'ask' : dict}
@@ -106,11 +102,11 @@ class Call(object):
         "required": Boolean,
         "timeout": Float } } 
     """
+    options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
+
     def __init__(self, to, **options):
-        dict = {}
-        dict['to'] = to
-        options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
-        for opt in options_array:
+        dict = {'to': to}
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'call' : dict}
@@ -123,19 +119,15 @@ class Choices(object):
 
     (See https://www.tropo.com/docs/webapi/ask.htm)
     """
-    def __init__(self, value, **options):
-        dict = {}
-        options_array = ['terminator', 'mode']
+    options_array = ['terminator', 'mode']
 
-        for opt in options_array:
+    def __init__(self, value, **options):
+        dict = {'value': value}
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
-
-        dict['value'] = value
-
         self.obj = {'choices': dict}
         self.json = dict
-
 
 class Conference(object):
     """
@@ -154,14 +146,11 @@ class Conference(object):
         "required": Boolean,
         "terminator": String } } 
     """
+    options_array = ['mute', 'name', 'playTones', 'required', 'terminator']
 
     def __init__(self, id, **options):
-        dict = {}
-
-        dict['id'] = id
-        options_array = ['mute', 'name', 'playTones', 'required', 'terminator']
-
-        for opt in options_array:
+        dict = {'id': id}
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'conference' : dict}
@@ -204,19 +193,11 @@ class Message(object):
             "timeout": Float,
             "voice": String } } 
     """
+    options_array = ['answerOnMedia', 'channel', 'from', 'name', 'network', 'required', 'timeout', 'voice']
+
     def __init__(self, say_obj, to, **options):
-
-        dict = {}
-
-        # say_obj = Say(message).obj
-        say_payload = say_obj['say']
-        dict['say'] = say_payload
-        dict['to'] = to
-
-        options_array = ['answerOnMedia', 'channel', 'from', 'name', 'network', 'required', 'timeout', 'voice']
-
-        logging.info ("options: %s" % options)
-        for opt in options_array:
+        dict = {'say': say_obj['say'], 'to': to}
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'message' : dict}
@@ -238,22 +219,18 @@ class On(object):
         "required": Boolean,
         "say": Object } } 
     """
+    options_array = ['name','next','required','say']
+
     def __init__(self, event, **options):
-        dict = {}
-        dict['event'] = event
-        options_array = ['name','next','required','say']
-        for opt in options_array:
+        dict = {'event': event}
+        for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], str))):
-                    say_obj = options['say']
-                    say_obj1 = Say(say_obj).json
-                    dict['say'] = say_obj1
+                    dict['say'] = Say(options['say']).json
                 else:
                     dict[opt] = options[opt]
-
         self.obj = {'on' : dict}
         self.json = dict
-
 
 class Record(object):
     """
@@ -261,8 +238,6 @@ class Record(object):
     Class constructor arg: 
     Class constructor options: attempts, bargein, beep, choices, format, maxSilence, maxTime, method, minConfidence, name, password, required, say, timeout, transcription, url, username
     Convenience function: Tropo.record()
-
-
 
     (See https://www.tropo.com/docs/webapi/record.htm)
 
@@ -285,21 +260,18 @@ class Record(object):
             "url": String,#Required ?????
             "username": String } } 
     """
+    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username']
 
     def __init__(self, **options):
         dict = {}
-        options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username']
-        for opt in options_array:
+        for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], str))):
-                    say_obj = options['say']
-                    say_obj1 = Say(say_obj).json
-                    dict['say'] = say_obj1
+                    dict['say'] = Say(options['say']).json
                 else:
                     dict[opt] = options[opt]
         self.obj = {'record' : dict}
         self.json = dict
-
 
 class Redirect(object):
     """
@@ -315,18 +287,15 @@ class Redirect(object):
         "name": String,
         "required": Boolean } } 
     """
+    options_array = ['name', 'required']
+
     def __init__(self, to, **options):
-        dict = {}
-        dict['to'] = to
-
-        options_array = ['name', 'required']
-
-        for opt in options_array:
+        dict = {'to': to}
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'redirect' : dict}
         self.json = dict
-
 
 class Reject(object):
     """
@@ -342,10 +311,10 @@ class Reject(object):
     def __init__(self):
         dict = {}
         self.obj = {'reject' : dict}
+        self.json = dict
 
 
 class Result(object):
-
     """
     Returned anytime a request is made to the Tropo Web API. 
     Method: getValue 
@@ -360,7 +329,7 @@ class Result(object):
             "sessionId": String,
             "state": String } }
     """ 
-            
+
     def __init__(self, result_json):
         logging.info ("result POST data: %s" % result_json)
         result_data = jsonlib.loads(result_json)
@@ -408,15 +377,15 @@ class Say(object):
         "value": String #Required
         } } 
     """
+    options_array = ['as', 'name', 'required']
+
     def __init__(self, message, **options):
         dict = {}
-        options_array = ['as', 'name', 'required']
-        for opt in options_array:
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
         if (isinstance (message, list)):
             lis = []
-
             for mess in message:
                 new_dict = dict.copy()
                 new_dict['value'] = mess
@@ -464,12 +433,11 @@ class StartRecording(object):
         "username": String,
         "password": String } } 
     """
-    def __init__(self, url, **options):
-        dict = {}
-        dict['url'] = url
-        options_array = ['format', 'method', 'username', 'password']
+    options_array = ['format', 'method', 'username', 'password']
 
-        for opt in options_array:
+    def __init__(self, url, **options):
+        dict = {'url': url}
+        for opt in self.options_array:
             if opt in options:
                 dict[opt] = options[opt]
         self.obj = {'startRecording' : dict}
@@ -508,13 +476,11 @@ class Transfer(object):
         "terminator": String,
         "timeout": Float } } 
     """
+    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator']
+
     def __init__(self, to, **options):
-        dict = {}
-        dict['to'] = to
-
-        options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator']
-
-        for opt in options_array:
+        dict = {'to': to}
+        for opt in self.options_array:
             if opt in options:
                 if (opt == 'from'):
                     dict['from'] = options['from']
@@ -534,13 +500,12 @@ class Tropo(object):
 
       Each method takes one or more required arguments, followed by optional
       arguments expressed as key=value pairs.
-      
+
       The optional arguments for these methods are described here:
       https://www.tropo.com/docs/webapi/
     """
     def  __init__(self):
         self._steps = []
-
 
     def ask(self, choices, **options):
         """
@@ -557,7 +522,7 @@ class Tropo(object):
     def call (self, to, **options):
         """
 	 Places a call or sends an an IM, Twitter, or SMS message. To start a call, use the Session API to tell Tropo to launch your code. 
-	 
+
 	 Arguments: to is a String.
 	 Argument: **options is a set of optional keyword arguments.
 	 See https://www.tropo.com/docs/webapi/call.htm
@@ -597,7 +562,7 @@ class Tropo(object):
     def message (self, say_obj, to, **options):
         """
 	A shortcut method to create a session, say something, and hang up, all in one step. This is particularly useful for sending out a quick SMS or IM. 
-	
+
  	Argument: "say_obj" is a Say object
         Argument: "to" is a String
         Argument: **options is a set of optional keyword arguments.
@@ -613,7 +578,6 @@ class Tropo(object):
 #        steps.append({'message' : piece})
         steps.append(piece)
         self._steps = steps
-
 
     def on(self, event, **options):
         """
@@ -641,7 +605,6 @@ class Tropo(object):
         piece = record_obj.obj
         steps.append(piece)
         self._steps = steps
-
 
     def redirect(self, id, **options):
         """
