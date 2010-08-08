@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 from itty import *
-from tropo_web_api import Tropo
+from tropo_web_api import Tropo, Session
 
 @post('/index.json')
 def index(request):
+    s = Session(request.body)
     t = Tropo()
     t.say(['hello workd!', 'how are you doing?'])
     return t.RenderJson()
