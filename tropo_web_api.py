@@ -24,12 +24,22 @@ as "say". In some cases, you'll want to build a class object directly such as in
     ...
 
 """
-from django.utils import simplejson
-import cgi
-import logging
-import pprint
-import unittest 
 
+try:
+    import cjson as jsonlib
+    jsonlib.dumps = jsonlib.encode
+    jsonlib.loads = jsonlib.decode
+except ImportError:
+    try:
+        from django.utils import simplejson as jsonlib
+    except ImportError:
+        try:
+            import simplejson as jsonlib
+        except ImportError:
+            import json as jsonlib
+
+import logging
+import unittest 
 
 
 class Ask():
@@ -354,7 +364,7 @@ class Result():
             
     def __init__(self, result_json):
         logging.info ("result POST data: %s" % result_json)
-        result_data = simplejson.loads(result_json)
+        result_data = jsonlib.loads(result_json)
         result_dict = result_data['result']
 
         options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state']
@@ -427,7 +437,7 @@ class Session():
     """
     def __init__(self, session_json):
         logging.info ("POST data: %s" % session_json)
-        session_data = simplejson.loads(session_json)
+        session_data = jsonlib.loads(session_json)
         session_dict = session_data['session']
         for key in session_dict:
             val = session_dict[key]
@@ -721,7 +731,7 @@ class Tropo():
         topdict['tropo'] = steps
         logging.info ("topdict: %s" % topdict)
         # {"tropo": [{"say": "Hello World"}]}
-        json = simplejson.dumps(topdict)
+        json = jsonlib.dumps(topdict)
         return json
 
     def PrettyJson(self):
@@ -729,8 +739,11 @@ class Tropo():
         Render a Tropo object into a Json string, pretty-printed with indents.
         """
         json = self.RenderJson()
-        l = simplejson.loads(json)
-        pretty = simplejson.dumps(l, indent=4, sort_keys=False)
+        l = jsonlib.loads(json)
+        try:
+            pretty = jsonlib.dumps(l, indent=4, sort_keys=False)
+        except TypeError:
+            pretty = jsonlib.dumps(l)
         return pretty
 
 
@@ -758,9 +771,9 @@ class TestTropoPython(unittest.TestCase):
         pretty_rendered = tropo.PrettyJson()
         print "===============test_ask================="
         print "render json: %s" % pretty_rendered
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"ask": {"say": {"value": "Please enter a 5 digit zip code"}, "choices": {"value": "[5 digits]"}}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         # print "test_ask: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
 
@@ -777,9 +790,9 @@ class TestTropoPython(unittest.TestCase):
         print ("============test_call=============")
         print "render json: %s" % pretty_rendered
 
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"call": {"to": "%s", "network": "SMS", "channel": "TEXT"}}, {"say": {"value": "Wish you were here"}}]}' % self.MY_PHONE
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         # print "test_call: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
 
@@ -797,10 +810,10 @@ class TestTropoPython(unittest.TestCase):
         print "===============test_conference================="
         print "render json: %s" % pretty_rendered
 
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"conference": {"playTones": true, "mute": false, "name": "Staff Meeting", "id": "foo", "terminator": "#"}}]}'
         print "wanted_json: %s" % wanted_json
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         # print "test_conference: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
 
@@ -817,9 +830,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_hangup: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"hangup": {}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
     def test_message(self):
@@ -835,9 +848,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_message: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = ' {"tropo": [{"message": {"to": "%s", "say": {"value": "Hello World"}, "network": "SMS", "timeout": 5, "channel": "TEXT"}}]}' % self.MY_PHONE
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
     def test_on(self):
@@ -856,9 +869,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_on: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = ' {"tropo": [{"on": {"say": {"value": "Please hold."}, "event": "continue", "next": "/weather.py?uri=end"}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
 
@@ -879,9 +892,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_record: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = ' {"tropo": [{"record": {"url": "/receive_recording.py", "say": {"value": "Tell us about yourself"}, "choices": {"terminator": "#", "value": ""}}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
     def test_redirect(self):
@@ -897,9 +910,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         print "Wanted_Json %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"redirect": {"to": "%s"}}]}' % self.MY_PHONE
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         # print "test_redirect: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
 
@@ -917,9 +930,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         print "Want %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"reject": {}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         # print "test_reject: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
 
@@ -937,9 +950,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_say: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
     def test_list_say(self):
@@ -955,9 +968,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_say: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"say": [{"value": "Hello, World"}, {"value": "How ya doing?"}]}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
 
@@ -974,9 +987,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_startRecording: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"startRecording": {"url": "/receive_recording.py"}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
         
 
@@ -993,9 +1006,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_stopRecording: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = ' {"tropo": [{"stopRecording": {}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
 
@@ -1014,9 +1027,9 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         # print "test_transfer: %s" % tropo.RenderJson()
-        rendered_obj = simplejson.loads(rendered)
+        rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"say": {"value": "One moment please."}}, {"transfer": {"to": "6021234567"}}, {"say": {"value": "Hi. I am a robot"}}]}'
-        wanted_obj = simplejson.loads(wanted_json)
+        wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
 
