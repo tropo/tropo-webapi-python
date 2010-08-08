@@ -510,11 +510,7 @@ class Tropo(object):
          Arguments: "choices" is a Choices object
          See https://www.tropo.com/docs/webapi/ask.htm
         """
-        steps = self._steps
-        ask_obj = Ask(choices, **options)
-        piece = ask_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Ask(choices, **options).obj)
 
     def call (self, to, **options):
         """
@@ -524,12 +520,7 @@ class Tropo(object):
 	 Argument: **options is a set of optional keyword arguments.
 	 See https://www.tropo.com/docs/webapi/call.htm
         """
-        steps = self._steps
-        call_obj = Call (to, **options)
-        piece = call_obj.obj
-#        steps.append({'message' : piece})
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Call (to, **options).obj)
 
     def conference(self, id, **options):
         """
@@ -539,22 +530,14 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
 	See https://www.tropo.com/docs/webapi/conference.htm
         """
-        steps = self._steps
-        conference_obj = Conference(id, **options)
-        piece = conference_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Conference(id, **options).obj)
 
     def hangup(self):
         """
         This method instructs Tropo to "hang-up" or disconnect the session associated with the current session.
 	See https://www.tropo.com/docs/webapi/hangup.htm
         """
-        steps = self._steps
-        hangup_obj = Hangup()
-        piece = hangup_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Hangup().obj)
 
     def message (self, say_obj, to, **options):
         """
@@ -565,16 +548,11 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/message.htm
         """
-        steps = self._steps
         if isinstance(say_obj, str):
-           say_obj1 = Say(say_obj).obj
-           message_obj = Message(say_obj1, to, **options)
+            say = Say(say_obj).obj
         else:
-           message_obj = Message(say_obj, to, **options)
-        piece = message_obj.obj
-#        steps.append({'message' : piece})
-        steps.append(piece)
-        self._steps = steps
+            say = say_obj
+        self._steps.append(Message(say, to, **options).obj)
 
     def on(self, event, **options):
         """
@@ -584,12 +562,7 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/on.htm
         """
-        on_obj = On(event, **options)
-        steps = self._steps
-        piece = on_obj.obj
-#        steps.append({'on' : piece})
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(On(event, **options).obj)
 
     def record(self, **options):
         """
@@ -597,11 +570,7 @@ class Tropo(object):
          Argument: **options is a set of optional keyword arguments.
 	 See https://www.tropo.com/docs/webapi/record.htm
         """
-        steps = self._steps
-        record_obj = Record(**options)
-        piece = record_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Record(**options).obj)
 
     def redirect(self, id, **options):
         """
@@ -610,24 +579,15 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/redirect.htm
         """
-        steps = self._steps
-        redirect_obj = Redirect(id, **options)
-        piece = redirect_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Redirect(id, **options).obj)
 
     def reject(self):
         """
         Allows Tropo applications to reject incoming sessions before they are answered. 
         See https://www.tropo.com/docs/webapi/reject.htm
         """
-        steps = self._steps
-        reject_obj = Reject()
-        piece = reject_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Reject().obj)
 
-# ??? say may take an array of values
     def say(self, message, **options):
         """
 	When the current session is a voice channel this key will either play a message or an audio file from a URL. 
@@ -636,13 +596,7 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/say.htm
         """
-        steps = self._steps
-        say_obj = Say(message, **options)
-        piece = say_obj.obj
-#        steps.append({'say' : piece})
-        steps.append(piece)
-        self._steps = steps
-        return say_obj.json
+        self._steps.append(Say(message, **options).obj)
 
     def startRecording(self, url, **options):
         """
@@ -651,22 +605,14 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/startrecording.htm
         """
-        steps = self._steps
-        startRecording_obj = StartRecording(url, **options)
-        piece = startRecording_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(StartRecording(url, **options).obj)
 
     def stopRecording(self):
         """
         Stops a previously started recording.
 	See https://www.tropo.com/docs/webapi/stoprecording.htm
         """
-        steps = self._steps
-        stopRecording_obj = StopRecording()
-        piece = stopRecording_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(StopRecording().obj)
 
     def transfer(self, to, **options):
         """
@@ -675,11 +621,7 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/transfer.htm
         """
-        steps = self._steps
-        transfer_obj = Transfer(to, **options)
-        piece = transfer_obj.obj
-        steps.append(piece)
-        self._steps = steps
+        self._steps.append(Transfer(to, **options).obj)
 
     def RenderJson(self, pretty=False):
         """
