@@ -41,7 +41,20 @@ except ImportError:
 import logging
 
 
-class Ask(object):
+class TropoAction(object):
+    """
+    Class representing the base Tropo action.
+    Two properties are provided in order to avoid defining the same attributes for every action.
+    """
+    @property
+    def json(self):
+        return self._dict
+
+    @property
+    def obj(self):
+        return {self.action: self._dict}
+
+class Ask(TropoAction):
     """
     Class representing the "ask" Tropo action. Builds an "ask" JSON object.
     Class constructor arg: choices, a Choices object
@@ -64,24 +77,23 @@ class Ask(object):
             "voice": String } } 
 
     """
+    action = 'ask'
     options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice']
 
     def __init__(self, choices, **options):
-        dict = {}
+        self._dict = {}
         if (isinstance(choices, str)):
-            dict['choices'] = Choices(choices).json
+            self._dict['choices'] = Choices(choices).json
         else:
-            dict['choices'] = choices['choices']
+            self._dict['choices'] = choices['choices']
         for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], str))):
-                    dict['say'] = Say(options['say']).json
+                    self._dict['say'] = Say(options['say']).json
                 else:
-                    dict[opt] = options[opt]
-        self.obj = {'ask' : dict}
-        self.json = dict
+                    self._dict[opt] = options[opt]
 
-class Call(object):
+class Call(TropoAction):
     """
     Class representing the "call" Tropo action. Builds a "call" JSON object.
     Class constructor arg: to, a String
@@ -102,34 +114,32 @@ class Call(object):
         "required": Boolean,
         "timeout": Float } } 
     """
+    action = 'call'
     options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
 
     def __init__(self, to, **options):
-        dict = {'to': to}
+        self._dict = {'to': to}
         for opt in self.options_array:
             if opt in options:
-                dict[opt] = options[opt]
-        self.obj = {'call' : dict}
-        self.json = dict
+                self._dict[opt] = options[opt]
 
-class Choices(object):
+class Choices(TropoAction):
     """
     Class representing choice made by a user. Builds a "choices" JSON object.
     Class constructor options: terminator, mode
 
     (See https://www.tropo.com/docs/webapi/ask.htm)
     """
+    action = 'choices'
     options_array = ['terminator', 'mode']
 
     def __init__(self, value, **options):
-        dict = {'value': value}
+        self._dict = {'value': value}
         for opt in self.options_array:
             if opt in options:
-                dict[opt] = options[opt]
-        self.obj = {'choices': dict}
-        self.json = dict
+                self._dict[opt] = options[opt]
 
-class Conference(object):
+class Conference(TropoAction):
     """
     Class representing the "conference" Tropo action. Builds a "conference" JSON object.
     Class constructor arg: id, a String
@@ -146,17 +156,16 @@ class Conference(object):
         "required": Boolean,
         "terminator": String } } 
     """
+    action = 'conference'
     options_array = ['mute', 'name', 'playTones', 'required', 'terminator']
 
     def __init__(self, id, **options):
-        dict = {'id': id}
+        self._dict = {'id': id}
         for opt in self.options_array:
             if opt in options:
-                dict[opt] = options[opt]
-        self.obj = {'conference' : dict}
-        self.json = dict
+                self._dict[opt] = options[opt]
 
-class Hangup(object):
+class Hangup(TropoAction):
     """
     Class representing the "hangup" Tropo action. Builds a "hangup" JSON object.
     Class constructor arg: 
@@ -167,12 +176,12 @@ class Hangup(object):
 
     { "hangup": { } } 
     """
-    def __init__(self):
-        dict = {}
-        self.obj = {'hangup' : dict}
-        self.json = dict
+    action = 'hangup'
 
-class Message(object):
+    def __init__(self):
+        self._dict = {}
+
+class Message(TropoAction):
     """
     Class representing the "message" Tropo action. Builds a "message" JSON object.
     Class constructor arg: say_obj, a Say object
@@ -193,17 +202,16 @@ class Message(object):
             "timeout": Float,
             "voice": String } } 
     """
+    action = 'message'
     options_array = ['answerOnMedia', 'channel', 'from', 'name', 'network', 'required', 'timeout', 'voice']
 
     def __init__(self, say_obj, to, **options):
-        dict = {'say': say_obj['say'], 'to': to}
+        self._dict = {'say': say_obj['say'], 'to': to}
         for opt in self.options_array:
             if opt in options:
-                dict[opt] = options[opt]
-        self.obj = {'message' : dict}
-        self.json = dict
+                self._dict[opt] = options[opt]
 
-class On(object):
+class On(TropoAction):
     """
     Class representing the "on" Tropo action. Builds an "on" JSON object.
     Class constructor arg: event, a String
@@ -219,20 +227,19 @@ class On(object):
         "required": Boolean,
         "say": Object } } 
     """
+    action = 'on'
     options_array = ['name','next','required','say']
 
     def __init__(self, event, **options):
-        dict = {'event': event}
+        self._dict = {'event': event}
         for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], str))):
-                    dict['say'] = Say(options['say']).json
+                    self._dict['say'] = Say(options['say']).json
                 else:
-                    dict[opt] = options[opt]
-        self.obj = {'on' : dict}
-        self.json = dict
+                    self._dict[opt] = options[opt]
 
-class Record(object):
+class Record(TropoAction):
     """
     Class representing the "record" Tropo action. Builds a "record" JSON object.
     Class constructor arg: 
@@ -260,20 +267,19 @@ class Record(object):
             "url": String,#Required ?????
             "username": String } } 
     """
+    action = 'record'
     options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username']
 
     def __init__(self, **options):
-        dict = {}
+        self._dict = {}
         for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], str))):
-                    dict['say'] = Say(options['say']).json
+                    self._dict['say'] = Say(options['say']).json
                 else:
-                    dict[opt] = options[opt]
-        self.obj = {'record' : dict}
-        self.json = dict
+                    self._dict[opt] = options[opt]
 
-class Redirect(object):
+class Redirect(TropoAction):
     """
     Class representing the "redirect" Tropo action. Builds a "redirect" JSON object.
     Class constructor arg: to, a String
@@ -287,17 +293,16 @@ class Redirect(object):
         "name": String,
         "required": Boolean } } 
     """
+    action = 'redirect'
     options_array = ['name', 'required']
 
     def __init__(self, to, **options):
-        dict = {'to': to}
+        self._dict = {'to': to}
         for opt in self.options_array:
             if opt in options:
-                dict[opt] = options[opt]
-        self.obj = {'redirect' : dict}
-        self.json = dict
+                self._dict[opt] = options[opt]
 
-class Reject(object):
+class Reject(TropoAction):
     """
     Class representing the "reject" Tropo action. Builds a "reject" JSON object.
     Class constructor arg: 
@@ -308,16 +313,130 @@ class Reject(object):
 
     { "reject": { } } 
     """
+    action = 'reject'
+
     def __init__(self):
+        self._dict = {}
+
+class Say(TropoAction):
+    """
+    Class representing the "say" Tropo action. Builds a "say" JSON object.
+    Class constructor arg: message, a String, or a List of Strings
+    Class constructor options: attempts, bargein, choices, minConfidence, name, recognizer, required, say, timeout, voice
+    Convenience function: Tropo.say()
+
+    (See https://www.tropo.com/docs/webapi/say.htm)
+
+    { "say": {
+        "as": String,
+        "name": String,
+        "required": Boolean,
+        "value": String #Required
+        } } 
+    """
+    action = 'say'
+    options_array = ['as', 'name', 'required']
+
+    def __init__(self, message, **options):
         dict = {}
-        self.obj = {'reject' : dict}
-        self.json = dict
+        for opt in self.options_array:
+            if opt in options:
+                dict[opt] = options[opt]
+        self._list = []
+        if (isinstance (message, list)):
+            for mess in message:
+                new_dict = dict.copy()
+                new_dict['value'] = mess
+                self._list.append(new_dict)
+        else:
+            dict['value'] = message
+            self._list.append(dict)
+
+    @property
+    def json(self):
+        return self._list[0] if len(self._list) == 1 else self._list
+
+    @property
+    def obj(self):
+        return {self.action: self._list[0]} if len(self._list) == 1 else {self.action: self._list}
+
+class StartRecording(TropoAction):
+    """
+    Class representing the "startRecording" Tropo action. Builds a "startRecording" JSON object.
+    Class constructor arg: url, a String
+    Class constructor options: format, method, username, password
+    Convenience function: Tropo.startRecording()
+
+    (See https://www.tropo.com/docs/webapi/startrecording.htm)
+
+    { "startRecording": {
+        "format": String,
+        "method": String,
+        "url": String,#Required
+        "username": String,
+        "password": String } } 
+    """
+    action = 'startRecording'
+    options_array = ['format', 'method', 'username', 'password']
+
+    def __init__(self, url, **options):
+        self._dict = {'url': url}
+        for opt in self.options_array:
+            if opt in options:
+                self._dict[opt] = options[opt]
+
+class StopRecording(TropoAction):
+   """
+    Class representing the "stopRecording" Tropo action. Builds a "stopRecording" JSON object.
+    Class constructor arg:
+    Class constructor options:
+    Convenience function: Tropo.stopRecording()
+
+   (See https://www.tropo.com/docs/webapi/stoprecording.htm)
+      { "stopRecording": { } } 
+   """
+   action = 'stopRecording'
+
+   def __init__(self):
+       self._dict = {}
+
+class Transfer(TropoAction):
+    """
+    Class representing the "transfer" Tropo action. Builds a "transfer" JSON object.
+    Class constructor arg: to, a String, or List
+    Class constructor options: answerOnMedia, choices, from, name, required, terminator
+    Convenience function: Tropo.transfer()
+
+    (See https://www.tropo.com/docs/webapi/transfer.htm)
+    { "transfer": {
+        "to": String or Array,#Required
+        "answerOnMedia": Boolean,
+        "choices": Object,
+        "from": Object,
+        "name": String,
+        "required": Boolean,
+        "terminator": String,
+        "timeout": Float } } 
+    """
+    action = 'transfer'
+    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator']
+
+    def __init__(self, to, **options):
+        self._dict = {'to': to}
+        for opt in self.options_array:
+            if opt in options:
+                if (opt == 'from'):
+                    self._dict['from'] = options['from']
+                elif(opt == 'choices'):
+                    self._dict['choices'] = {'value' : options['choices']}
+                else:
+                    self._dict[opt] = options[opt]
 
 
 class Result(object):
     """
     Returned anytime a request is made to the Tropo Web API. 
-    Method: getValue 
+    Method: getValue
     (See https://www.tropo.com/docs/webapi/result.htm)
 
         { "result": {
@@ -328,7 +447,7 @@ class Result(object):
             "sessionDuration": Integer,
             "sessionId": String,
             "state": String } }
-    """ 
+    """
 
     def __init__(self, result_json):
         logging.info ("result POST data: %s" % result_json)
@@ -361,43 +480,6 @@ class Result(object):
         return dict['interpretation']
 
 
-class Say(object):
-    """
-    Class representing the "say" Tropo action. Builds a "say" JSON object.
-    Class constructor arg: message, a String, or a List of Strings
-    Class constructor options: attempts, bargein, choices, minConfidence, name, recognizer, required, say, timeout, voice
-    Convenience function: Tropo.say()
-
-    (See https://www.tropo.com/docs/webapi/say.htm)
-
-    { "say": {
-        "as": String,
-        "name": String,
-        "required": Boolean,
-        "value": String #Required
-        } } 
-    """
-    options_array = ['as', 'name', 'required']
-
-    def __init__(self, message, **options):
-        dict = {}
-        for opt in self.options_array:
-            if opt in options:
-                dict[opt] = options[opt]
-        if (isinstance (message, list)):
-            lis = []
-            for mess in message:
-                new_dict = dict.copy()
-                new_dict['value'] = mess
-                lis.append(new_dict)
-            self.obj = {'say' : lis}
-            self.json = lis
-        else:
-            dict['value'] = message
-            self.obj = {'say' : dict}
-            self.json = dict
-
-
 class Session(object):
     """
     Session is the payload sent as an HTTP POST to your web application when a new session arrives. 
@@ -414,82 +496,6 @@ class Session(object):
         for key in session_dict:
             val = session_dict[key]
             self.key = val
-
-
-
-class StartRecording(object):
-    """
-    Class representing the "startRecording" Tropo action. Builds a "startRecording" JSON object.
-    Class constructor arg: url, a String
-    Class constructor options: format, method, username, password
-    Convenience function: Tropo.startRecording()
-
-    (See https://www.tropo.com/docs/webapi/startrecording.htm)
-
-    { "startRecording": {
-        "format": String,
-        "method": String,
-        "url": String,#Required
-        "username": String,
-        "password": String } } 
-    """
-    options_array = ['format', 'method', 'username', 'password']
-
-    def __init__(self, url, **options):
-        dict = {'url': url}
-        for opt in self.options_array:
-            if opt in options:
-                dict[opt] = options[opt]
-        self.obj = {'startRecording' : dict}
-        self.json = dict
-
-class StopRecording(object):
-   """
-    Class representing the "stopRecording" Tropo action. Builds a "stopRecording" JSON object.
-    Class constructor arg:
-    Class constructor options:
-    Convenience function: Tropo.stopRecording()
-
-   (See https://www.tropo.com/docs/webapi/stoprecording.htm)
-      { "stopRecording": { } } 
-   """
-   def __init__(self):
-       dict = {}
-       self.obj = {'stopRecording' : dict}
-       self.json = dict
-
-class Transfer(object):
-    """
-    Class representing the "transfer" Tropo action. Builds a "transfer" JSON object.
-    Class constructor arg: to, a String, or List
-    Class constructor options: answerOnMedia, choices, from, name, required, terminator
-    Convenience function: Tropo.transfer()
-
-    (See https://www.tropo.com/docs/webapi/transfer.htm)
-    { "transfer": {
-        "to": String or Array,#Required
-        "answerOnMedia": Boolean,
-        "choices": Object,
-        "from": Object,
-        "name": String,
-        "required": Boolean,
-        "terminator": String,
-        "timeout": Float } } 
-    """
-    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator']
-
-    def __init__(self, to, **options):
-        dict = {'to': to}
-        for opt in self.options_array:
-            if opt in options:
-                if (opt == 'from'):
-                    dict['from'] = options['from']
-                elif(opt == 'choices'):
-                    dict['choices'] = {'value' : options['choices']}
-                else:
-                    dict[opt] = options[opt]
-        self.obj = {'transfer' : dict}
-        self.json = dict
 
 
 class Tropo(object):
