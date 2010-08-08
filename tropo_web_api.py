@@ -42,7 +42,7 @@ import logging
 import unittest 
 
 
-class Ask():
+class Ask(object):
     """
     Class representing the "ask" Tropo action. Builds an "ask" JSON object.
     Class constructor arg: choices, a Choices object
@@ -86,7 +86,7 @@ class Ask():
         self.obj = {'ask' : dict}
         self.json = dict
 
-class Call():
+class Call(object):
     """
     Class representing the "call" Tropo action. Builds a "call" JSON object.
     Class constructor arg: to, a String
@@ -117,7 +117,7 @@ class Call():
         self.obj = {'call' : dict}
         self.json = dict
 
-class Choices():
+class Choices(object):
     """
     Class representing choice made by a user. Builds a "choices" JSON object.
     Class constructor options: terminator, mode
@@ -138,7 +138,7 @@ class Choices():
         self.json = dict
 
 
-class Conference():
+class Conference(object):
     """
     Class representing the "conference" Tropo action. Builds a "conference" JSON object.
     Class constructor arg: id, a String
@@ -168,7 +168,7 @@ class Conference():
         self.obj = {'conference' : dict}
         self.json = dict
 
-class Hangup ():
+class Hangup(object):
     """
     Class representing the "hangup" Tropo action. Builds a "hangup" JSON object.
     Class constructor arg: 
@@ -184,7 +184,7 @@ class Hangup ():
         self.obj = {'hangup' : dict}
         self.json = dict
 
-class Message():
+class Message(object):
     """
     Class representing the "message" Tropo action. Builds a "message" JSON object.
     Class constructor arg: say_obj, a Say object
@@ -223,7 +223,7 @@ class Message():
         self.obj = {'message' : dict}
         self.json = dict
 
-class On():
+class On(object):
     """
     Class representing the "on" Tropo action. Builds an "on" JSON object.
     Class constructor arg: event, a String
@@ -256,7 +256,7 @@ class On():
         self.json = dict
 
 
-class Record():
+class Record(object):
     """
     Class representing the "record" Tropo action. Builds a "record" JSON object.
     Class constructor arg: 
@@ -302,7 +302,7 @@ class Record():
         self.json = dict
 
 
-class Redirect():
+class Redirect(object):
     """
     Class representing the "redirect" Tropo action. Builds a "redirect" JSON object.
     Class constructor arg: to, a String
@@ -329,7 +329,7 @@ class Redirect():
         self.json = dict
 
 
-class Reject():
+class Reject(object):
     """
     Class representing the "reject" Tropo action. Builds a "reject" JSON object.
     Class constructor arg: 
@@ -345,7 +345,7 @@ class Reject():
         self.obj = {'reject' : dict}
 
 
-class Result():
+class Result(object):
 
     """
     Returned anytime a request is made to the Tropo Web API. 
@@ -393,7 +393,7 @@ class Result():
         return dict['interpretation']
 
 
-class Say():
+class Say(object):
     """
     Class representing the "say" Tropo action. Builds a "say" JSON object.
     Class constructor arg: message, a String, or a List of Strings
@@ -430,7 +430,7 @@ class Say():
             self.json = dict
 
 
-class Session():
+class Session(object):
     """
     Session is the payload sent as an HTTP POST to your web application when a new session arrives. 
     (See https://www.tropo.com/docs/webapi/session.htm)
@@ -449,7 +449,7 @@ class Session():
 
 
 
-class StartRecording ():
+class StartRecording(object):
     """
     Class representing the "startRecording" Tropo action. Builds a "startRecording" JSON object.
     Class constructor arg: url, a String
@@ -476,7 +476,7 @@ class StartRecording ():
         self.obj = {'startRecording' : dict}
         self.json = dict
 
-class StopRecording ():
+class StopRecording(object):
    """
     Class representing the "stopRecording" Tropo action. Builds a "stopRecording" JSON object.
     Class constructor arg:
@@ -491,7 +491,7 @@ class StopRecording ():
        self.obj = {'stopRecording' : dict}
        self.json = dict
 
-class Transfer():
+class Transfer(object):
     """
     Class representing the "transfer" Tropo action. Builds a "transfer" JSON object.
     Class constructor arg: to, a String, or List
@@ -527,7 +527,7 @@ class Transfer():
         self.json = dict
 
 
-class Tropo():
+class Tropo(object):
     """
       This is the top level class for all the Tropo web api actions.
       The methods of this class implement individual Tropo actions.
@@ -749,7 +749,6 @@ class Tropo():
 
 
 class TestTropoPython(unittest.TestCase):        
-#class TestTropoPython():        
     """
     Class implementing a set of unit tests for TropoPython.
     """
