@@ -721,7 +721,7 @@ class Tropo(object):
         steps.append(piece)
         self._steps = steps
 
-    def RenderJson(self):
+    def RenderJson(self, pretty=False):
         """
         Render a Tropo object into a Json string.
         """
@@ -729,20 +729,12 @@ class Tropo(object):
         topdict = {}
         topdict['tropo'] = steps
         logging.info ("topdict: %s" % topdict)
-        # {"tropo": [{"say": "Hello World"}]}
-        json = jsonlib.dumps(topdict)
+        if pretty:
+            try:
+                json = jsonlib.dumps(topdict, indent=4, sort_keys=False)
+            except TypeError:
+                json = jsonlib.dumps(topdict)
+        else:
+            json = jsonlib.dumps(topdict)
         return json
-
-    def PrettyJson(self):
-        """
-        Render a Tropo object into a Json string, pretty-printed with indents.
-        """
-        json = self.RenderJson()
-        l = jsonlib.loads(json)
-        try:
-            pretty = jsonlib.dumps(l, indent=4, sort_keys=False)
-        except TypeError:
-            pretty = jsonlib.dumps(l)
-        return pretty
-
 

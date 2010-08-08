@@ -39,7 +39,7 @@ class TestTropoPython(unittest.TestCase):
         tropo.ask("[5 digits]",
                   say = Say("Please enter a 5 digit zip code").json)
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_ask================="
         print "render json: %s" % pretty_rendered
         rendered_obj = jsonlib.loads(rendered)
@@ -57,7 +57,7 @@ class TestTropoPython(unittest.TestCase):
         tropo.call(self.MY_PHONE, channel='TEXT', network='SMS')
         tropo.say ("Wish you were here")
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print ("============test_call=============")
         print "render json: %s" % pretty_rendered
 
@@ -76,7 +76,7 @@ class TestTropoPython(unittest.TestCase):
         tropo.conference(self.ID, playTones=True,terminator="#",
                    name="Staff Meeting", mute=False)
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_conference================="
         print "render json: %s" % pretty_rendered
 
@@ -95,7 +95,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.hangup()
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_hangup================="
         print "render json: %s" % pretty_rendered
 
@@ -113,7 +113,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.message("Hello World", self.MY_PHONE, channel='TEXT', network='SMS', timeout=5)
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_message================="
         print "render json: %s" % pretty_rendered
 
@@ -134,7 +134,7 @@ class TestTropoPython(unittest.TestCase):
              next="/weather.py?uri=end",
              say="Please hold.")
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_on================="
         print "render json: %s" % pretty_rendered
 
@@ -155,7 +155,7 @@ class TestTropoPython(unittest.TestCase):
         tropo.record(say="Tell us about yourself", url=url, 
                      choices=choices_obj)
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_record================="
         print "render json: %s" % pretty_rendered
 
@@ -173,7 +173,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.redirect(self.MY_PHONE)
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_redirect================="
         print "render json: %s" % pretty_rendered
 
@@ -192,7 +192,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.reject()
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_reject================="
         print "render json: %s" % pretty_rendered
 
@@ -211,7 +211,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.say("Hello, World")
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_say================="
         print "render json: %s" % pretty_rendered
 
@@ -229,7 +229,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.say(["Hello, World", "How ya doing?"])
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_list_say================="
         print "render json: %s" % pretty_rendered
 
@@ -247,7 +247,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.startRecording(self.RECORDING_URL)
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_startRecording================="
         print "render json: %s" % pretty_rendered
 
@@ -265,7 +265,7 @@ class TestTropoPython(unittest.TestCase):
         tropo = Tropo()
         tropo.stopRecording()
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_stopRecording================="
         print "render json: %s" % pretty_rendered
 
@@ -285,7 +285,7 @@ class TestTropoPython(unittest.TestCase):
         tropo.transfer(self.MY_PHONE)
         tropo.say("Hi. I am a robot")
         rendered = tropo.RenderJson()
-        pretty_rendered = tropo.PrettyJson()
+        pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_transfer================="
         print "render json: %s" % pretty_rendered
 
