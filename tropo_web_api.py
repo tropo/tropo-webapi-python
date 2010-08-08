@@ -456,7 +456,8 @@ class Result(object):
         result_dict = result_data['result']
 
         for opt in self.options_array:
-            setattr(self, '_%s' % opt, result_dict[opt])
+            if result_dict.get(opt, False):
+                setattr(self, '_%s' % opt, result_dict[opt])
 
     def getValue(self):
         """
