@@ -88,13 +88,13 @@ class Ask(TropoAction):
 
     def __init__(self, choices, **options):
         self._dict = {}
-        if (isinstance(choices, str)):
+        if (isinstance(choices, basestring)):
             self._dict['choices'] = Choices(choices).json
         else:
             self._dict['choices'] = choices['choices']
         for opt in self.options_array:
             if opt in options:
-                if ((opt == 'say') and (isinstance(options['say'], str))):
+                if ((opt == 'say') and (isinstance(options['say'], basestring))):
                     self._dict['say'] = Say(options['say']).json
                 else:
                     self._dict[opt] = options[opt]
@@ -240,7 +240,7 @@ class On(TropoAction):
         self._dict = {'event': event}
         for opt in self.options_array:
             if opt in options:
-                if ((opt == 'say') and (isinstance(options['say'], str))):
+                if ((opt == 'say') and (isinstance(options['say'], basestring))):
                     self._dict['say'] = Say(options['say']).json
                 else:
                     self._dict[opt] = options[opt]
@@ -280,7 +280,7 @@ class Record(TropoAction):
         self._dict = {}
         for opt in self.options_array:
             if opt in options:
-                if ((opt == 'say') and (isinstance(options['say'], str))):
+                if ((opt == 'say') and (isinstance(options['say'], basestring))):
                     self._dict['say'] = Say(options['say']).json
                 else:
                     self._dict[opt] = options[opt]
@@ -555,7 +555,7 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/message.htm
         """
-        if isinstance(say_obj, str):
+        if isinstance(say_obj, basestring):
             say = Say(say_obj).obj
         else:
             say = say_obj
