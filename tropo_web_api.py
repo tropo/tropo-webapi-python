@@ -3,9 +3,13 @@ The TropoPython module. This module implements a set of classes and methods for 
 
 Usage:
 
+----
+from tropo_web_api import Tropo
+
 tropo = Tropo()
 tropo.say("Hello, World")
 json = tropo.RenderJson() 
+----
 
 You can write this JSON back to standard output to get Tropo to perform 
 the action. For example, on Google Appengine you might write something like:
