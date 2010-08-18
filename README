@@ -31,6 +31,8 @@ DESCRIPTION
                   attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
         ...
 
+    NOTE: This module requires python 2.5 or higher.
+
 TESTS
 
 	Run testsuite by issuing:

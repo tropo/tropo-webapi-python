@@ -27,6 +27,8 @@ as "say". In some cases, you'll want to build a class object directly such as in
               attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
     ...
 
+NOTE: This module requires python 2.5 or higher.
+
 """
 
 try:
