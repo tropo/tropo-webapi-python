@@ -641,3 +641,17 @@ class Tropo(object):
             json = jsonlib.dumps(topdict)
         return json
 
+if __name__ == '__main__':
+    print """
+    
+ This is the Python web API for http://www.tropo.com/
+    
+ To run the test suite, please run:
+    
+    cd test
+    python test.py
+    
+
+"""
+
+
