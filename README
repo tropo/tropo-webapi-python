@@ -1,15 +1,19 @@
 NAME
-    tropo_web_api - The TropoPython module. This module implements a set of classes and methods for manipulating the Voxeo Tropo WebAPI.
+    tropo_web_api - The TropoPython module. This module implements a set of classes and methods for manipulating the Voxeo Tropo WebAPI for the Tropo cloud communications service at http://www.tropo.com/
 
 FILE
-    /Users/egilchri/appengine/egilchri1/tropo_web_api.py
+    http://github.com/tropo/python-webapi/blob/master/tropo_web_api.py
 
 DESCRIPTION
     Usage:
     
+    ----
+    from tropo_web_api import Tropo
+
     tropo = Tropo()
     tropo.say("Hello, World")
     json = tropo.RenderJson() 
+    ----
     
     You can write this JSON back to standard output to get Tropo to perform 
     the action. For example, on Google Appengine you might write something like:
@@ -30,7 +34,9 @@ DESCRIPTION
 TESTS
 
 	Run testsuite by issuing:
-	python ./tropo_web_api.py
+
+	cd test
+	python test.py
 
 CLASSES
     Ask
