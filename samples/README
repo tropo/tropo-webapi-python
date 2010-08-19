@@ -1,0 +1,15 @@
+These sample applications demonstrate the usage of this "tropo_web_api" python module with 
+the Tropo cloud communications service at http://www.tropo.com
+
+To use these examples you need to have:
+
+1. an account at http://www.tropo.com/ (free for developers)
+2. a web server where your app runs that is publicly accessible over the Internet
+
+For #2, you could use either:
+- a hosted service such as Google App Engine
+- your own server running a separate web server such as "itty" 
+     ( http://github.com/toastdriven/itty )
+- a server running an existing web server that can execute python programs
+
+Sample applications will eventually be provided for all these types.
