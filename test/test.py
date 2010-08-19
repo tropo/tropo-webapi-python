@@ -40,8 +40,8 @@ class TestTropoPython(unittest.TestCase):
                   say = Say("Please enter a 5 digit zip code").json)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_ask================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_ask=================")
+        print ("render json: %s" % pretty_rendered)
         rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"ask": {"say": {"value": "Please enter a 5 digit zip code"}, "choices": {"value": "[5 digits]"}}}]}'
         wanted_obj = jsonlib.loads(wanted_json)
@@ -59,7 +59,7 @@ class TestTropoPython(unittest.TestCase):
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
         print ("============test_call=============")
-        print "render json: %s" % pretty_rendered
+        print ("render json: %s" % pretty_rendered)
 
         rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"call": {"to": "%s", "network": "SMS", "channel": "TEXT"}}, {"say": {"value": "Wish you were here"}}]}' % self.MY_PHONE
@@ -77,12 +77,12 @@ class TestTropoPython(unittest.TestCase):
                    name="Staff Meeting", mute=False)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_conference================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_conference=================")
+        print ("render json: %s" % pretty_rendered)
 
         rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"conference": {"playTones": true, "mute": false, "name": "Staff Meeting", "id": "foo", "terminator": "#"}}]}'
-        print "wanted_json: %s" % wanted_json
+        print ("wanted_json: %s" % wanted_json)
         wanted_obj = jsonlib.loads(wanted_json)
         # print "test_conference: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
@@ -96,8 +96,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.hangup()
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_hangup================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_hangup=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_hangup: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -114,8 +114,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.message("Hello World", self.MY_PHONE, channel='TEXT', network='SMS', timeout=5)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_message================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_message=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_message: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -135,8 +135,8 @@ class TestTropoPython(unittest.TestCase):
              say="Please hold.")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_on================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_on=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_on: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -156,8 +156,8 @@ class TestTropoPython(unittest.TestCase):
                      choices=choices_obj)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_record================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_record=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_record: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -174,10 +174,10 @@ class TestTropoPython(unittest.TestCase):
         tropo.redirect(self.MY_PHONE)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_redirect================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_redirect=================")
+        print ("render json: %s" % pretty_rendered)
 
-        print "Wanted_Json %s" % tropo.RenderJson()
+        print ("Wanted_Json %s" % tropo.RenderJson())
         rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"redirect": {"to": "%s"}}]}' % self.MY_PHONE
         wanted_obj = jsonlib.loads(wanted_json)
@@ -193,10 +193,10 @@ class TestTropoPython(unittest.TestCase):
         tropo.reject()
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_reject================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_reject=================")
+        print ("render json: %s" % pretty_rendered)
 
-        print "Want %s" % tropo.RenderJson()
+        print ("Want %s" % tropo.RenderJson())
         rendered_obj = jsonlib.loads(rendered)
         wanted_json = '{"tropo": [{"reject": {}}]}'
         wanted_obj = jsonlib.loads(wanted_json)
@@ -212,8 +212,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.say("Hello, World")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_say================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_say=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_say: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -230,8 +230,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.say(["Hello, World", "How ya doing?"])
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_list_say================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_list_say=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_say: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -248,8 +248,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.startRecording(self.RECORDING_URL)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_startRecording================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_startRecording=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_startRecording: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -266,8 +266,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.stopRecording()
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_stopRecording================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_stopRecording=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_stopRecording: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
@@ -286,8 +286,8 @@ class TestTropoPython(unittest.TestCase):
         tropo.say("Hi. I am a robot")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
-        print "===============test_transfer================="
-        print "render json: %s" % pretty_rendered
+        print ("===============test_transfer=================")
+        print ("render json: %s" % pretty_rendered)
 
         # print "test_transfer: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
