@@ -31,7 +31,12 @@ DESCRIPTION
                   attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
         ...
 
-    NOTE: This module requires python 2.5 or higher.
+NOTE ON PYTHON VERSIONS
+
+    This version of the module is for python 3.x.
+    There is a separate version available for python 2.x at:
+
+	      http://github.com/tropo/python-webapi/
 
 TESTS
 
