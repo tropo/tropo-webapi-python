@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 """
-Hellow world script for Session API (https://www.tropo.com/docs/webapi/sessionapi.htm)
+Hello world script for Session API ( https://www.tropo.com/docs/webapi/sessionapi.htm )
 
 Upon launch, it will trigger a message to be sent via Jabber to the addess specified in
 'number'.
 """
+
+# Sample application using the itty-bitty python web framework from:
+#  http://github.com/toastdriven/itty
 
 from itty import *
 from tropo_web_api import Tropo, Session
@@ -21,9 +24,9 @@ def index(request):
 
 
 base_url = 'http://api.tropo.com/1.0/sessions'
-token = 'xxxxxxxxxx'
+token = 'xxxxxxxxxx'		# Insert your token here
 action = 'create'
-number = 'username@domain'
+number = 'username@domain'	# change to the Jabber ID to which you want to send the message
 message = 'hello from the session API!'
 
 params = urlencode([('action', action), ('token', token), ('numberToDial', number), ('message', message)])
