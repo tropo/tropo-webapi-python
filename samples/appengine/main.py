@@ -20,7 +20,7 @@ GOOGLE_WEATHER_API_URL = "http://www.google.com/ig/api"
 
 def HelloWorld(handler, tropo):
     """
-    This is the traditional "Hello, World" function. The idiom is used throughout the API. We consturct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
+    This is the traditional "Hello, World" function. The idiom is used throughout the API. We construct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
     """
     tropo.say (["Hello, World", "How ya doing?"])
     json = tropo.RenderJson()
@@ -73,7 +73,7 @@ def SMSDemo(handler, tropo):
 
 def RecordHelloWorld(handler, tropo):
     """
-    This is the traditional "Hello, World" function. The idiom is used throughout the API. We construct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
+    Demonstration of recording a message.
     """
     # http://www.s3fm.com/
     url = "/receive_recording.py"
@@ -86,24 +86,24 @@ def RecordHelloWorld(handler, tropo):
 
 def RedirectDemo(handler, tropo):
     """
-    This is the traditional "Hello, World" function. The idiom is used throughout the API. We construct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
+    Demonstration of redirecting to another number.
     """
     tropo.say ("One moment please.")
     tropo.redirect(MY_PHONE)
     json = tropo.RenderJson()
-    logging.info ("RecordHelloWorld json: %s" % json)
+    logging.info ("RedirectDemo json: %s" % json)
     handler.response.out.write(json)
 
 def TransferDemo(handler, tropo):
     """
-    This is the traditional "Hello, World" function. The idiom is used throughout the API. We construct a Tropo object, and then flesh out that object by calling "action" functions (in this case, tropo.say). Then call tropo.Render, which translates the Tropo object into JSON format. Finally, we write the JSON object to the standard output, so that it will get POSTed back to the API.
+    Demonstration of transfering to another number
     """
     # http://www.s3fm.com/
     tropo.say ("One moment please.")
     tropo.transfer(MY_PHONE)
     tropo.say("Hi. I am a robot")
     json = tropo.RenderJson()
-    logging.info ("RecordHelloWorld json: %s" % json)
+    logging.info ("TransferDemo json: %s" % json)
     handler.response.out.write(json)
 
 
