@@ -1,14 +1,14 @@
 NAME
-    tropo_web_api - The TropoPython module. This module implements a set of classes and methods for manipulating the Voxeo Tropo WebAPI for the Tropo cloud communications service at http://www.tropo.com/
+    tropo_webapi - The TropoPython module. This module implements a set of classes and methods for manipulating the Voxeo Tropo WebAPI for the Tropo cloud communications service at http://www.tropo.com/
 
 FILE
-    http://github.com/tropo/python-webapi/blob/master/tropo_web_api.py
+    http://github.com/tropo/python-webapi/blob/master/tropo_webapi.py
 
 DESCRIPTION
     Usage:
     
     ----
-    from tropo_web_api import Tropo
+    from tropo_webapi import Tropo
 
     tropo = Tropo()
     tropo.say("Hello, World")
@@ -24,7 +24,7 @@ DESCRIPTION
     object and communicating back to Tropo via the Tropo class methods, such 
     as "say". In some cases, you'll want to build a class object directly such as in :
     
-        choices = tropo_web_api.Choices("[5 digits]").obj
+        choices = tropo_webapi.Choices("[5 digits]").obj
     
         tropo.ask(choices, 
                   say="Please enter your 5 digit zip code.", 
