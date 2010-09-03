@@ -10,7 +10,7 @@ Upon launch, it will trigger a message to be sent via Jabber to the addess speci
 #  http://github.com/toastdriven/itty
 
 from itty import *
-from tropo_webapi import Tropo, Session
+from tropo import Tropo, Session
 from urllib import urlencode
 from urllib2 import urlopen
 

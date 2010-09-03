@@ -4,7 +4,7 @@ The TropoPython module. This module implements a set of classes and methods for 
 Usage:
 
 ----
-from tropo_webapi import Tropo
+from tropo import Tropo
 
 tropo = Tropo()
 tropo.say("Hello, World")
@@ -20,7 +20,7 @@ Much of the time, a you will interact with Tropo by  examining the Result
 object and communicating back to Tropo via the Tropo class methods, such 
 as "say". In some cases, you'll want to build a class object directly such as in :
 
-    choices = tropo_webapi.Choices("[5 digits]").obj
+    choices = tropo.Choices("[5 digits]").obj
 
     tropo.ask(choices, 
               say="Please enter your 5 digit zip code.", 
@@ -106,7 +106,7 @@ class Call(TropoAction):
     Class constructor options: answerOnMedia, channel, from, headers, name, network, recording, required, timeout
     Convenience function: Tropo.call()
 
-    (See https://www.tropo.com/docs/webapi/call.htm)
+    (See https://www.tropo.com/docswebapi/call.htm)
 
     { "call": {
         "to": String or Array,#Required

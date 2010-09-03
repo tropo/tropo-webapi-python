@@ -17,7 +17,7 @@ except ImportError:
 import unittest 
 import sys
 sys.path = ['..'] + sys.path
-from tropo_webapi import Choices, Say, Tropo
+from tropo import Choices, Say, Tropo
 
 
 class TestTropoPython(unittest.TestCase):        
