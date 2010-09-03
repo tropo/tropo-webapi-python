@@ -1,10 +1,22 @@
 NAME
-    tropo - The TropoPython module. This module implements a set of classes and methods for manipulating the Voxeo Tropo WebAPI for the Tropo cloud communications service at http://www.tropo.com/
+
+    tropo - The TropoPython module. This module implements a set of classes and methods for manipulating the 
+    Web API for the Tropo cloud communications service at http://www.tropo.com/
+
+    For more information about the Tropo Web API that is used with this module, please see:
+
+        http://www.tropo.com/docs/webapi/
+
+    As this python module is still in development, please report any bugs or issues by raising an issue here:
+
+        http://github.com/tropo/tropo-webapi-python/issues
 
 FILE
+
     http://github.com/tropo/tropo-webapi-python/blob/master/tropo.py
 
 DESCRIPTION
+
     Usage:
     
     ----
