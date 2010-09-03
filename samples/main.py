@@ -7,7 +7,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 import cgi
 import logging
-import tropo_web_api
+import tropo
 import GoogleS3
 from xml.dom import minidom
 from google.appengine.api import urlfetch
@@ -30,7 +30,7 @@ def HelloWorld(handler, tropo):
 def WeatherDemo(handler, tropo):
     """
     """
-    choices = tropo_web_api.Choices("[5 digits]").obj
+    choices = tropo.Choices("[5 digits]").obj
 
     tropo.ask(choices, 
               say="Please enter your 5 digit zip code.", 
@@ -56,7 +56,7 @@ def WeatherDemo(handler, tropo):
 def RecordDemo(handler, tropo):
 
     url = "/receive_recording.py"
-    choices_obj = tropo_web_api.Choices("", terminator="#").json
+    choices_obj = tropo.Choices("", terminator="#").json
     tropo.record(say="Tell us about yourself", url=url, 
                  choices=choices_obj)
     json = tropo.RenderJson()
@@ -151,7 +151,7 @@ class TropoDemo(webapp.RequestHandler):
     """
     def post(self):
         if (1):
-            tropo = tropo_web_api.Tropo()
+            tropo = tropo.Tropo()
             tropo.say ("Welcome to the Tropo web API demo")
 
             request = "Please press"
@@ -166,7 +166,7 @@ class TropoDemo(webapp.RequestHandler):
                 demo = DEMOS[key][1]
                 request = "%s %s for %s," % (request, key, demo_name)
                 choices_counter += 1
-            choices = tropo_web_api.Choices(choices_string).obj
+            choices = tropo.Choices(choices_string).obj
 
             tropo.ask(choices, say=request, attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
 
@@ -190,8 +190,8 @@ class TropoDemoContinue(webapp.RequestHandler):
     def post (self):
         json = self.request.body
         logging.info ("json: %s" % json)
-        tropo = tropo_web_api.Tropo()
-        result = tropo_web_api.Result(json)
+        tropo = tropo.Tropo()
+        result = tropo.Result(json)
         choice = result.getValue()
         logging.info ("Choice of demo is: %s" % choice)
 
@@ -209,8 +209,8 @@ class Weather(webapp.RequestHandler):
     def post (self):
         json = self.request.body
         logging.info ("json: %s" % json)
-        tropo = tropo_web_api.Tropo()
-        result = tropo_web_api.Result(json);
+        tropo = tropo.Tropo()
+        result = tropo.Result(json);
         zip = result.getValue()
         google_weather_url = "%s?weather=%s&hl=en" % (GOOGLE_WEATHER_API_URL, zip)
         resp = urlfetch.fetch(google_weather_url)
@@ -226,7 +226,7 @@ class Weather(webapp.RequestHandler):
             wind_condition = doc.find("weather/current_conditions/wind_condition").attrib['data']
             city = doc.find("weather/forecast_information/city").attrib['data']
             logging.info ("condition: %s temp_f: %s wind_condition: %s city: %s" % (condition, temp_f, wind_condition, city))
-            tropo = tropo_web_api.Tropo()
+            tropo = tropo.Tropo()
             # condition: Partly Cloudy temp_f: 73 wind_condition: Wind: NW at 10 mph city: Portsmouth, NH
             temp = "%s degrees" % temp_f
             wind = self.english_expand (wind_condition)
@@ -283,7 +283,7 @@ class ReceiveRecording(webapp.RequestHandler):
 
 class CallWorld(webapp.RequestHandler):
     def post(self):
-        tropo = tropo_web_api.Tropo()
+        tropo = tropo.Tropo()
         tropo.call(MY_PHONE, channel='TEXT', network='SMS', answerOnMedia='True')
         tropo.say ("Wish you were here")
         json = tropo.RenderJson()
@@ -304,7 +304,7 @@ def main():
                                           ('/weather.py', Weather),
                                           ('/receive_recording.py', ReceiveRecording),
                                           ('/demo_continue.py', TropoDemoContinue),
-#                                          ('/tropo_web_api.html', ShowDoc)
+#                                          ('/tropo.html', ShowDoc)
 
   ],
                                          debug=True)

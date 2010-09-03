@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 """
-Hellow world script for Session API (https://www.tropo.com/docs/webapi/sessionapi.htm)
+Hello world script for Session API (https://www.tropo.com/docs/webapi/sessionapi.htm)
 
 Upon launch, it will trigger a message to be sent via Jabber to the addess specified in
 'number'.
 """
 
 from itty import *
-from tropo_web_api import Tropo, Session
+from tropo import Tropo, Session
 from urllib import urlencode
 from urllib2 import urlopen
 

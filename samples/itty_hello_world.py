@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from itty import *
-from tropo_web_api import Tropo, Session
+from tropo import Tropo, Session
 
 @post('/index.json')
 def index(request):
