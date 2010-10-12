@@ -493,7 +493,10 @@ class Session(object):
         for key in session_dict:
             val = session_dict[key]
             logging.info ("key: %s val: %s" % (key, val))
-            setattr(self, key, val)
+            if key == "from":
+                setattr(self, "fromaddress", val) 
+            else:
+                setattr(self, key, val)
 
 
 class Tropo(object):
