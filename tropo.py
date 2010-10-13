@@ -497,7 +497,7 @@ class Session(object):
                 setattr(self, "fromaddress", val) 
             else:
                 setattr(self, key, val)
-	    setattr(self, 'dict', session_dict)
+	setattr(self, 'dict', session_dict)
 
 
 class Tropo(object):
