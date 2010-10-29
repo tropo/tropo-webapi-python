@@ -8,22 +8,22 @@ from tropo import Tropo
 
 tropo = Tropo()
 tropo.say("Hello, World")
-json = tropo.RenderJson() 
+json = tropo.RenderJson()
 ----
 
-You can write this JSON back to standard output to get Tropo to perform 
+You can write this JSON back to standard output to get Tropo to perform
 the action. For example, on Google Appengine you might write something like:
 
 handler.response.out.write(json)
 
-Much of the time, a you will interact with Tropo by  examining the Result 
-object and communicating back to Tropo via the Tropo class methods, such 
+Much of the time, a you will interact with Tropo by  examining the Result
+object and communicating back to Tropo via the Tropo class methods, such
 as "say". In some cases, you'll want to build a class object directly such as in :
 
     choices = tropo.Choices("[5 digits]").obj
 
-    tropo.ask(choices, 
-              say="Please enter your 5 digit zip code.", 
+    tropo.ask(choices,
+              say="Please enter your 5 digit zip code.",
               attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
     ...
 
@@ -80,7 +80,7 @@ class Ask(TropoAction):
             "required": Boolean,
             "say": Object,
             "timeout": Float,
-            "voice": String } } 
+            "voice": String } }
 
     """
     action = 'ask'
@@ -118,7 +118,7 @@ class Call(TropoAction):
         "network": String,
         "recording": Array or Object,
         "required": Boolean,
-        "timeout": Float } } 
+        "timeout": Float } }
     """
     action = 'call'
     options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
@@ -160,7 +160,7 @@ class Conference(TropoAction):
         "name": String,
         "playTones": Boolean,
         "required": Boolean,
-        "terminator": String } } 
+        "terminator": String } }
     """
     action = 'conference'
     options_array = ['mute', 'name', 'playTones', 'required', 'terminator']
@@ -174,13 +174,13 @@ class Conference(TropoAction):
 class Hangup(TropoAction):
     """
     Class representing the "hangup" Tropo action. Builds a "hangup" JSON object.
-    Class constructor arg: 
-    Class constructor options: 
+    Class constructor arg:
+    Class constructor options:
     Convenience function: Tropo.hangup()
 
     (See https://www.tropo.com/docs/webapi/hangup.htm)
 
-    { "hangup": { } } 
+    { "hangup": { } }
     """
     action = 'hangup'
 
@@ -206,7 +206,7 @@ class Message(TropoAction):
             "network": String,
             "required": Boolean,
             "timeout": Float,
-            "voice": String } } 
+            "voice": String } }
     """
     action = 'message'
     options_array = ['answerOnMedia', 'channel', 'from', 'name', 'network', 'required', 'timeout', 'voice']
@@ -231,7 +231,7 @@ class On(TropoAction):
         "name": String,
         "next": String,
         "required": Boolean,
-        "say": Object } } 
+        "say": Object } }
     """
     action = 'on'
     options_array = ['name','next','required','say']
@@ -248,7 +248,7 @@ class On(TropoAction):
 class Record(TropoAction):
     """
     Class representing the "record" Tropo action. Builds a "record" JSON object.
-    Class constructor arg: 
+    Class constructor arg:
     Class constructor options: attempts, bargein, beep, choices, format, maxSilence, maxTime, method, minConfidence, name, password, required, say, timeout, transcription, url, username
     Convenience function: Tropo.record()
 
@@ -271,7 +271,7 @@ class Record(TropoAction):
             "timeout": Float,
             "transcription": Array or Object,
             "url": String,#Required ?????
-            "username": String } } 
+            "username": String } }
     """
     action = 'record'
     options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username']
@@ -297,7 +297,7 @@ class Redirect(TropoAction):
     { "redirect": {
         "to": Object,#Required
         "name": String,
-        "required": Boolean } } 
+        "required": Boolean } }
     """
     action = 'redirect'
     options_array = ['name', 'required']
@@ -311,13 +311,13 @@ class Redirect(TropoAction):
 class Reject(TropoAction):
     """
     Class representing the "reject" Tropo action. Builds a "reject" JSON object.
-    Class constructor arg: 
-    Class constructor options: 
+    Class constructor arg:
+    Class constructor options:
     Convenience function: Tropo.reject()
 
     (See https://www.tropo.com/docs/webapi/reject.htm)
 
-    { "reject": { } } 
+    { "reject": { } }
     """
     action = 'reject'
 
@@ -334,14 +334,15 @@ class Say(TropoAction):
     (See https://www.tropo.com/docs/webapi/say.htm)
 
     { "say": {
+        "voice": String,
         "as": String,
         "name": String,
         "required": Boolean,
         "value": String #Required
-        } } 
+        } }
     """
     action = 'say'
-    options_array = ['as', 'name', 'required']
+    options_array = ['as', 'name', 'required', 'voice']
 
     def __init__(self, message, **options):
         dict = {}
@@ -380,7 +381,7 @@ class StartRecording(TropoAction):
         "method": String,
         "url": String,#Required
         "username": String,
-        "password": String } } 
+        "password": String } }
     """
     action = 'startRecording'
     options_array = ['format', 'method', 'username', 'password']
@@ -399,7 +400,7 @@ class StopRecording(TropoAction):
     Convenience function: Tropo.stopRecording()
 
    (See https://www.tropo.com/docs/webapi/stoprecording.htm)
-      { "stopRecording": { } } 
+      { "stopRecording": { } }
    """
    action = 'stopRecording'
 
@@ -422,7 +423,7 @@ class Transfer(TropoAction):
         "name": String,
         "required": Boolean,
         "terminator": String,
-        "timeout": Float } } 
+        "timeout": Float } }
     """
     action = 'transfer'
     options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator']
@@ -441,7 +442,7 @@ class Transfer(TropoAction):
 
 class Result(object):
     """
-    Returned anytime a request is made to the Tropo Web API. 
+    Returned anytime a request is made to the Tropo Web API.
     Method: getValue
     (See https://www.tropo.com/docs/webapi/result.htm)
 
@@ -483,7 +484,7 @@ class Result(object):
 
 class Session(object):
     """
-    Session is the payload sent as an HTTP POST to your web application when a new session arrives. 
+    Session is the payload sent as an HTTP POST to your web application when a new session arrives.
     (See https://www.tropo.com/docs/webapi/session.htm)
     """
     def __init__(self, session_json):
@@ -494,7 +495,7 @@ class Session(object):
             val = session_dict[key]
             logging.info ("key: %s val: %s" % (key, val))
             if key == "from":
-                setattr(self, "fromaddress", val) 
+                setattr(self, "fromaddress", val)
             else:
                 setattr(self, key, val)
 	setattr(self, 'dict', session_dict)
@@ -525,7 +526,7 @@ class Tropo(object):
 
     def call (self, to, **options):
         """
-	 Places a call or sends an an IM, Twitter, or SMS message. To start a call, use the Session API to tell Tropo to launch your code. 
+	 Places a call or sends an an IM, Twitter, or SMS message. To start a call, use the Session API to tell Tropo to launch your code.
 
 	 Arguments: to is a String.
 	 Argument: **options is a set of optional keyword arguments.
@@ -535,8 +536,8 @@ class Tropo(object):
 
     def conference(self, id, **options):
         """
-        This object allows multiple lines in separate sessions to be conferenced together so that the parties on each line can talk to each other simultaneously. 
-	This is a voice channel only feature. 
+        This object allows multiple lines in separate sessions to be conferenced together so that the parties on each line can talk to each other simultaneously.
+	This is a voice channel only feature.
 	Argument: "id" is a String
         Argument: **options is a set of optional keyword arguments.
 	See https://www.tropo.com/docs/webapi/conference.htm
@@ -552,7 +553,7 @@ class Tropo(object):
 
     def message (self, say_obj, to, **options):
         """
-	A shortcut method to create a session, say something, and hang up, all in one step. This is particularly useful for sending out a quick SMS or IM. 
+	A shortcut method to create a session, say something, and hang up, all in one step. This is particularly useful for sending out a quick SMS or IM.
 
  	Argument: "say_obj" is a Say object
         Argument: "to" is a String
@@ -567,8 +568,8 @@ class Tropo(object):
 
     def on(self, event, **options):
         """
-        Adds an event callback so that your application may be notified when a particular event occurs. 
-	Possible events are: "continue", "error", "incomplete" and "hangup". 
+        Adds an event callback so that your application may be notified when a particular event occurs.
+	Possible events are: "continue", "error", "incomplete" and "hangup".
 	Argument: event is an event
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/on.htm
@@ -577,7 +578,7 @@ class Tropo(object):
 
     def record(self, **options):
         """
-	 Plays a prompt (audio file or text to speech) and optionally waits for a response from the caller that is recorded. 
+	 Plays a prompt (audio file or text to speech) and optionally waits for a response from the caller that is recorded.
          Argument: **options is a set of optional keyword arguments.
 	 See https://www.tropo.com/docs/webapi/record.htm
         """
@@ -585,7 +586,7 @@ class Tropo(object):
 
     def redirect(self, id, **options):
         """
-        Forwards an incoming call to another destination / phone number before answering it. 
+        Forwards an incoming call to another destination / phone number before answering it.
         Argument: id is a String
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/redirect.htm
@@ -594,15 +595,15 @@ class Tropo(object):
 
     def reject(self):
         """
-        Allows Tropo applications to reject incoming sessions before they are answered. 
+        Allows Tropo applications to reject incoming sessions before they are answered.
         See https://www.tropo.com/docs/webapi/reject.htm
         """
         self._steps.append(Reject().obj)
 
     def say(self, message, **options):
         """
-	When the current session is a voice channel this key will either play a message or an audio file from a URL. 
-	In the case of an text channel it will send the text back to the user via i nstant messaging or SMS. 
+	When the current session is a voice channel this key will either play a message or an audio file from a URL.
+	In the case of an text channel it will send the text back to the user via i nstant messaging or SMS.
         Argument: message is a string
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/say.htm
@@ -611,7 +612,7 @@ class Tropo(object):
 
     def startRecording(self, url, **options):
         """
-        Allows Tropo applications to begin recording the current session. 
+        Allows Tropo applications to begin recording the current session.
         Argument: url is a string
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/startrecording.htm
@@ -627,7 +628,7 @@ class Tropo(object):
 
     def transfer(self, to, **options):
         """
-        Transfers an already answered call to another destination / phone number. 
+        Transfers an already answered call to another destination / phone number.
 	Argument: to is a string
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/transfer.htm
@@ -653,14 +654,14 @@ class Tropo(object):
 
 if __name__ == '__main__':
     print """
-    
+
  This is the Python web API for http://www.tropo.com/
-    
+
  To run the test suite, please run:
-    
+
     cd test
     python test.py
-    
+
 
 """
 
