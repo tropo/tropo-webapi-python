@@ -84,7 +84,7 @@ class Ask(TropoAction):
 
     """
     action = 'ask'
-    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice']
+    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice', 'allowSignals']
 
     def __init__(self, choices, **options):
         self._dict = {}
@@ -121,7 +121,7 @@ class Call(TropoAction):
         "timeout": Float } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
+    options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'allowSignals']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
@@ -163,7 +163,7 @@ class Conference(TropoAction):
         "terminator": String } }
     """
     action = 'conference'
-    options_array = ['mute', 'name', 'playTones', 'required', 'terminator']
+    options_array = ['mute', 'name', 'playTones', 'required', 'terminator', 'allowSignals']
 
     def __init__(self, id, **options):
         self._dict = {'id': id}
@@ -274,7 +274,7 @@ class Record(TropoAction):
             "username": String } }
     """
     action = 'record'
-    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username']
+    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username', 'allowSignals']
 
     def __init__(self, **options):
         self._dict = {}
@@ -342,7 +342,7 @@ class Say(TropoAction):
         } }
     """
     action = 'say'
-    options_array = ['as', 'name', 'required', 'voice']
+    options_array = ['as', 'name', 'required', 'voice', 'allowSignals']
 
     def __init__(self, message, **options):
         dict = {}
@@ -426,7 +426,7 @@ class Transfer(TropoAction):
         "timeout": Float } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator']
+    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator', 'allowSignals']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
