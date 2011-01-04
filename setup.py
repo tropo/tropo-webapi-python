@@ -2,9 +2,9 @@
 
 from distutils.core import setup
 
-setup(name              = "python-tropo-webapi",
+setup(name              = "tropo-webapi-python",
       version           = "0.1.0",
-      url               = "http://github.com/tropo/python-webapi",
+      url               = "http://github.com/tropo/tropo-webapi-python",
       maintainer        = "Voxeo",
       maintainer_email  = "support@tropo.com",
       long_description  = "Python Tropo WebAPI implementation",
