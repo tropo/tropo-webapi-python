@@ -426,7 +426,7 @@ class Transfer(TropoAction):
         "timeout": Float } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'required', 'terminator', 'allowSignals']
+    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'on', 'required', 'allowSignals']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
@@ -435,7 +435,7 @@ class Transfer(TropoAction):
                 if (opt == 'from'):
                     self._dict['from'] = options['from']
                 elif(opt == 'choices'):
-                    self._dict['choices'] = {'value' : options['choices']}
+                    self._dict['choices'] = options['choices']
                 else:
                     self._dict[opt] = options[opt]
 
