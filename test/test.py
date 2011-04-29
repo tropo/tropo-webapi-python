@@ -73,15 +73,15 @@ class TestTropoPython(unittest.TestCase):
         """
 
         tropo = Tropo()
-        tropo.conference(self.ID, playTones=True,terminator="#",
-                   name="Staff Meeting", mute=False)
+        tropo.conference(self.ID, playTones=True, mute=False,
+                   name="Staff Meeting")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_conference================="
         print "render json: %s" % pretty_rendered
 
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"conference": {"playTones": true, "mute": false, "name": "Staff Meeting", "id": "foo", "terminator": "#"}}]}'
+        wanted_json = '{"tropo": [{"conference": {"playTones": true, "mute": false, "name": "Staff Meeting", "id": "foo"}}]}'
         print "wanted_json: %s" % wanted_json
         wanted_obj = jsonlib.loads(wanted_json)
         # print "test_conference: %s" % tropo.RenderJson()
