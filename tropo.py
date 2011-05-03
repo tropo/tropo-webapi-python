@@ -486,6 +486,9 @@ class Session(object):
     """
     Session is the payload sent as an HTTP POST to your web application when a new session arrives.
     (See https://www.tropo.com/docs/webapi/session.htm)
+    
+    Because 'from' is a reserved word in Python, the session object's 'from' property is called
+    fromaddress in the Python library
     """
     def __init__(self, session_json):
         logging.info ("POST data: %s" % session_json)
