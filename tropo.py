@@ -44,9 +44,6 @@ except ImportError:
         except ImportError:
             import json as jsonlib
 
-import logging
-
-
 class TropoAction(object):
     """
     Class representing the base Tropo action.
@@ -458,7 +455,6 @@ class Result(object):
     options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state']
 
     def __init__(self, result_json):
-        logging.info ("result POST data: %s" % result_json)
         result_data = jsonlib.loads(result_json)
         result_dict = result_data['result']
 
@@ -473,12 +469,9 @@ class Result(object):
         actions = self._actions
 
         if (type (actions) is list):
-            logging.info ("Actions is a list")
             dict = actions[0]
         else:
-            logging.info ("Actions is a dict")
             dict = actions
-        logging.info ("Actions is: %s" % actions)
         return dict['interpretation']
 
 
@@ -491,12 +484,10 @@ class Session(object):
     fromaddress in the Python library
     """
     def __init__(self, session_json):
-        logging.info ("POST data: %s" % session_json)
         session_data = jsonlib.loads(session_json)
         session_dict = session_data['session']
         for key in session_dict:
             val = session_dict[key]
-            logging.info ("key: %s val: %s" % (key, val))
             if key == "from":
                 setattr(self, "fromaddress", val)
             else:
@@ -645,7 +636,6 @@ class Tropo(object):
         steps = self._steps
         topdict = {}
         topdict['tropo'] = steps
-        logging.info ("topdict: %s" % topdict)
         if pretty:
             try:
                 json = jsonlib.dumps(topdict, indent=4, sort_keys=False)
