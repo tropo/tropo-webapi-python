@@ -472,7 +472,7 @@ class Result(object):
             dict = actions[0]
         else:
             dict = actions
-        return dict['interpretation']
+        return dict['value']
 
 
 class Session(object):
