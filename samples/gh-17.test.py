@@ -6,19 +6,16 @@ from tropo import Tropo, Result
 
 @post('/index.json')
 def index(request):
-
 	t = Tropo()
-
 	t.ask(choices = "yes(yes,y,1), no(no,n,2)", timeout=60, name="reminder", say = "Hey, did you remember to take your pills?")	
-
 	t.on(event = "continue", next ="/continue")
 	t.on(event = "incomplete", next ="/incomplete")
-
-	return t.RenderJson()
+	json = t.RenderJson()
+	print json
+	return json
 
 @post("/continue")
 def index(request):
-
 	r = Result(request.body)
 	t = Tropo()
 
@@ -31,15 +28,16 @@ def index(request):
 	else :
 		t.say("What are you waiting for?")
 
-	return t.RenderJson()
+	json = t.RenderJson()
+	print json
+	return json
 
 @post("/incomplete")
 def index(request):
-
 	t = Tropo()
-
 	t.say("Sorry, that wasn't on of the options.")
-
-	return t.RenderJson()
+	json = t.RenderJson()
+	print json
+	return json
 
 run_itty()

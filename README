@@ -106,7 +106,7 @@ CLASSES
     class Call
      |  Class representing the "call" Tropo action. Builds a "call" JSON object.
      |  Class constructor arg: to, a String
-     |  Class constructor options: answerOnMedia, channel, from, headers, name, network, recording, required, timeout
+     |  Class constructor options: answerOnMedia, channel, _from, headers, name, network, recording, required, timeout
      |  Convenience function: Tropo.call()
      |  
      |  (See https://www.tropo.com/docs/webapi/call.htm)
@@ -175,7 +175,7 @@ CLASSES
      |  Class representing the "message" Tropo action. Builds a "message" JSON object.
      |  Class constructor arg: say_obj, a Say object
      |  Class constructor arg: to, a String
-     |  Class constructor options: answerOnMedia, channel, from, name, network, required, timeout, voice
+     |  Class constructor options: answerOnMedia, channel, _from, name, network, required, timeout, voice
      |  Convenience function: Tropo.message()
      |  
      |  (See https://www.tropo.com/docs/webapi/message.htm)
@@ -302,7 +302,7 @@ CLASSES
     class Say
      |  Class representing the "say" Tropo action. Builds a "say" JSON object.
      |  Class constructor arg: message, a String, or a List of Strings
-     |  Class constructor options: attempts, bargein, choices, minConfidence, name, recognizer, required, say, timeout, voice
+     |  Class constructor options: attempts, bargein, choices, minConfidence, name, recognizer, required, say, timeout, voice, _as
      |  Convenience function: Tropo.say()
      |  
      |  (See https://www.tropo.com/docs/webapi/say.htm)
@@ -588,7 +588,7 @@ CLASSES
     class Transfer
      |  Class representing the "transfer" Tropo action. Builds a "transfer" JSON object.
      |  Class constructor arg: to, a String, or List
-     |  Class constructor options: answerOnMedia, choices, from, name, required, terminator
+     |  Class constructor options: answerOnMedia, choices, _from, name, required, terminator
      |  Convenience function: Tropo.transfer()
      |  
      |  (See https://www.tropo.com/docs/webapi/transfer.htm)
@@ -636,7 +636,7 @@ CLASSES
      |      Places a call or sends an an IM, Twitter, or SMS message. To start a call, use the Session API to tell Tropo to launch your code. 
      |      
      |      Arguments: to is a String.
-     |      Argument: **options is a set of optional keyword arguments.
+     |      Argument: **options is a set of optional keyword arguments. Use "_from" instead of "from".
      |      See https://www.tropo.com/docs/webapi/call.htm
      |  
      |  conference(self, id, **options)
@@ -655,7 +655,7 @@ CLASSES
      |      
      |      Argument: "say_obj" is a Say object
      |      Argument: "to" is a String
-     |      Argument: **options is a set of optional keyword arguments.
+     |      Argument: **options is a set of optional keyword arguments. Use "_from" instead of "from".
      |      See https://www.tropo.com/docs/webapi/message.htm
      |  
      |  on(self, event, **options)
@@ -684,7 +684,7 @@ CLASSES
      |      When the current session is a voice channel this key will either play a message or an audio file from a URL. 
      |      In the case of an text channel it will send the text back to the user via i nstant messaging or SMS. 
      |      Argument: message is a string
-     |      Argument: **options is a set of optional keyword arguments.
+     |      Argument: **options is a set of optional keyword arguments. Use "_as" instead of "as".
      |      See https://www.tropo.com/docs/webapi/say.htm
      |  
      |  startRecording(self, url, **options)
@@ -700,6 +700,6 @@ CLASSES
      |  transfer(self, to, **options)
      |      Transfers an already answered call to another destination / phone number. 
      |      Argument: to is a string
-     |      Argument: **options is a set of optional keyword arguments.
+     |      Argument: **options is a set of optional keyword arguments. Use "_from" instead of "from".
      |      See https://www.tropo.com/docs/webapi/transfer.htm
 

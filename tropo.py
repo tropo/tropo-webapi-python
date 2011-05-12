@@ -118,13 +118,18 @@ class Call(TropoAction):
         "timeout": Float } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'channel', 'from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'allowSignals']
+    options_array = ['answerOnMedia', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'allowSignals']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
         for opt in self.options_array:
             if opt in options:
-                self._dict[opt] = options[opt]
+                if (opt == "_from"):
+                    self._dict['from'] = options[opt]
+                else:
+                    self._dict[opt] = options[opt]
+
+                
 
 class Choices(TropoAction):
     """
@@ -198,7 +203,7 @@ class Message(TropoAction):
             "to": String or Array,#Required
             "answerOnMedia": Boolean,
             "channel": string,
-            "from": Object,
+            "from": String,
             "name": String,
             "network": String,
             "required": Boolean,
@@ -206,13 +211,17 @@ class Message(TropoAction):
             "voice": String } }
     """
     action = 'message'
-    options_array = ['answerOnMedia', 'channel', 'from', 'name', 'network', 'required', 'timeout', 'voice']
+    options_array = ['answerOnMedia', 'channel', '_from', 'name', 'network', 'required', 'timeout', 'voice']
 
     def __init__(self, say_obj, to, **options):
         self._dict = {'say': say_obj['say'], 'to': to}
         for opt in self.options_array:
             if opt in options:
-                self._dict[opt] = options[opt]
+                if (opt == "_from"):
+                    self._dict['from'] = options[opt]
+                else:
+                    self._dict[opt] = options[opt]
+
 
 class On(TropoAction):
     """
@@ -339,13 +348,17 @@ class Say(TropoAction):
         } }
     """
     action = 'say'
-    options_array = ['as', 'name', 'required', 'voice', 'allowSignals']
+    # added _as because 'as' is reserved
+    options_array = ['_as', 'name', 'required', 'voice', 'allowSignals']
 
     def __init__(self, message, **options):
         dict = {}
         for opt in self.options_array:
             if opt in options:
-                dict[opt] = options[opt]
+                if (opt == "_as"):
+                    dict['as'] = options['_as']
+                else:
+                    dict[opt] = options[opt]
         self._list = []
         if (isinstance (message, list)):
             for mess in message:
@@ -416,21 +429,21 @@ class Transfer(TropoAction):
         "to": String or Array,#Required
         "answerOnMedia": Boolean,
         "choices": Object,
-        "from": Object,
+        "from": String,
         "name": String,
         "required": Boolean,
         "terminator": String,
         "timeout": Float } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', 'from', 'name', 'on', 'required', 'allowSignals']
+    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
         for opt in self.options_array:
             if opt in options:
-                if (opt == 'from'):
-                    self._dict['from'] = options['from']
+                if (opt == '_from'):
+                    self._dict['from'] = options['_from']
                 elif(opt == 'choices'):
                     self._dict['choices'] = options['choices']
                 else:
@@ -472,6 +485,7 @@ class Result(object):
             dict = actions[0]
         else:
             dict = actions
+        # return dict['value'] Fixes issue 17
         return dict['value']
 
 
@@ -602,6 +616,7 @@ class Tropo(object):
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/say.htm
         """
+        #voice = self.voice
         self._steps.append(Say(message, **options).obj)
 
     def startRecording(self, url, **options):
