@@ -488,6 +488,23 @@ class Result(object):
         # return dict['value'] Fixes issue 17
         return dict['value']
 
+# # **Tue May 17 07:17:38 2011** -- egilchri
+
+    def getInterpretation(self):
+        """
+        Get the value of the previously POSTed Tropo action.
+        """
+        actions = self._actions
+
+        if (type (actions) is list):
+            dict = actions[0]
+        else:
+            dict = actions
+        # return dict['value'] Fixes issue 17
+        return dict['interpretation']
+
+# # **Tue May 17 07:17:38 2011** -- egilchri
+
 
 class Session(object):
     """
@@ -524,13 +541,31 @@ class Tropo(object):
     def  __init__(self):
         self._steps = []
 
+# # **Sun May 15 21:05:01 2011** -- egilchri
+    def setVoice(self, voice):
+        self.voice = voice
+
+# # end **Sun May 15 21:05:01 2011** -- egilchri
+
     def ask(self, choices, **options):
         """
 	 Sends a prompt to the user and optionally waits for a response.
          Arguments: "choices" is a Choices object
          See https://www.tropo.com/docs/webapi/ask.htm
         """
+# # **Sun May 15 21:21:29 2011** -- egilchri
+
+        # Settng the voice in this method call has priority.
+	# Otherwise, we can pick up the voice from the Tropo object,
+	# if it is set there.
+        if hasattr (self, 'voice'):
+            if (not 'voice' in options):
+                options['voice'] = self.voice
+        
+# # **Sun May 15 21:21:29 2011** -- egilchri
+
         self._steps.append(Ask(choices, **options).obj)
+
 
     def call (self, to, **options):
         """
@@ -617,6 +652,16 @@ class Tropo(object):
         See https://www.tropo.com/docs/webapi/say.htm
         """
         #voice = self.voice
+# # **Sun May 15 21:21:29 2011** -- egilchri
+
+        # Settng the voice in this method call has priority.
+	# Otherwise, we can pick up the voice from the Tropo object,
+	# if it is set there.
+        if hasattr (self, 'voice'):
+            if (not 'voice' in options):
+                options['voice'] = self.voice
+# # **Sun May 15 21:21:29 2011** -- egilchri
+
         self._steps.append(Say(message, **options).obj)
 
     def startRecording(self, url, **options):
