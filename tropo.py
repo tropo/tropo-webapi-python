@@ -430,6 +430,10 @@ class Transfer(TropoAction):
         "to": String or Array,#Required
         "answerOnMedia": Boolean,
         "choices": Object,
+	# # **Wed May 18 21:14:05 2011** -- egilchri
+	"headers": Object,
+	# # **Wed May 18 21:14:05 2011** -- egilchri
+	
         "from": String,
         "name": String,
         "required": Boolean,
@@ -437,7 +441,7 @@ class Transfer(TropoAction):
         "timeout": Float } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals']
+    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
