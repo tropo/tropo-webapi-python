@@ -88,7 +88,8 @@ class Ask(TropoAction):
         if (isinstance(choices, basestring)):
             self._dict['choices'] = Choices(choices).json
         else:
-            self._dict['choices'] = choices['choices']
+#            self._dict['choices'] = choices['choices']
+            self._dict['choices'] = choices.json
         for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], basestring))):
@@ -500,7 +501,6 @@ class Result(object):
             dict = actions[0]
         else:
             dict = actions
-        # return dict['value'] Fixes issue 17
         return dict['interpretation']
 
 # # **Tue May 17 07:17:38 2011** -- egilchri
