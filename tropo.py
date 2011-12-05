@@ -278,10 +278,11 @@ class Record(TropoAction):
             "timeout": Float,
             "transcription": Array or Object,
             "url": String,#Required ?????
-            "username": String } }
+            "username": String,
+            "voice": String} }
     """
     action = 'record'
-    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username', 'allowSignals']
+    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username', 'allowSignals', 'voice']
 
     def __init__(self, **options):
         self._dict = {}
