@@ -81,7 +81,7 @@ class Ask(TropoAction):
 
     """
     action = 'ask'
-    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice', 'allowSignals']
+    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice', 'allowSignals', 'interdigitTimeout']
 
     def __init__(self, choices, **options):
         self._dict = {}
@@ -166,7 +166,7 @@ class Conference(TropoAction):
         "terminator": String } }
     """
     action = 'conference'
-    options_array = ['mute', 'name', 'playTones', 'required', 'terminator', 'allowSignals']
+    options_array = ['mute', 'name', 'playTones', 'required', 'terminator', 'allowSignals', 'interdigitTimeout']
 
     def __init__(self, id, **options):
         self._dict = {'id': id}
@@ -282,7 +282,7 @@ class Record(TropoAction):
             "voice": String} }
     """
     action = 'record'
-    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username', 'allowSignals', 'voice']
+    options_array = ['attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'minConfidence', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'url', 'username', 'allowSignals', 'voice', 'interdigitTimeout']
 
     def __init__(self, **options):
         self._dict = {}
@@ -442,7 +442,7 @@ class Transfer(TropoAction):
         "timeout": Float } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers']
+    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers', 'interdigitTimeout', 'ringRepeat', 'timeout']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
