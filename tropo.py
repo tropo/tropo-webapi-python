@@ -77,11 +77,14 @@ class Ask(TropoAction):
             "required": Boolean,
             "say": Object,
             "timeout": Float,
-            "voice": String } }
+            "voice": String,
+            'speechCompleteTimeout': Integer,
+            'speechIncompleteTimeout' : Integer, 
+            'sensitivity': Integer } }
 
     """
     action = 'ask'
-    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice', 'allowSignals', 'interdigitTimeout']
+    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice', 'allowSignals', 'interdigitTimeout', 'speechCompleteTimeout', 'speechIncompleteTimeout', 'sensitivity']
 
     def __init__(self, choices, **options):
         self._dict = {}
@@ -238,18 +241,22 @@ class On(TropoAction):
         "name": String,
         "next": String,
         "required": Boolean,
-        "say": Object } }
+        "say": Object
+        "voice": String } }
     """
     action = 'on'
-    options_array = ['name','next','required','say']
+    options_array = ['name','next','required','say', 'voice']
 
     def __init__(self, event, **options):
         self._dict = {'event': event}
         for opt in self.options_array:
             if opt in options:
                 if ((opt == 'say') and (isinstance(options['say'], basestring))):
-                    self._dict['say'] = Say(options['say']).json
-                else:
+                    if('voice' in options):
+                      self._dict['say'] = Say(options['say'], voice=options['voice']).json
+                    else:
+                      self._dict['say'] = Say(options['say']).json
+                elif(opt != 'voice'):
                     self._dict[opt] = options[opt]
 
 class Record(TropoAction):
@@ -617,11 +624,17 @@ class Tropo(object):
     def on(self, event, **options):
         """
         Adds an event callback so that your application may be notified when a particular event occurs.
-	Possible events are: "continue", "error", "incomplete" and "hangup".
-	Argument: event is an event
+	      Possible events are: "continue", "error", "incomplete" and "hangup".
+	      Argument: event is an event
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/on.htm
         """
+        
+        if hasattr (self, 'voice'):
+          if (not 'voice' in options):
+            options['voice'] = self.voice
+
+
         self._steps.append(On(event, **options).obj)
 
     def record(self, **options):
