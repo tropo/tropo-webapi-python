@@ -168,6 +168,8 @@ class Conference(TropoAction):
 
     { "conference": {
         "id": String,#Required
+        "allowSignals": String or Array,
+        "interdigitTimeout":Integer,
         "mute": Boolean,
         "name": String,
         "playTones": Boolean,
@@ -175,7 +177,7 @@ class Conference(TropoAction):
         "terminator": String } }
     """
     action = 'conference'
-    options_array = ['mute', 'name', 'playTones', 'required', 'terminator', 'allowSignals', 'interdigitTimeout']
+    options_array = ['allowSignals', 'interdigitTimeout', 'mute', 'name', 'playTones', 'required', 'terminator']
 
     def __init__(self, id, **options):
         self._dict = {'id': id}
