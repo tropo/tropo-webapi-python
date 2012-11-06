@@ -117,6 +117,7 @@ class Call(TropoAction):
     { "call": {
         "to": String or Array,#Required
         "answerOnMedia": Boolean,
+        "allowSignals": String or Array
         "channel": string,
         "from": string,
         "headers": Object,
@@ -127,7 +128,7 @@ class Call(TropoAction):
         "timeout": Float } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'allowSignals']
+    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
