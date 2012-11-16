@@ -117,6 +117,7 @@ class Call(TropoAction):
     { "call": {
         "to": String or Array,#Required
         "answerOnMedia": Boolean,
+        "allowSignals": String or Array
         "channel": string,
         "from": string,
         "headers": Object,
@@ -127,7 +128,7 @@ class Call(TropoAction):
         "timeout": Float } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'allowSignals']
+    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
@@ -167,6 +168,8 @@ class Conference(TropoAction):
 
     { "conference": {
         "id": String,#Required
+        "allowSignals": String or Array,
+        "interdigitTimeout":Integer,
         "mute": Boolean,
         "name": String,
         "playTones": Boolean,
@@ -174,7 +177,7 @@ class Conference(TropoAction):
         "terminator": String } }
     """
     action = 'conference'
-    options_array = ['mute', 'name', 'playTones', 'required', 'terminator', 'allowSignals', 'interdigitTimeout']
+    options_array = ['allowSignals', 'interdigitTimeout', 'mute', 'name', 'playTones', 'required', 'terminator']
 
     def __init__(self, id, **options):
         self._dict = {'id': id}
@@ -405,10 +408,13 @@ class StartRecording(TropoAction):
         "method": String,
         "url": String,#Required
         "username": String,
-        "password": String } }
+        "password": String, 
+        "transcriptionID": String
+        "transcriptionEmailFormat":String
+        "transcriptionOutURI": String} }
     """
     action = 'startRecording'
-    options_array = ['format', 'method', 'username', 'password']
+    options_array = ['format', 'method', 'username', 'password', 'transcriptionID', 'transcriptionEmailFormat', 'transcriptionOutURI']
 
     def __init__(self, url, **options):
         self._dict = {'url': url}
@@ -466,7 +472,28 @@ class Transfer(TropoAction):
                     self._dict['choices'] = options['choices']
                 else:
                     self._dict[opt] = options[opt]
+                    
+class Wait(TropoAction):
+      """
+      Class representing the "wait" Tropo action. Builds a "wait" JSON object.
+      Class constructor arg: milliseconds, an Integer
+      Class constructor options: allowSignals
+      Convenience function: Tropo.wait()
 
+      (See https://www.tropo.com/docs/webapi/wait.htm)
+      { "wait": {
+          "milliseconds": Integer,#Required
+          "allowSignals": String or Array
+      """
+      
+      action = 'wait'
+      options_array = ['allowSignals']
+
+      def __init__(self, milliseconds, **options):
+          self._dict = {'milliseconds': milliseconds}
+          for opt in self.options_array:
+              if opt in options:
+                self._dict[opt] = options[opt]
 
 class Result(object):
     """
@@ -711,7 +738,16 @@ class Tropo(object):
         See https://www.tropo.com/docs/webapi/transfer.htm
         """
         self._steps.append(Transfer(to, **options).obj)
-
+        
+    def wait(self, milliseconds, **options):
+      """
+      Allows the thread to sleep for a given amount of time in milliseconds
+      Argument: milliseconds is an Integer
+      Argument: **options is a set of optional keyword arguments.
+      See https://www.tropo.com/docs/webapi/wait.htm
+      """
+      self._steps.append(Wait(milliseconds, **options).obj)
+      
     def RenderJson(self, pretty=False):
         """
         Render a Tropo object into a Json string.
