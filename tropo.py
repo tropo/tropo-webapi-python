@@ -69,22 +69,27 @@ class Ask(TropoAction):
 
         { "ask": {
             "attempts": Integer,
+            "allowSiganls": String or Array,
             "bargein": Boolean,
             "choices": Object, #Required
+            "interdigitTimeout": Integer,
             "minConfidence": Integer,
             "name": String,
             "recognizer": String,
             "required": Boolean,
             "say": Object,
+            "sensitivity": Integer,
+            "speechCompleteTimeout": Integer,
+            "speechIncompleteTimeout": Integer,
             "timeout": Float,
             "voice": String,
-            'speechCompleteTimeout': Integer,
-            'speechIncompleteTimeout' : Integer, 
-            'sensitivity': Integer } }
+             
+            ,
+             } }
 
     """
     action = 'ask'
-    options_array = ['attempts', 'bargein', 'choices', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'timeout', 'voice', 'allowSignals', 'interdigitTimeout', 'speechCompleteTimeout', 'speechIncompleteTimeout', 'sensitivity']
+    options_array = ['attempts', 'allowSiganls', 'bargein', 'choices', 'interdigitTimeout', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'sensitivity', 'speechCompleteTimeout', 'speechIncompleteTimeout', 'timeout', 'voice']
 
     def __init__(self, choices, **options):
         self._dict = {}
