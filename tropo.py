@@ -109,7 +109,7 @@ class Call(TropoAction):
     """
     Class representing the "call" Tropo action. Builds a "call" JSON object.
     Class constructor arg: to, a String
-    Class constructor options: answerOnMedia, channel, from, headers, name, network, recording, required, timeout
+    Class constructor options: answerOnMedia, channel, from, headers, name, network, recording, required, timeout, machineDetection
     Convenience function: Tropo.call()
 
     (See https://www.tropo.com/docswebapi/call.htm)
@@ -125,10 +125,11 @@ class Call(TropoAction):
         "network": String,
         "recording": Array or Object,
         "required": Boolean,
-        "timeout": Float } }
+        "timeout": Float.
+        "machineDetection: Boolean or Object" } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout']
+    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'machineDetection']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
@@ -201,6 +202,23 @@ class Hangup(TropoAction):
     def __init__(self):
         self._dict = {}
 
+
+class MachineDetection(TropoAction):
+  """
+  Class representing machine detection for the call method. Builds a "machineDetection" JSON object.
+  Class constructor options: introduction, voice
+
+  (See https://www.tropo.com/docs/webapi/ask.htm)
+  """
+  action = 'machineDetection'
+  options_array = ['introduction', 'voice']
+
+  def __init__(self, introduction, **options):
+    self._dict = {'introduction': introduction}
+    for opt in self.options_array:
+      if opt in options:
+        self._dict[opt] = options[opt]
+        
 class Message(TropoAction):
     """
     Class representing the "message" Tropo action. Builds a "message" JSON object.

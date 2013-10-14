@@ -17,7 +17,7 @@ except ImportError:
 import unittest 
 import sys
 sys.path = ['..'] + sys.path
-from tropo import Choices, Say, Tropo
+from tropo import Choices, MachineDetection, Say, Tropo
 
 
 class TestTropoPython(unittest.TestCase):        
@@ -52,9 +52,10 @@ class TestTropoPython(unittest.TestCase):
         """
         Test the "call" Tropo class method.
         """
+        mc = MachineDetection(introduction="This is a test", voice="Victor").json
 
         tropo = Tropo()
-        tropo.call(self.MY_PHONE, channel='TEXT', network='SMS')
+        tropo.call(self.MY_PHONE, channel='TEXT', network='SMS', machineDetection=mc)
         tropo.say ("Wish you were here")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
@@ -312,8 +313,12 @@ if __name__ == '__main__':
 
         tropo.ask("[5 digits]",
                   say = Say("Please enter a 5 digit zip code").json)
+        # mc = MachineDetection("This is a test").json
+        
+        print "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        # print mc
 
-        tropo.call (TO)
+        tropo.call (TO, machineDetection=true)
         tropo.conference(ID)
         tropo.hangup()
         tropo.message ("Hello, World", TO)
