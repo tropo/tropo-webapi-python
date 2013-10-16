@@ -175,10 +175,12 @@ class Conference(TropoAction):
         "name": String,
         "playTones": Boolean,
         "required": Boolean,
-        "terminator": String } }
+        "terminator": String,
+        "joinPrompt": Object,
+        "leavePrompt": Object } }
     """
     action = 'conference'
-    options_array = ['allowSignals', 'interdigitTimeout', 'mute', 'name', 'playTones', 'required', 'terminator']
+    options_array = ['allowSignals', 'interdigitTimeout', 'mute', 'name', 'playTones', 'required', 'terminator', 'joinPrompt', 'leavePrompt']
 
     def __init__(self, id, **options):
         self._dict = {'id': id}
@@ -201,14 +203,45 @@ class Hangup(TropoAction):
 
     def __init__(self):
         self._dict = {}
+        
+class JoinPrompt(TropoAction):
+  """
+  Class representing join prompts for the conference method. Builds a "joinPrompt" JSON object.
+  Class constructor options: value, voice
 
+  (See https://www.tropo.com/docs/webapi/conference.htm)
+  """
+  action = 'joinPrompt'
+  options_array = ['value', 'voice']
 
+  def __init__(self, value, **options):
+    self._dict = {'value': value}
+    for opt in self.options_array:
+      if opt in options:
+        self._dict[opt] = options[opt]
+
+class LeavePrompt(TropoAction):
+  """
+  Class representing leave prompts for the conference method. Builds a "leavePrompt" JSON object.
+  Class constructor options: value, voice
+
+  (See https://www.tropo.com/docs/webapi/conference.htm)
+  """
+  action = 'leavePrompt'
+  options_array = ['value', 'voice']
+
+  def __init__(self, value, **options):
+    self._dict = {'value': value}
+    for opt in self.options_array:
+      if opt in options:
+        self._dict[opt] = options[opt]
+                
 class MachineDetection(TropoAction):
   """
   Class representing machine detection for the call method. Builds a "machineDetection" JSON object.
   Class constructor options: introduction, voice
 
-  (See https://www.tropo.com/docs/webapi/ask.htm)
+  (See https://www.tropo.com/docs/webapi/call.htm)
   """
   action = 'machineDetection'
   options_array = ['introduction', 'voice']
