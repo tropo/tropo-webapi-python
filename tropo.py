@@ -607,7 +607,7 @@ class Result(object):
             "sessionId": String,
             "state": String } }
     """
-    options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state', 'userType']
+    options_array = ['actions','complete','error','sequence', 'sessionDuration', 'sessionId', 'state', 'userType', 'connectedDuration', 'duration', 'calledID']
 
     def __init__(self, result_json):
         result_data = jsonlib.loads(result_json)
