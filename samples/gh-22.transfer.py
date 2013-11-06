@@ -11,7 +11,7 @@
 
 
 from itty import *
-from tropo import Tropo, Session
+from tropo-webapi-python/tropo import Tropo, Session
 
 
 #TO_NUMBER = '1xxxxxxxxxx'

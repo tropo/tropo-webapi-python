@@ -535,9 +535,6 @@ class Transfer(TropoAction):
       self._dict = {'to': to}
       for opt in self.options_array:
         if opt in options:
-          print "\n*************\n"          
-          print options['on']['ask']
-          print "\n*************"
           whisper = []
           for key, val in options['on'].iteritems():
             newDict = {}
@@ -558,10 +555,8 @@ class Transfer(TropoAction):
               newDict['event'] = 'connect'
               newDict['message'] = val
               
-            print (newDict)
             whisper.append(newDict)
 
-          print whisper
           self._dict['on'] = whisper
           if (opt == '_from'):
             self._dict['from'] = options['_from']
