@@ -625,6 +625,14 @@ class Result(object):
         # return dict['value'] Fixes issue 17
         return dict['value']
 
+
+    def getUserType(self):
+      """
+      Get the userType of the previously POSTed Tropo action.
+      """
+      userType = self._userType
+      return userType
+
 # # **Tue May 17 07:17:38 2011** -- egilchri
 
     def getInterpretation(self):
