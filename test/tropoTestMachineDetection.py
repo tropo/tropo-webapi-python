@@ -7,7 +7,7 @@ def index(request):
   t = Tropo()
 
   mc = MachineDetection(introduction="This is a test. Please hold while I determine if you are a Machine or Human. Processing. Finished. THank you for your patience.", voice="Victor").json
-  t.call(to="+14072559655", machineDetection=mc)
+  t.call(to="+14071234321", machineDetection=mc)
   
   t.on(event="continue", next="/continue.json")
 
