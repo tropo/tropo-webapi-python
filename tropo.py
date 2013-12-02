@@ -526,10 +526,11 @@ class Transfer(TropoAction):
         "name": String,
         "required": Boolean,
         "terminator": String,
-        "timeout": Float } }
+        "timeout": Float,
+        "machineDetection": Boolean or Object } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers', 'interdigitTimeout', 'ringRepeat', 'timeout']
+    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers', 'interdigitTimeout', 'ringRepeat', 'timeout', 'machineDetection']
 
     def __init__(self, to, **options):
       self._dict = {'to': to}
