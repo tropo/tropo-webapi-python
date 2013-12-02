@@ -27,6 +27,9 @@ whisper["ask"] = ask
 say = Say("You are now being connected to the call").json
 whisper["say"] = say
 
+say1 = Say("http://www.phono.com/audio/holdmusic.mp3").json
+whisper["ring"] = say1
+
 t.transfer(to="+14071234321", on=whisper)
 t.on(event="incomplete", say="You are now being disconnected. Goodbye")
 

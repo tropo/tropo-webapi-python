@@ -540,20 +540,25 @@ class Transfer(TropoAction):
             newDict = {}
 
             if(key == "ask"):
-              newDict['event'] = 'connect'
               newDict['ask'] = val
+              newDict['event'] = 'connect'
 
             elif(key == "say"):
-              newDict['event'] = 'connect'
               newDict['say'] = val
+              newDict['event'] = 'connect'
 
             elif(key == "wait"):
-              newDict['event'] = 'connect'
               newDict['wait'] = val
+              newDict['event'] = 'connect'
 
             elif(key == "message"):
-              newDict['event'] = 'connect'
               newDict['message'] = val
+              newDict['event'] = 'connect'
+            
+            elif(key == "ring"):
+              newDict['say'] = val
+              newDict['event'] = 'ring'
+
               
             whisper.append(newDict)
 
