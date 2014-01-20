@@ -1,63 +1,65 @@
-NAME
+# NAME
 
-    tropo - The TropoPython module. This module implements a set of classes and methods for manipulating the 
-    Web API for the Tropo cloud communications service at http://www.tropo.com/
+tropo - The TropoPython module. This module implements a set of classes and methods for manipulating the 
+Web API for the Tropo cloud communications service at http://www.tropo.com/
 
-    For more information about the Tropo Web API that is used with this module, please see:
+For more information about the Tropo Web API that is used with this module, please see:
 
-        http://www.tropo.com/docs/webapi/
+    http://www.tropo.com/docs/webapi/
 
-    As this python module is still in development, please report any bugs or issues by raising an issue here:
+As this python module is still in development, please report any bugs or issues by raising an issue here:
 
-        http://github.com/tropo/tropo-webapi-python/issues
+    http://github.com/tropo/tropo-webapi-python/issues
 
-FILE
+## FILE
 
     http://github.com/tropo/tropo-webapi-python/blob/master/tropo.py
 
-DESCRIPTION
+## DESCRIPTION
 
-    Usage:
-    
-    ----
-    from tropo import Tropo
+Usage:
 
-    tropo = Tropo()
-    tropo.say("Hello, World")
-    json = tropo.RenderJson() 
-    ----
-    
-    You can write this JSON back to standard output to get Tropo to perform 
-    the action. For example, on Google Appengine you might write something like:
-    
-    handler.response.out.write(json)
-    
-    Much of the time, a you will interact with Tropo by  examining the Result 
-    object and communicating back to Tropo via the Tropo class methods, such 
-    as "say". In some cases, you'll want to build a class object directly such as in :
-    
-        choices = tropo.Choices("[5 digits]").obj
-    
-        tropo.ask(choices, 
-                  say="Please enter your 5 digit zip code.", 
-                  attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
-        ...
+```python
+from tropo import Tropo
 
-NOTE ON PYTHON VERSIONS
+tropo = Tropo()
+tropo.say("Hello, World")
+json = tropo.RenderJson() 
+```
+
+You can write this JSON back to standard output to get Tropo to perform 
+the action. For example, on Google Appengine you might write something like:
+
+handler.response.out.write(json)
+
+Much of the time, a you will interact with Tropo by  examining the Result 
+object and communicating back to Tropo via the Tropo class methods, such 
+as "say". In some cases, you'll want to build a class object directly such as in :
+
+```python
+    choices = tropo.Choices("[5 digits]").obj
+
+    tropo.ask(choices, 
+              say="Please enter your 5 digit zip code.", 
+              attempts=3, bargein=True, name="zip", timeout=5, voice="dave")
+    ...
+```
+
+## NOTE ON PYTHON VERSIONS
 
     This module is for python 2.x and requires python 2.5 or higher.  
     There is a separate version available for python 3.x at:
 
       http://github.com/tropo/python-webapi/tree/python3
 
-TESTS
+## TESTS
 
-	Run testsuite by issuing:
+Run testsuite by issuing:
 
 	cd test
 	python test.py
 
-CLASSES
+## CLASSES
     Ask
     Call
     Choices
