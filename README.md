@@ -1,4 +1,4 @@
-# NAME
+# Tropo Python Module
 
 tropo - The TropoPython module. This module implements a set of classes and methods for manipulating the 
 Web API for the Tropo cloud communications service at http://www.tropo.com/
@@ -11,11 +11,11 @@ As this python module is still in development, please report any bugs or issues 
 
     http://github.com/tropo/tropo-webapi-python/issues
 
-## FILE
+## File
 
     http://github.com/tropo/tropo-webapi-python/blob/master/tropo.py
 
-## DESCRIPTION
+## Description
 
 Usage:
 
@@ -45,21 +45,22 @@ as "say". In some cases, you'll want to build a class object directly such as in
     ...
 ```
 
-## NOTE ON PYTHON VERSIONS
+## Note on Python versions
 
-    This module is for python 2.x and requires python 2.5 or higher.  
-    There is a separate version available for python 3.x at:
+This module is for python 2.x and requires python 2.5 or higher.  
+There is a separate version available for python 3.x at:
 
       http://github.com/tropo/python-webapi/tree/python3
 
-## TESTS
+## Tests
 
 Run testsuite by issuing:
 
 	cd test
 	python test.py
 
-## CLASSES
+## Classes
+```python
     Ask
     Call
     Choices
@@ -704,4 +705,4 @@ Run testsuite by issuing:
      |      Argument: to is a string
      |      Argument: **options is a set of optional keyword arguments. Use "_from" instead of "from".
      |      See https://www.tropo.com/docs/webapi/transfer.htm
-
+```
