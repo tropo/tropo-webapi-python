@@ -52,6 +52,10 @@ There is a separate version available for python 3.x at:
 
       http://github.com/tropo/python-webapi/tree/python3
 
+## License
+
+MIT, see LICENSE.txt
+
 ## Tests
 
 Run testsuite by issuing:
