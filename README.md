@@ -50,7 +50,7 @@ as "say". In some cases, you'll want to build a class object directly such as in
 This module is for python 2.x and requires python 2.5 or higher.  
 There is a separate version available for python 3.x at:
 
-      http://github.com/tropo/python-webapi/tree/python3
+      https://github.com/tropo/tropo-webapi-python/tree/python3
 
 ## License
 
