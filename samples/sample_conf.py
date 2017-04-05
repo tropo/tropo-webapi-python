@@ -1,4 +1,4 @@
-#itty Config
-host = '10.140.254.69'
+# itty Config
+host = '100.100.100.100'
 port = 8080
 server = 'wsgiref'

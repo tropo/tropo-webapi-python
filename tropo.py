@@ -599,6 +599,28 @@ class Wait(TropoAction):
               if opt in options:
                 self._dict[opt] = options[opt]
 
+class GeneralLogSecurity(TropoAction):
+      """
+      Class representing the "generalLogSecurity" Tropo action. Builds a "generalLogSecurity" JSON object.
+      Class constructor arg: state, an String
+      Convenience function: Tropo.generalLogSecurity()
+
+      (See https://www.tropo.com/docs/webapi/generallogsecurity)
+      { "generallogsecurity": {
+          "state": String,#Required
+      """
+#      action = ''
+#      state = ''
+
+      def __init__(self, state):
+#          self._dict = {'generalLogSecurity': state}
+          self.state = state
+
+      @property
+      def obj(self):
+	  return {'generalLogSecurity':self.state}
+
+
 class Result(object):
     """
     Returned anytime a request is made to the Tropo Web API.
@@ -860,7 +882,17 @@ class Tropo(object):
       See https://www.tropo.com/docs/webapi/wait
       """
       self._steps.append(Wait(milliseconds, **options).obj)
-      
+
+    def generalLogSecurity(self, state, **options):
+      """
+      Turn on/off all logging on the Tropo platform
+      Argument: state is a String
+      See https://www.tropo.com/docs/webapi/generallogsecurity
+      """
+      self._steps.append(GeneralLogSecurity(state).obj)
+
+
+
     def RenderJson(self, pretty=False):
         """
         Render a Tropo object into a Json string.
