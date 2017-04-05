@@ -88,7 +88,7 @@ class Ask(TropoAction):
 
     """
     action = 'ask'
-    options_array = ['attempts', 'allowSignals', 'bargein', 'choices', 'interdigitTimeout', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'sensitivity', 'speechCompleteTimeout', 'speechIncompleteTimeout', 'timeout', 'voice']
+    options_array = ['attempts', 'allowSignals', 'bargein', 'choices', 'interdigitTimeout', 'minConfidence', 'name', 'recognizer', 'required', 'say', 'sensitivity', 'speechCompleteTimeout', 'speechIncompleteTimeout', 'timeout', 'voice', 'promptLogSecurity', 'asrLogSecurity', 'maskTemplate']
 
     def __init__(self, choices, **options):
         self._dict = {}
