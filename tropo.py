@@ -125,10 +125,14 @@ class Call(TropoAction):
         "recording": Array or Object,
         "required": Boolean,
         "timeout": Float.
-        "machineDetection: Boolean or Object" } }
+        "machineDetection: Boolean or Object" 
+	"voice": string default "".
+        "callbackUrl": string.
+        "promptLogSecurity": string default none.
+        "label: string"  } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'machineDetection']
+    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'machineDetection', 'voice', 'callbackUrl', 'promptLogSecurity', 'label]
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
