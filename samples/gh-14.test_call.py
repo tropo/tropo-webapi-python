@@ -20,9 +20,9 @@ FROM_NUMBER = '1yyyyyyyyyy'
 def index(request):
     s = Session(request.body)
     t = Tropo()
-    t.call(to='tel:+' + TO_NUMBER, _from='tel:+' + FROM_NUMBER)
+    t.call(to=' ' + TO_NUMBER, _from=' ' + FROM_NUMBER, label='xiangwyujianghu', voice='Tian-tian', callbackUrl='http://192.168.26.88:8080/FileUpload/receiveJson', promptLogSecurity='suppress')
     t.say('This is your mother. Did you brush your teeth today?')
-    json = t.RenderJson()
+    json = t.RenderJson() 
     print json
     return json
 
