@@ -206,8 +206,7 @@ class Hangup(TropoAction):
     action = 'hangup'
 
     def __init__(self):
-        self._dict = {}
-
+        self._dict = None
 
 class JoinPrompt(TropoAction):
     """
