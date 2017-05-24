@@ -180,10 +180,11 @@ class Conference(TropoAction):
         "required": Boolean,
         "terminator": String,
         "joinPrompt": Object,
+        "promptLogSecurity": string,
         "leavePrompt": Object } }
     """
     action = 'conference'
-    options_array = ['allowSignals', 'interdigitTimeout', 'mute', 'name', 'playTones', 'required', 'terminator', 'joinPrompt', 'leavePrompt']
+    options_array = ['allowSignals', 'interdigitTimeout', 'mute', 'name', 'playTones', 'required', 'terminator', 'joinPrompt', 'leavePrompt', 'promptLogSecurity']
 
     def __init__(self, id, **options):
         self._dict = {'id': id}
