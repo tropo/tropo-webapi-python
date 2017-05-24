@@ -153,6 +153,7 @@ class TestTropoPython(unittest.TestCase):
 
         tropo.on(event="continue", 
              next="/weather.py?uri=end",
+             post="http://foo.com/bar",
              say="Please hold.")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
@@ -161,7 +162,7 @@ class TestTropoPython(unittest.TestCase):
 
         # print "test_on: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = ' {"tropo": [{"on": {"say": {"value": "Please hold."}, "event": "continue", "next": "/weather.py?uri=end"}}]}'
+        wanted_json = ' {"tropo": [{"on": {"say": {"value": "Please hold."}, "post": "http://foo.com/bar", "event": "continue", "next": "/weather.py?uri=end"}}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 

@@ -304,14 +304,12 @@ class On(TropoAction):
 
     { "on": {
         "event": String,#Required
-        "name": String,
         "next": String,
-        "required": Boolean,
         "say": Object
-        "voice": String } }
+        "post": String } }
     """
     action = 'on'
-    options_array = ['name','next','required','say', 'voice', 'ask', 'message', 'wait']
+    options_array = ['next','say', 'post']
 
     def __init__(self, event, **options):
         self._dict = {}
