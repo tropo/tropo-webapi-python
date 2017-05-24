@@ -101,7 +101,7 @@ class TestTropoPython(unittest.TestCase):
 
         # print "test_hangup: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"hangup": {}}]}'
+        wanted_json = '{"tropo": [{"hangup": null}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
