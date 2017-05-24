@@ -277,10 +277,11 @@ class Message(TropoAction):
             "network": String,
             "required": Boolean,
             "timeout": Float,
+	    "promptLogSecurity": String,
             "voice": String } }
     """
     action = 'message'
-    options_array = ['answerOnMedia', 'channel', '_from', 'name', 'network', 'required', 'timeout', 'voice']
+    options_array = ['answerOnMedia', 'channel', '_from', 'name', 'network', 'required', 'timeout', 'voice', 'promptLogSecurity']
 
     def __init__(self, say_obj, to, **options):
         self._dict = {'say': say_obj['say'], 'to': to}

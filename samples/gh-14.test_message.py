@@ -12,19 +12,19 @@
 from itty import *
 from tropo import Tropo, Session
 
-TO_NUMBER = '1xxxxxxxxxx'
-FROM_NUMBER = '1yyyyyyyyyy'
+TO_NUMBER = 'sip:frank@172.16.22.128:5678'
+FROM_NUMBER = 'sip:xiangjun_yu@192.168.26.21:5678'
 
 
 @post('/index.json')
 def index(request):
         t = Tropo()
-        t.message("Hello World", TO_NUMBER, channel='VOICE', _from='tel:+' + FROM_NUMBER)
+	t.message("Hello World from tylor", TO_NUMBER, channel='VOICE', _from='' + FROM_NUMBER, promptLogSecurity='sss')
 	json = t.RenderJson()
 	print json
 	return json
 #retest
 
 
-run_itty()
+run_itty(config='sample_conf')
 
