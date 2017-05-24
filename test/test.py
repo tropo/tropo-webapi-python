@@ -54,7 +54,7 @@ class TestTropoPython(unittest.TestCase):
         """
 
         tropo = Tropo()
-        tropo.call(self.MY_PHONE, channel='TEXT', network='SMS')
+        tropo.call(self.MY_PHONE, channel='TEXT', network='SMS', label='labelofcall', voice = 'Tian-tian', callbackUrl = 'foourl', promptLogSecurity = 'suppress')
         tropo.say ("Wish you were here")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
@@ -62,7 +62,7 @@ class TestTropoPython(unittest.TestCase):
         print "render json: %s" % pretty_rendered
 
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"call": {"to": "%s", "network": "SMS", "channel": "TEXT"}}, {"say": {"value": "Wish you were here"}}]}' % self.MY_PHONE
+        wanted_json = '{"tropo": [{"call": {"to": "%s", "network": "SMS", "channel": "TEXT", "label": "labelofcall", "voice": "Tian-tian", "callbackUrl": "foourl", "promptLogSecurity": "suppress"}}, {"say": {"value": "Wish you were here"}}]}' % self.MY_PHONE
         wanted_obj = jsonlib.loads(wanted_json)
         # print "test_call: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)

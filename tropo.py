@@ -132,7 +132,7 @@ class Call(TropoAction):
         "label: string"  } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'machineDetection', 'voice', 'callbackUrl', 'promptLogSecurity', 'label]
+    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'machineDetection', 'voice', 'callbackUrl', 'promptLogSecurity', 'label']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
