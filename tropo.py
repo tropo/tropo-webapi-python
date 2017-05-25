@@ -108,7 +108,7 @@ class Call(TropoAction):
     """
     Class representing the "call" Tropo action. Builds a "call" JSON object.
     Class constructor arg: to, a String
-    Class constructor options: answerOnMedia, channel, from, headers, name, network, recording, required, timeout, machineDetection
+    Class constructor options: answerOnMedia, channel, from, headers, name, network, required, timeout, machineDetection
     Convenience function: Tropo.call()
 
     (See https://www.tropo.com/docswebapi/call)
@@ -122,7 +122,6 @@ class Call(TropoAction):
         "headers": Object,
         "name": String,
         "network": String,
-        "recording": Array or Object,
         "required": Boolean,
         "timeout": Float.
         "machineDetection: Boolean or Object" 
@@ -132,7 +131,7 @@ class Call(TropoAction):
         "label: string"  } }
     """
     action = 'call'
-    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'recording', 'required', 'timeout', 'machineDetection', 'voice', 'callbackUrl', 'promptLogSecurity', 'label']
+    options_array = ['answerOnMedia', 'allowSignals', 'channel', '_from', 'headers', 'name', 'network', 'required', 'timeout', 'machineDetection', 'voice', 'callbackUrl', 'promptLogSecurity', 'label']
 
     def __init__(self, to, **options):
         self._dict = {'to': to}
