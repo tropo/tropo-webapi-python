@@ -175,6 +175,7 @@ class TestTropoPython(unittest.TestCase):
         url = "/receive_recording.py"
         choices_obj = Choices("", terminator="#").json
         tropo.record(say="Tell us about yourself", url=url, 
+                     promptLogSecurity="suppree",
                      choices=choices_obj)
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
@@ -183,7 +184,7 @@ class TestTropoPython(unittest.TestCase):
 
         # print "test_record: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = ' {"tropo": [{"record": {"url": "/receive_recording.py", "say": {"value": "Tell us about yourself"}, "choices": {"terminator": "#", "value": ""}}}]}'
+        wanted_json = ' {"tropo": [{"record": {"url": "/receive_recording.py", "promptLogSecurity": "suppree", "say": {"value": "Tell us about yourself"}, "choices": {"terminator": "#", "value": ""}}}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
