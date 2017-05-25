@@ -546,9 +546,8 @@ class Transfer(TropoAction):
       for opt in self.options_array:
         if opt in options:
           if opt == "on":
-            whisper = []
+            newDict = {} 
             for key, val in options['on'].iteritems():
-              newDict = {}
 
               if(key == "ask"):
                 newDict['ask'] = val
@@ -556,7 +555,7 @@ class Transfer(TropoAction):
 
               elif(key == "say"):
                 newDict['say'] = val
-                newDict['event'] = 'connect'
+                #newDict['event'] = 'connect'
 
               elif(key == "wait"):
                 newDict['wait'] = val
@@ -569,10 +568,12 @@ class Transfer(TropoAction):
               elif(key == "ring"):
                 newDict['say'] = val
                 newDict['event'] = 'ring'
+	      
+              else:
+                newDict[key] = val
 
-              whisper.append(newDict)
 
-            self._dict['on'] = whisper
+            self._dict['on'] = newDict
           if (opt == '_from'):
             self._dict['from'] = options['_from']
           elif(opt == 'choices'):
