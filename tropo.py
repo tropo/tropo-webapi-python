@@ -415,12 +415,12 @@ class Reject(TropoAction):
 
     (See https://www.tropo.com/docs/webapi/reject)
 
-    { "reject": { } }
+    { "reject":  null }
     """
     action = 'reject'
 
     def __init__(self):
-        self._dict = {}
+        self._dict = None
 
 class Say(TropoAction):
     """
