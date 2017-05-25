@@ -221,7 +221,7 @@ class TestTropoPython(unittest.TestCase):
 
         print "Want %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"reject": {}}]}'
+        wanted_json = '{"tropo": [{"reject": null}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         # print "test_reject: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
