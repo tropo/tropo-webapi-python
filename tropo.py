@@ -507,12 +507,12 @@ class StopRecording(TropoAction):
     Convenience function: Tropo.stopRecording()
 
    (See https://www.tropo.com/docs/webapi/stoprecording)
-      { "stopRecording": { } }
+      { "stopRecording": null }
    """
    action = 'stopRecording'
 
    def __init__(self):
-       self._dict = {}
+       self._dict = None
 
 class Transfer(TropoAction):
     """
