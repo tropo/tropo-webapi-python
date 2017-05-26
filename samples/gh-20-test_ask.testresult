@@ -1,0 +1,38 @@
+request.body : {"result":{"sessionId":"d8d42bc7260e88983e72b94b2c5b8a28","callId":"b900196da92c20a4d08423dd180e02d6","state":"ANSWERED","sessionDuration":36,"sequence":1,"complete":true,"error":null,"calledid":"9994806398","actions":[{"name":"directory","attempts":3,"disposition":"SUCCESS","confidence":100,"interpretation":"1","utterance":"1","concept":"yes","value":"yes","xml":"<?xml version=\"1.0\"?>\r\n<result grammar=\"2@a9a9b19b.vxmlgrammar\">\r\n    <interpretation grammar=\"2@a9a9b19b.vxmlgrammar\" confidence=\"100\">\r\n        \r\n      <input mode=\"dtmf\">dtmf-1<\/input>\r\n    <\/interpretation>\r\n<\/result>\r\n"},{"name":"color","attempts":3,"disposition":"SUCCESS","confidence":100,"interpretation":"2","utterance":"2","concept":"blue","value":"blue","xml":"<?xml version=\"1.0\"?>\r\n<result grammar=\"5@a9a9b19b.vxmlgrammar\">\r\n    <interpretation grammar=\"5@a9a9b19b.vxmlgrammar\" confidence=\"100\">\r\n        \r\n      <input mode=\"dtmf\">dtmf-2<\/input>\r\n    <\/interpretation>\r\n<\/result>\r\n"}]}}
+action object filed name's value is directory
+action object filed attempts's value is 3
+action object filed disposition's value is SUCCESS
+action object filed confidence's value is 100
+action object filed interpretation's value is 1
+action object filed utterance's value is 1
+action object filed value's value is yes
+action object filed concept's value is yes
+action object filed xml's value is <?xml version="1.0"?>
+<result grammar="2@a9a9b19b.vxmlgrammar">
+    <interpretation grammar="2@a9a9b19b.vxmlgrammar" confidence="100">
+        
+      <input mode="dtmf">dtmf-1</input>
+    </interpretation>
+</result>
+
+action object filed uploadStatus's value is NoValue
+------------------------------
+action object filed name's value is color
+action object filed attempts's value is 3
+action object filed disposition's value is SUCCESS
+action object filed confidence's value is 100
+action object filed interpretation's value is 2
+action object filed utterance's value is 2
+action object filed value's value is blue
+action object filed concept's value is blue
+action object filed xml's value is <?xml version="1.0"?>
+<result grammar="5@a9a9b19b.vxmlgrammar">
+    <interpretation grammar="5@a9a9b19b.vxmlgrammar" confidence="100">
+        
+      <input mode="dtmf">dtmf-2</input>
+    </interpretation>
+</result>
+
+action object filed uploadStatus's value is NoValue
+------------------------------
+{"tropo": [{"say": {"value": "You said 1, which is a yes"}}]}
