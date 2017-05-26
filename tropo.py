@@ -654,6 +654,10 @@ class Result(object):
             if result_dict.get(opt, False):
                 setattr(self, '_%s' % opt, result_dict[opt])
 
+    def getActions(self):
+    	actions = self._actions
+	return actions
+
     def getValue(self):
         """
         Get the value of the previously POSTed Tropo action.
@@ -664,8 +668,7 @@ class Result(object):
             dict = actions[0]
         else:
             dict = actions
-        # return dict['value'] Fixes issue 17
-        return dict['value']
+        return dict.get('value', 'NoValue')
 
 
     def getUserType(self):
@@ -687,7 +690,7 @@ class Result(object):
             dict = actions[0]
         else:
             dict = actions
-        return dict['interpretation']
+        return dict.get('interpretation', 'NoValue')
 
 # # **Tue May 17 07:17:38 2011** -- egilchri
 
