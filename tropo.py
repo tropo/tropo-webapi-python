@@ -518,7 +518,7 @@ class Transfer(TropoAction):
     """
     Class representing the "transfer" Tropo action. Builds a "transfer" JSON object.
     Class constructor arg: to, a String, or List
-    Class constructor options: answerOnMedia, choices, from, name, required, terminator
+    Class constructor options: answerOnMedia, choices, from, name, required, on
     Convenience function: Tropo.transfer()
 
     (See https://www.tropo.com/docs/webapi/transfer)
@@ -535,13 +535,16 @@ class Transfer(TropoAction):
         "playTones":Boolean,
         "required": Boolean,
         "ringRepeat":Integer,
-        "terminator": String,
+        "on": Onject,
         "timeout": Float,
         "voice": String,
+        "callbackUrl": String,
+        "promptLogSecurity": String,
+        "label": String
      } }
     """
     action = 'transfer'
-    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers', 'interdigitTimeout', 'ringRepeat', 'timeout', 'machineDetection', 'playTones', 'voice']
+    options_array = ['answerOnMedia', 'choices', '_from', 'name', 'on', 'required', 'allowSignals', 'headers', 'interdigitTimeout', 'ringRepeat', 'timeout', 'machineDetection', 'playTones', 'voice', 'callbackUrl', 'promptLogSecurity', 'label']
     def __init__(self, to, **options):
       self._dict = {'to': to}
       for opt in self.options_array:
