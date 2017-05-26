@@ -232,7 +232,7 @@ class TestTropoPython(unittest.TestCase):
         """
 
         tropo = Tropo()
-        tropo.say("Hello, World")
+        tropo.say("Hello, World", promptLogSecurity='soppress')
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_say================="
@@ -240,7 +240,7 @@ class TestTropoPython(unittest.TestCase):
 
         # print "test_say: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"say": {"value": "Hello, World"}}]}'
+        wanted_json = '{"tropo": [{"say": {"value": "Hello, World", "promptLogSecurity": "soppress"}}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
@@ -250,7 +250,7 @@ class TestTropoPython(unittest.TestCase):
         """
 
         tropo = Tropo()
-        tropo.say(["Hello, World", "How ya doing?"])
+        tropo.say(["Hello, World", "How ya doing?"], promptLogSecurity = "suppredd")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_list_say================="
@@ -258,7 +258,7 @@ class TestTropoPython(unittest.TestCase):
 
         # print "test_say: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"say": [{"value": "Hello, World"}, {"value": "How ya doing?"}]}]}'
+        wanted_json = '{"tropo": [{"say": [{"value": "Hello, World", "promptLogSecurity": "suppredd"}, {"value": "How ya doing?", "promptLogSecurity": "suppredd"}]}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 

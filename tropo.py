@@ -437,12 +437,13 @@ class Say(TropoAction):
         "as": String,
         "name": String,
         "required": Boolean,
-        "value": String #Required
+        "value": String #Required,
+        "promptLogSecurity": String
         } }
     """
     action = 'say'
     # added _as because 'as' is reserved
-    options_array = ['_as', 'name', 'required', 'voice', 'allowSignals']
+    options_array = ['_as', 'name', 'required', 'voice', 'allowSignals', 'promptLogSecurity']
 
     def __init__(self, message, **options):
         dict = {}
