@@ -305,7 +305,7 @@ class TestTropoPython(unittest.TestCase):
 
         tropo = Tropo()
         tropo.say ("One moment please.")
-        tropo.transfer(self.MY_PHONE)
+        tropo.transfer(self.MY_PHONE, callbackUrl="http://192.168.26.88:8080/FileUpload/receiveJson", label="woshitestlidela")
         tropo.say("Hi. I am a robot")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
@@ -314,7 +314,7 @@ class TestTropoPython(unittest.TestCase):
 
         # print "test_transfer: %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"say": {"value": "One moment please."}}, {"transfer": {"to": "6021234567"}}, {"say": {"value": "Hi. I am a robot"}}]}'
+        wanted_json = '{"tropo": [{"say": {"value": "One moment please."}}, {"transfer": {"to": "6021234567", "callbackUrl": "http://192.168.26.88:8080/FileUpload/receiveJson", "label": "woshitestlidela"}}, {"say": {"value": "Hi. I am a robot"}}]}'
         wanted_obj = jsonlib.loads(wanted_json)
         self.assertEqual(rendered_obj, wanted_obj)
 
