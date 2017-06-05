@@ -28,7 +28,7 @@ def HelloWorld(handler, t):
 def WeatherDemo(handler, t):
     """
     """
-    choices = tropo.Choices("[5 digits]")
+    choices = tropo.Choices("[5 DIGITS]")
 
     t.ask(choices, 
               say="Please enter your 5 digit zip code.", 
