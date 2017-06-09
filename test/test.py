@@ -194,7 +194,7 @@ class TestTropoPython(unittest.TestCase):
         """
 
         tropo = Tropo()
-        tropo.redirect(self.MY_PHONE)
+        tropo.redirect(self.MY_PHONE, "fakeredirectname")
         rendered = tropo.RenderJson()
         pretty_rendered = tropo.RenderJson(pretty=True)
         print "===============test_redirect================="
@@ -202,7 +202,7 @@ class TestTropoPython(unittest.TestCase):
 
         print "Wanted_Json %s" % tropo.RenderJson()
         rendered_obj = jsonlib.loads(rendered)
-        wanted_json = '{"tropo": [{"redirect": {"to": "%s"}}]}' % self.MY_PHONE
+        wanted_json = '{"tropo": [{"redirect": {"name": "fakeredirectname", "to": "%s"}}]}' % self.MY_PHONE
         wanted_obj = jsonlib.loads(wanted_json)
         # print "test_redirect: %s" % tropo.RenderJson()
         self.assertEqual(rendered_obj, wanted_obj)
