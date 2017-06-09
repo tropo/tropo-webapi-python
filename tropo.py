@@ -386,22 +386,23 @@ class Record(TropoAction):
 class Redirect(TropoAction):
     """
     Class representing the "redirect" Tropo action. Builds a "redirect" JSON object.
-    Class constructor arg: to, a String
-    Class constructor options:  name, required
+    Class constructor arg: to, a String; name, a String
+    Class constructor options:  required
     Convenience function: Tropo.redirect()
 
     (See https://www.tropo.com/docs/webapi/redirect)
 
     { "redirect": {
         "to": Object,#Required
-        "name": String,
+        "name": String,,#Required
         "required": Boolean } }
     """
     action = 'redirect'
-    options_array = ['name', 'required']
+    options_array = ['required']
 
-    def __init__(self, to, **options):
-        self._dict = {'to': to}
+    def __init__(self, to, name, **options):
+        self._dict = {'to': to, 'name': name}
+        #self._dict = {'name': name}
         for opt in self.options_array:
             if opt in options:
                 self._dict[opt] = options[opt]
@@ -823,14 +824,15 @@ class Tropo(object):
         """
         self._steps.append(Record(**options).obj)
 
-    def redirect(self, id, **options):
+    def redirect(self, id, name, **options):
         """
         Forwards an incoming call to another destination / phone number before answering it.
         Argument: id is a String
+        Argument: name is a String
         Argument: **options is a set of optional keyword arguments.
         See https://www.tropo.com/docs/webapi/redirect
         """
-        self._steps.append(Redirect(id, **options).obj)
+        self._steps.append(Redirect(id, name, **options).obj)
 
     def reject(self):
         """
