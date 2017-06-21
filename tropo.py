@@ -660,8 +660,21 @@ class Result(object):
                 setattr(self, '_%s' % opt, result_dict[opt])
 
     def getActions(self):
-    	actions = self._actions
-	return actions
+        actions = self._actions
+        return actions
+    
+    def getActionsCount(self):
+        actions = self._actions
+        if actions is None:
+            count = 0
+            return count
+        if (type (actions) is list):
+            count = len(actions)
+        else:
+            count = 1
+        return count
+    
+    
 
     def getValue(self):
         """
@@ -671,6 +684,32 @@ class Result(object):
 
         if (type (actions) is list):
             dict = actions[0]
+        else:
+            dict = actions
+        return dict.get('value', 'NoValue')
+
+    def getIndexedValue(self, index):
+        """
+        Get the value of the indexed Tropo action.
+        """
+        actions = self._actions
+
+        if (type (actions) is list):
+            dict = actions[index]
+        else:
+            dict = actions
+        return dict.get('value', 'NoValue')
+
+    def getNamedActionValue(self, name):
+        """
+        Get the value of the named Tropo action.
+        """
+        actions = self._actions
+
+        if (type (actions) is list):
+            for a in actions:
+                if a.get('name', 'NoValue') == name:
+                    dict =a
         else:
             dict = actions
         return dict.get('value', 'NoValue')
@@ -693,6 +732,32 @@ class Result(object):
 
         if (type (actions) is list):
             dict = actions[0]
+        else:
+            dict = actions
+        return dict.get('interpretation', 'NoValue')
+
+    def getIndexdedInterpretation(self, index):
+        """
+        Get the value of the indexed Tropo action.
+        """
+        actions = self._actions
+
+        if (type (actions) is list):
+            dict = actions[index]
+        else:
+            dict = actions
+        return dict.get('interpretation', 'NoValue')
+
+    def getNamedActionInterpretation(self, name):
+        """
+        Get the value of the named Tropo action.
+        """
+        actions = self._actions
+
+        if (type (actions) is list):
+            for a in actions:
+                if a.get('name', 'NoValue') == name:
+                    dict =a
         else:
             dict = actions
         return dict.get('interpretation', 'NoValue')
