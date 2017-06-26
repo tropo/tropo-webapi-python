@@ -160,6 +160,22 @@ class Choices(TropoAction):
             if opt in options:
                 self._dict[opt] = options[opt]
 
+class TransferOnChoices(TropoAction):
+    """
+    Class representing choice made by a user. Builds a "choices" JSON object.
+    Class constructor options: terminator, mode
+
+    (See https://www.tropo.com/docs/webapi/ask)
+    """
+    action = 'choices'
+    options_array = ['terminator']
+
+    def __init__(self, **options):
+        self._dict = {}
+        for opt in self.options_array:
+            if opt in options:
+                self._dict[opt] = options[opt]
+
 class Conference(TropoAction):
     """
     Class representing the "conference" Tropo action. Builds a "conference" JSON object.
@@ -308,7 +324,7 @@ class On(TropoAction):
         "post": String } }
     """
     action = 'on'
-    options_array = ['next','say', 'post']
+    options_array = ['next','say', 'post', 'ask']
 
     def __init__(self, event, **options):
         self._dict = {}
@@ -325,17 +341,7 @@ class On(TropoAction):
                     self._dict['ask'] = Ask(options['ask'], voice=options['voice']).json
                   else:
                     self._dict['ask'] = Ask(options['ask']).json
-              
-                elif ((opt == 'message') and (isinstance(options['message'], basestring))):
-                  if('voice' in options):
-                    self._dict['message'] = Message(options['message'], voice=options['voice']).json
-                  else:
-                    self._dict['message'] = Message(options['message']).json
-                
-                elif ((opt == 'wait') and (isinstance(options['wait'], basestring))):
-                  self._dict['wait'] = Wait(options['wait']).json
-                  
-                elif(opt != 'voice'):
+                else:
                     self._dict[opt] = options[opt]
                     
         self._dict['event'] = event
@@ -550,40 +556,9 @@ class Transfer(TropoAction):
       self._dict = {'to': to}
       for opt in self.options_array:
         if opt in options:
-          if opt == "on":
-            newDict = {} 
-            for key, val in options['on'].iteritems():
-
-              if(key == "ask"):
-                newDict['ask'] = val
-                newDict['event'] = 'connect'
-
-              elif(key == "say"):
-                newDict['say'] = val
-                #newDict['event'] = 'connect'
-
-              elif(key == "wait"):
-                newDict['wait'] = val
-                newDict['event'] = 'connect'
-
-              elif(key == "message"):
-                newDict['message'] = val
-                newDict['event'] = 'connect'
-            
-              elif(key == "ring"):
-                newDict['say'] = val
-                newDict['event'] = 'ring'
-	      
-              else:
-                newDict[key] = val
-
-
-            self._dict['on'] = newDict
           if (opt == '_from'):
             self._dict['from'] = options['_from']
-          elif(opt == 'choices'):
-            self._dict['choices'] = options['choices']
-          elif(opt != 'on'):
+          else:
               self._dict[opt] = options[opt]
 
 class Wait(TropoAction):
