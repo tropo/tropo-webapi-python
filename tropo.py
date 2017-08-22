@@ -393,10 +393,11 @@ class Record(TropoAction):
             "url": String, #Required 
             "username": String,
             "voice": String, 
-            "promptLogSecurity": String} }
+            "promptLogSecurity": String,
+            "sensitivity": String} }
     """
     action = 'record'
-    options_array = ['asyncUpload', 'attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'username', 'allowSignals', 'voice', 'interdigitTimeout', 'promptLogSecurity']
+    options_array = ['asyncUpload', 'attempts', 'bargein', 'beep', 'choices', 'format', 'maxSilence', 'maxTime', 'method', 'name', 'password', 'required', 'say', 'timeout', 'transcription', 'username', 'allowSignals', 'voice', 'interdigitTimeout', 'promptLogSecurity', 'sensitivity']
     def __init__(self, url, **options):
         self._dict = {'url': url}
         for opt in self.options_array:

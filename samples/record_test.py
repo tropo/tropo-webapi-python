@@ -9,12 +9,9 @@ def index(request):
     t = Tropo()
     VOICE = 'Grace' 
     
-    #transcriptionobj = Transcription(id = "tropo-12123", url = "http://192.168.26.88:8080/FileUpload/uploadFile", language = "English").json
-    #print transcriptionobj
-    
-    transcriptionobj2 = '{"url": "http://192.168.26.88:8080/FileUpload/uploadFile", "id": "tropo-1212322223", "language": "English"}'
+    transcriptionobj = Transcription(id = "tropo-12123", url = "http://192.168.26.88:8080/FileUpload/uploadFile", language = "English").json
 
-    t.record(transcription = transcriptionobj2, name='voicemail.wav', say='Your call is important. Please leave a short message after the tone: ', url = 'http://192.168.26.88:8080/FileUpload/uploadFile', beep = True, formamt = 'audio/wav') 
+    t.record(transcription = transcriptionobj, name='voicemail.wav', say='Your call is important. Please leave a short message after the tone: ', url = 'http://192.168.26.88:8080/FileUpload/uploadFile', beep = True, formamt = 'audio/wav', sensitivity = 5.3) 
 
     return t.RenderJson()
 	
