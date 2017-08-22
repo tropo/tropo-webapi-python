@@ -273,6 +273,23 @@ class MachineDetection(TropoAction):
                 self._dict[opt] = options[opt]
 
 
+class Transcription(TropoAction):
+    """
+    Class representing transcription for the record method. Builds a "transcription" JSON object.
+    Class constructor options: id, url, emailFormat, language
+
+    (See https://www.tropo.com/docs/webapi/record)
+    """
+    action = 'transcription'
+    options_array = ['id', 'url', 'emailFormat', 'language']
+
+    def __init__(self, url, **options):
+        self._dict = {'url': url}
+        for opt in self.options_array:
+            if opt in options:
+                self._dict[opt] = options[opt]
+
+
 class Message(TropoAction):
     """
     Class representing the "message" Tropo action. Builds a "message" JSON object.
@@ -496,10 +513,11 @@ class StartRecording(TropoAction):
         "password": String, 
         "transcriptionID": String
         "transcriptionEmailFormat":String
+        "transcriptionLanguage":String
         "transcriptionOutURI": String} }
     """
     action = 'startRecording'
-    options_array = ['asyncUpload', 'format', 'method', 'username', 'password', 'transcriptionID', 'transcriptionEmailFormat', 'transcriptionOutURI']
+    options_array = ['asyncUpload', 'format', 'method', 'username', 'password', 'transcriptionID', 'transcriptionEmailFormat', 'transcriptionLanguage', 'transcriptionOutURI']
     def __init__(self, url, **options):
         self._dict = {'url': url}
         for opt in self.options_array:
