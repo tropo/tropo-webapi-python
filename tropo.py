@@ -104,6 +104,28 @@ class Ask(TropoAction):
                 else:
                     self._dict[opt] = options[opt]
 
+class Answer(TropoAction):
+    """
+    Class representing the "answer" Tropo action. Builds a "answer" JSON object.
+    Class constructor arg: headers, a Object
+    Class constructor options: headers
+    Convenience function: Tropo.answer()
+
+    (See https://www.tropo.com/docswebapi/answer)
+
+    { "answer": {
+        "headers": Object  } }
+    """
+    action = 'answer'
+    options_array = []
+
+    def __init__(self, headers, **options):
+        self._dict = {'headers': headers}
+        for opt in self.options_array:
+            if opt in options:
+                self._dict[opt] = options[opt]
+
+                
 class Call(TropoAction):
     """
     Class representing the "call" Tropo action. Builds a "call" JSON object.
@@ -819,6 +841,15 @@ class Tropo(object):
 
         self._steps.append(Ask(choices, **options).obj)
 
+
+    def answer (self, headers, **options):
+        """
+        Places a call or sends an an IM, Twitter, or SMS message. To start a call, use the Session API headers tell Tropo headers launch your code.
+        Arguments: headers is a String.
+        Argument: **options is a set of optional keyword arguments.
+        See https://www.tropo.com/docs/webapi/answer
+        """
+        self._steps.append(Answer (headers, **options).obj)
 
     def call (self, to, **options):
         """
