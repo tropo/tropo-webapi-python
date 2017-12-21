@@ -312,6 +312,23 @@ class Transcription(TropoAction):
                 self._dict[opt] = options[opt]
 
 
+class RecordUrlTuple(TropoAction):
+    """
+    Class representing recordURL for the record method. Builds a "recordURL" JSON object.
+    Class constructor options: url, username, password, method
+
+    (See https://www.tropo.com/docs/webapi/record)
+    """
+    action = 'url'
+    options_array = ['url', 'username', 'password', 'method']
+
+    def __init__(self, url, **options):
+        self._dict = {'url': url}
+        for opt in self.options_array:
+            if opt in options:
+                self._dict[opt] = options[opt]
+
+
 class Message(TropoAction):
     """
     Class representing the "message" Tropo action. Builds a "message" JSON object.
