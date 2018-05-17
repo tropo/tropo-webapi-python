@@ -14,6 +14,12 @@ As this python module is still in development, please report any bugs or issues 
 ## File
 
     http://github.com/tropo/tropo-webapi-python/blob/master/tropo.py
+    
+## Installation 
+    You can visist https://pypi.org/project/tropo-webapi-sdk-python/ manual download package
+    or run pip install 'tropo-webapi-sdk-python==15.11.0'
+    
+    Or git clone this repository for latest source code.
 
 ## Description
 
