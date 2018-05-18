@@ -1,3 +1,8 @@
+[![PyPI version (tropo-webapi-python)](https://img.shields.io/pypi/v/tropo-webapi-sdk-python.svg?style=flat-square)](https://pypi.org/project/tropo-webapi-sdk-python/)
+[![GitHub license](https://img.shields.io/github/license/tropo/tropo-webapi-python.svg?style=for-the-badge)](https://github.com/tropo/tropo-webapi-python/blob/master/LICENSE.txt)
+
+
+
 # Tropo Python Module
 
 tropo - The TropoPython module. This module implements a set of classes and methods for manipulating the 
@@ -14,12 +19,6 @@ As this python module is still in development, please report any bugs or issues 
 ## File
 
     http://github.com/tropo/tropo-webapi-python/blob/master/tropo.py
-    
-## Installation 
-    You can visist https://pypi.org/project/tropo-webapi-sdk-python/ manual download package
-    or run pip install 'tropo-webapi-sdk-python==15.11.0'
-    
-    Or git clone this repository for latest source code.
 
 ## Description
 
