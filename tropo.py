@@ -507,7 +507,7 @@ class Say(TropoAction):
     """
     action = 'say'
     # added _as because 'as' is reserved
-    options_array = ['_as', 'name', 'required', 'voice', 'allowSignals', 'promptLogSecurity']
+    options_array = ['_as', 'name', 'required', 'voice', 'allowSignals', 'promptLogSecurity', 'media']
 
     def __init__(self, message, **options):
         dict = {}
