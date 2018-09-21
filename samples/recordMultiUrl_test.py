@@ -13,10 +13,11 @@ def index(request):
     recordURLobj1 = RecordUrlTuple(url = "http://192.168.26.88:8080/FileUpload/uploadFile1", username = "fakename1", password="fakepassword", method="POST").json
     recordURLobj2 = RecordUrlTuple(url = "http://192.168.26.88:8080/FileUpload/uploadFile", username = "fakename2", password="fakepassword", method="POST").json
     recordURLobj3 = RecordUrlTuple(url = "http://192.168.26.88:8080/FileUpload/uploadFile3", username = "fakename3", password="fakepassword", method="POST").json
+    recordURLobj5 = RecordUrlTuple(url = "http://192.168.26.88:8080/FileUpload/uploadFile3", sessionToken = "ThisisafakesessionTokenforpython", username = "fakename3", password="fakepassword", method="POST").json
     recordURLobj4 = RecordUrlTuple(url = "http://192.168.26.88:8080/FileUpload/uploadFile4", username = "fakename4", password="fakepassword", method="POST").json
 
-    t.record(url = [recordURLobj1, recordURLobj2, recordURLobj3, recordURLobj4],transcription = transcriptionobj, name='voicemail.wav', say='Your call is important. Please leave a short message after the tone: ', beep = True, formamt = 'audio/wav', sensitivity = 5.3) 
+    t.record(url = [recordURLobj1, recordURLobj5, recordURLobj2, recordURLobj3, recordURLobj4],transcription = transcriptionobj, name='voicemail.wav', say='Your call is important. Please leave a short message after the tone: ', beep = True, formamt = 'audio/wav', sensitivity = 5.3) 
 
     return t.RenderJson()
 	
-run_itty(server='wsgiref', host='192.168.26.1', port=8888)
+run_itty(server='wsgiref', host='127.0.0.1', port=8888)

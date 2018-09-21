@@ -320,7 +320,7 @@ class RecordUrlTuple(TropoAction):
     (See https://www.tropo.com/docs/webapi/record)
     """
     action = 'url'
-    options_array = ['url', 'username', 'password', 'method']
+    options_array = ['url', 'username', 'password', 'method', 'sessionToken']
 
     def __init__(self, url, **options):
         self._dict = {'url': url}
