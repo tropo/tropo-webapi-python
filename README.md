@@ -645,7 +645,7 @@ Run testsuite by issuing:
      |      See https://www.tropo.com/docs/webapi/ask.htm
      |  
      |  call(self, to, **options)
-     |      Places a call or sends an an IM, Twitter, or SMS message. To start a call, use the Session API to tell Tropo to launch your code. 
+     |      Places a call or sends an IM, Twitter, or SMS message. To start a call, use the Session API to tell Tropo to launch your code. 
      |      
      |      Arguments: to is a String.
      |      Argument: **options is a set of optional keyword arguments. Use "_from" instead of "from".
